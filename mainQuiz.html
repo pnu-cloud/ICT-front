@@ -3,9 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz</title>
+    <title>모두의 자율학습, MOZA</title>
     <link rel="import" href="mainCourse.html" />
-    <header></header>
+    <style>
+      header {
+        border: 2px solid pink;
+        margin-bottom: 3%;
+        font-size: 150%;
+      }
+      body {
+        padding: 7% 10%;
+      }
+      .quizTemplate {
+        border: 2px solid;
+      }
+      .quizNumber {
+        border: 2px solid black;
+        float: left;
+      }
+      .quizSpec {
+        border: 2px solid red;
+        float: right;
+      }
+      .quizQuest {
+        border: 2px solid green;
+      }
+      .quizAnswer {
+        border: 2px solid blue;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <header>mainCourse에서 넘어온 과목 정보</header>
+    <div class="quizTemplate">
+      <div class="quizNumber">API에서 넘어온 문제 번호</div>
+      <div class="quizSpec">
+        <div class="quizQuest">API에서 넘어온 문제</div>
+        <div class="quizAnswer">답변 입력 칸</div>
+      </div>
+    </div>
+
+    <script></script>
+  </body>
 </html>
