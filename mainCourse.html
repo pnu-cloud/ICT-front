@@ -1,1 +1,41 @@
-<!-- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모두의 자율학습, MOZA</title>
+    <style>
+        header{
+            background-color: red;
+            margin-bottom: 3%;
+        }
+        body{
+            padding: 70%, 10%;
+        }
+        .block {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        d
+    </header>
+
+    <button id="addBlockButton">+</button>
+    <div id="blocksContainer"></div>
+
+    <script>
+        document.getElementById('addBlockButton').addEventListener('click', function() {
+            const container = document.getElementById('blocksContainer');
+            const newBlock = document.createElement('div');
+            newBlock.className = 'block';
+            newBlock.innerText = 'New Block';
+            container.appendChild(newBlock);
+        });
+    </script>
+</body>
+</html>
