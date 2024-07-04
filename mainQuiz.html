@@ -18,8 +18,8 @@
         padding: 3% 5%;
         font-family: "Nanum Gothic";
         font-weight: 400;
-        background-image: url("./assets/background-main.gif");
-        background-size: cover;
+        /* background-image: url("./assets/background-main.gif");
+        background-size: cover; */
       }
       .quizTemplate {
         /* border: 2px solid purple; */
@@ -158,62 +158,28 @@
         //   console.log("subjectId 다시 갖고 와.");
         // }
 
-        // 아래는 테스트용 데이터임
-        var jsonData = {
-          problem: [
-            {
-              id: "234",
-              title: "알고리즘 개념",
-              question: "버블 정렬에 대해 자유롭게 서술하시오",
-            },
-            {
-              id: "238",
-              title: "알고리즘 개념",
-              question: "버블 정렬에 대해 자유롭게 서술하시오",
-            },
-            {
-              id: "239",
-              title: "자료구조",
-              question: "스택과 큐의 차이점을 설명하시오",
-            },
-            {
-              id: "240",
-              title: "자료구조",
-              question: "이진 트리의 특징을 설명하시오",
-            },
-            {
-              id: "241",
-              title: "네트워크",
-              question: "TCP와 UDP의 차이점을 설명하시오",
-            },
-            {
-              id: "242",
-              title: "운영체제",
-              question: "프로세스와 스레드의 차이점을 설명하시오",
-            },
-          ],
-        };
-
         // var recentjsonData = "{ 'subjectId': " + recentId + " }";
-        // fetch(`https://apict.pnu.app/quiz/${recentId})`, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(recentjsonData),
-        // })
-        //   .then((response) => {
-        //     if (!response.ok) {
-        //       throw new Error("네트워크 응답이 옳지 않습니다.");
-        //       console.log("recentId: ", recentId);
-        //     }
-        //     return response.json();
-        //   })
-        //   .then((data) => {
-        //     console.log("성공적인 응답: ", data);
-        //     // 3. 받은 데이터를 이용하여 컴포넌트 생성하기
-        //     createComponent(data);
-        //   });
+        var recentjsonData = "{ 'subjectId': 10 }";
+        // fetch(`https://apict.pnu.app/subject/chapter/quiz/${recentId}`, {
+        fetch("https://apict.pnu.app/subject/chapter/quiz/10", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+              // console.log("recentId: ", recentId);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("성공적인 응답: ", data);
+            // 3. 받은 데이터를 이용하여 컴포넌트 생성하기
+            createComponent(data);
+          });
         createComponent(jsonData);
       });
 
