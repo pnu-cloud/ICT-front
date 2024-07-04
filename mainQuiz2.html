@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="kor">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>모두의 자율학습, MOZA</title>
+    <link rel="import" href="mainCourse.html" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+      header {
+        color: white;
+        border: 2px solid pink;
+      }
+      .tab {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        border: 2px solid red;
+        font-size: 60%;
+        float: right;
+        gap: 5%;
+        width: 20%;
+        height: auto;
+      }
+      .tab button {
+        border-radius: 20px;
+        background-color: transparent;
+        color: white;
+        height: 200%;
+        padding: 10px;
+      }
+      #subjectManage {
+        border: 1px solid white;
+        color: white;
+      }
+      #gradeStatic {
+        border: 1px solid grey;
+        color: grey;
+      }
+      #studyData {
+        border: 1px solid grey;
+        color: grey;
+      }
+      body {
+        padding: 3% 5%;
+        font-family: "Nanum Gothic";
+        font-weight: 400;
+        background-image: url("./assets/background-main.gif");
+        background-size: cover;
+      }
+      .quizTemplate {
+        /* border: 2px solid purple; */
+        border-radius: 20px;
+        height: 150%;
+        overflow: hidden;
+        background-color: #ebf5f9;
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        margin-bottom: 40px;
+      }
+
+      .quizNumber {
+        font-weight: 700;
+        /* border: 2px solid black; */
+        border-radius: 15px;
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        font-size: 150%;
+        width: 7%;
+        height: 70px;
+        float: left;
+        margin-top: 20px;
+        margin-left: 20px;
+        color: #1681ff;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .quizSpec {
+        /* border: 2px solid red; */
+        margin-top: 20px;
+        margin-left: 20px;
+        width: 75%;
+        float: left;
+        margin-bottom: 20px;
+      }
+      .quizQuest {
+        /* border: 2px solid green; */
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        width: auto;
+        border-radius: 10px;
+        font-size: 120%;
+        padding: 1.5%;
+        line-height: 130%;
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      .quizAnswer {
+        /* border: 2px solid blue; */
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        border: none;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 15px;
+        font-size: 120%;
+        padding: 1.2%;
+        line-height: 130%;
+        outline: none;
+        font-family: "Nanum Gothic";
+        background-color: (225, 225, 225, 0.8);
+      }
+
+      .ansJudge {
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        width: auto;
+        border-radius: 5px;
+        font-size: 120%;
+        padding: 1.5%;
+        line-height: 130%;
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      .quizSol {
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        width: auto;
+        border-radius: 5px;
+        font-size: 120%;
+        padding: 1.5%;
+        line-height: 130%;
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .quizButton {
+        /* border: 2px solid black; */
+        margin-top: 20px;
+        margin-right: 20px;
+        float: right;
+        justify-content: center;
+        text-align: right;
+        width: 11%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      button:active {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      button {
+        border-radius: 20px;
+        width: 100%;
+        height: 50px;
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        border: none;
+        font-size: 130%;
+        color: white;
+        background-color: #ff8b8be3;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+      #answerSubmit {
+        background-color: #ff8b8be3;
+      }
+      #showSolve {
+        background-color: #1683ffa4;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="quizHeader"></header>
+    <div id="quizContainer"></div>
+
+    <script>
+      const title = "mainCourse에서 받아올 제목";
+      const quizNumber = "NO.";
+      const quizExample = "API에서 넘어올 문제";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. 헤더 렌더링 하기
+        createHeader(title);
+        // 2. 서버에서 스토리지 젤 최근 subjectId 값 가지고 서버에서 json data 받기
+        // const recentId = localStorage.getItem("subjectId");
+        // if (recentId) {
+        //   console.log("subjectId: ", recentId);
+        // } else {
+        //   console.log("subjectId 다시 갖고 와.");
+        // }
+
+        // 아래는 테스트용 데이터임
+        var jsonData = {
+          problem: [
+            {
+              id: "234",
+              title: "알고리즘 개념",
+              question: "버블 정렬에 대해 자유롭게 서술하시오",
+            },
+            {
+              id: "238",
+              title: "알고리즘 개념",
+              question: "버블 정렬에 대해 자유롭게 서술하시오",
+            },
+            {
+              id: "239",
+              title: "자료구조",
+              question: "스택과 큐의 차이점을 설명하시오",
+            },
+            {
+              id: "240",
+              title: "자료구조",
+              question: "이진 트리의 특징을 설명하시오",
+            },
+            {
+              id: "241",
+              title: "네트워크",
+              question: "TCP와 UDP의 차이점을 설명하시오",
+            },
+            {
+              id: "242",
+              title: "운영체제",
+              question: "프로세스와 스레드의 차이점을 설명하시오",
+            },
+          ],
+        };
+
+        // var recentjsonData = "{ 'subjectId': " + recentId + " }";
+        // fetch(`https://apict.pnu.app/quiz/${recentId}`), {
+        fetch("https://apict.pnu.app/quiz/3"),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(recentjsonData),
+          }
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("네트워크 응답이 옳지 않습니다.");
+                console.log("recentId: ", recentId);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("성공적인 응답: ", data);
+              // 3. 받은 데이터를 이용하여 컴포넌트 생성하기
+              createComponent(data);
+            });
+        createComponent(jsonData);
+      });
+
+      function createHeader(subject) {
+        var header = document.createElement("header");
+
+        var logoImg = document.createElement("img");
+        logoImg.src = "./assets/MOZA.svg";
+        logoImg.style.width = "7%";
+        header.appendChild(logoImg);
+
+        var tabDiv = document.createElement("div");
+        tabDiv.classList.add("tab");
+
+        var subjectManageBtn = document.createElement("button");
+        subjectManageBtn.id = "subjectManage";
+        subjectManageBtn.textContent = "과목 관리";
+        tabDiv.appendChild(subjectManageBtn);
+
+        var gradeStaticBtn = document.createElement("button");
+        gradeStaticBtn.id = "gradeStatic";
+        gradeStaticBtn.textContent = "성적 통계";
+        tabDiv.appendChild(gradeStaticBtn);
+
+        var studyDataBtn = document.createElement("button");
+        studyDataBtn.id = "studyData";
+        studyDataBtn.textContent = "학습 데이터";
+        tabDiv.appendChild(studyDataBtn);
+
+        header.appendChild(tabDiv);
+
+        var infoDiv = document.createElement("div");
+        infoDiv.classList.add("info");
+
+        var subjectTitleDiv = document.createElement("div");
+        subjectTitleDiv.classList.add("subjectTitle");
+        var roundSquare1 = document.createElement("div");
+        subjectTitleDiv.appendChild(roundSquare1);
+        var subjectTitle = document.createElement("span");
+        subjectTitle.textContent = subject;
+        subjectTitleDiv.appendChild(subjectTitle);
+        infoDiv.appendChild(subjectTitleDiv);
+
+        var cheerPhraseSpan = document.createElement("span");
+        cheerPhraseSpan.classList.add("cheerPhrase");
+        cheerPhraseSpan.textContent = "중간고사까지 D-7🔥 할 수 있다!!";
+        infoDiv.appendChild(cheerPhraseSpan);
+
+        var progressGraphDiv = document.createElement("div");
+        progressGraphDiv.classList.add("progressGraph");
+        var progressSpan1 = document.createElement("span");
+        progressSpan1.textContent = "진도율";
+        progressGraphDiv.appendChild(progressSpan1);
+        var progressSpan2 = document.createElement("span");
+        progressSpan2.innerHTML = "진도율<br>그래프";
+        progressGraphDiv.appendChild(progressSpan2);
+        infoDiv.appendChild(progressGraphDiv);
+
+        var roundSquare2 = document.createElement("div");
+        // roundSquare2 속성 추가해주기
+        progressGraphDiv.appendChild(roundSquare2);
+
+        var studyPeriod = document.createElement("span");
+        studyPeriod.textContent = "학습 기간";
+        infoDiv.appendChild(studyPeriod);
+        var studyPeriod2 = document.createElement("span");
+        studyPeriod.textContent = "0000.00.00 ~ 0000.00.00";
+        infoDiv.appendChild(studyPeriod2);
+
+        header.appendChild(infoDiv);
+
+        document.body.insertBefore(header, document.body.firstChild);
+      }
+
+      function createComponent(data) {
+        var quizHeader = document.getElementById("quizHeader");
+        var quizIndex = 1;
+        data.problem.forEach(function (item) {
+          var quizTemplate = document.createElement("div");
+          quizTemplate.classList.add("quizTemplate");
+
+          var quizNumber = document.createElement("div");
+          quizNumber.classList.add("quizNumber");
+          quizNumber.textContent = quizIndex++;
+
+          var quizSpec = document.createElement("div");
+          quizSpec.classList.add("quizSpec");
+
+          var quizQuest = document.createElement("div");
+          quizQuest.classList.add("quizQuest");
+          quizQuest.textContent = item.question;
+
+          var quizAnswer = document.createElement("textarea");
+          quizAnswer.classList.add("quizAnswer");
+          quizAnswer.placeholder = "답변 입력 칸";
+
+          var quizButton = document.createElement("div");
+          quizButton.classList.add("quizButton");
+
+          var answerSubmit = document.createElement("button");
+          answerSubmit.setAttribute("id", "answerSubmit");
+          answerSubmit.textContent = "제출하기";
+          answerSubmit.addEventListener("click", function () {
+            var answerVal = quizAnswer.value;
+            var problemId = item.id;
+            var jsonData = "{ 'user_answer': " + answerVal + " }";
+            // var jsonData = {
+            //   user_answer: answerVal,
+            // };
+            fetch(`https://apict.pnu.app/problem/${jsonData.problemId}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("네트워크 응답이 옳지 않습니다.");
+                  console.log("problemId: ", problemId);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("성공적인 응답: ", data);
+                var ansJudge = document.createElement("div");
+                ansJudge.classList.add("ansJudge");
+                var judgeTF = JSON.stringfy(data.is_correct);
+                if (judgeTF == "true") {
+                  judgeTF = "정답입니다.";
+                } else {
+                  judgeTF = "오답입니다.";
+                }
+                ansJudge.textContent = judgeTF;
+                quizSpec.appendChild(ansJudge);
+              })
+              .catch((error) => {
+                console.error("실패한 응답: ", error);
+                console.log("problemId: ", problemId);
+              });
+          });
+
+          var showSolve = document.createElement("button");
+          showSolve.setAttribute("id", "showSolve");
+          showSolve.textContent = "풀이보기";
+          showSolve.addEventListener("click", function () {
+            var quizId = item.id;
+            var jsonData = "{ 'id': " + quizId + " }";
+            // var jsonData = {
+            //   id: quizId,
+            // };
+            fetch(`https://apict.pnu.app/solution/${jsonData.quizId}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("네트워크 응답이 옳지 않습니다.");
+                  console.log("quizId: ", quizId);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("성공적인 응답: ", data);
+                var quizSol = document.createElement("div");
+                quizSol.classList.add("quizSol");
+                quizSol.textContent = JSON.stringify(data);
+                quizSpec.appendChild(quizSol);
+              })
+              .catch((error) => {
+                console.error("실패한 응답: ", error);
+                console.log("quizId: ", quizId);
+              });
+          });
+
+          quizSpec.appendChild(quizQuest);
+          quizSpec.appendChild(quizAnswer);
+
+          quizButton.appendChild(answerSubmit);
+          quizButton.appendChild(showSolve);
+
+          quizTemplate.appendChild(quizNumber);
+          quizTemplate.appendChild(quizSpec);
+          quizTemplate.appendChild(quizButton);
+
+          quizContainer.appendChild(quizTemplate);
+        });
+      }
+    </script>
+  </body>
+</html>
