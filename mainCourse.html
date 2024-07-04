@@ -63,19 +63,21 @@
             margin-top: 2%;
             margin-bottom: 2%;
             border: 2px solid;
-            height: 100%;
-            overflow: hidden; /* 내부 요소가 넘칠 경우 숨기기 */
+            min-height:200px;
+            height: auto;
         }
         .block {
             background: #000000;
-            width: 80%;
-            height: auto;
+            width: 90%;
+            min-height: 150px;
             box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
             border-radius: 20px;
             color: white;
             padding: 1%;
             padding-left: 2%;
-            margin: 5%;
+            margin-top: 2%;
+            margin-left: 4.5%;
+            top : 0px;
             position: relative;
         }
         .correctionButton {
@@ -107,22 +109,23 @@
         }
         .quizBox {
             width: 48%;
-            height: auto;
+            height: 100px; /* 고정된 높이 설정 */
             background: #1681FF;
             border-radius: 20px;
             color: white;
             padding: 10px;
             position: absolute;
-            top: 20%;
+            top: 13px;
             right: 22%;
             transform: translate(50%, -50%);
+            overflow-y: auto; /* 수직 스크롤 추가 */
         }
         .quizTitle {
             background-color: white;
             color: black;
             padding: 1%;
             width: 30%;
-            top: 13%;
+            top: 100px;
             margin-top: 1%;
             margin-left: 5%;
         }
@@ -281,7 +284,7 @@
                 const chapter = newBlock.querySelector('.chapter').innerText;
                 const contents = Array.from(newBlock.querySelectorAll('.content-item label')).map(label => label.innerText.trim());
 
-                newQuiz.innerHTML = `<a href="${subjectName}${num}main.Quiz.html" target="_blank">Quiz ${num}</a>`;
+                newQuiz.innerHTML = `<a href="${subjectName}${num}mainQuiz.html" target="_blank">Quiz ${num}</a>`;
                 quizs.appendChild(newQuiz);
                 num++;
 
@@ -299,7 +302,7 @@
                 // JSON 파일 전송 (여기서는 다운로드 링크 생성)
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `${subjectName}${num}main.Quiz.json`;
+                link.download = `${subjectName}${num}mainQuiz.json`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
