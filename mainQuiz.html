@@ -151,17 +151,17 @@
         // 1. 헤더 렌더링 하기
         createHeader(title);
         // 2. 서버에서 스토리지 젤 최근 subjectId 값 가지고 서버에서 json data 받기
-        // const recentId = localStorage.getItem("subjectId");
-        // if (recentId) {
-        //   console.log("subjectId: ", recentId);
-        // } else {
-        //   console.log("subjectId 다시 갖고 와.");
-        // }
+        const recentId = localStorage.getItem("quiz_id");
+        if (recentId) {
+          console.log("quiz_id: ", recentId);
+        } else {
+          console.log("quiz_id 다시 갖고 와.");
+        }
 
-        // var recentjsonData = "{ 'subjectId': " + recentId + " }";
-        var recentjsonData = "{ 'subjectId': 10 }";
-        // fetch(`https://apict.pnu.app/subject/chapter/quiz/${recentId}`, {
-        fetch("https://apict.pnu.app/subject/chapter/quiz/10", {
+        var recentjsonData = "{ 'quiz_id': " + recentId + " }";
+        // var recentjsonData = "{ 'quiz_id': 12 }";
+        fetch(`https://apict.pnu.app/subject/chapter/quiz/${recentId}`, {
+          // fetch("https://apict.pnu.app/subject/chapter/quiz/12", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
