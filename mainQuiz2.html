@@ -52,6 +52,17 @@
       }
       .info {
         border: 1px solid red;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .subjectTitle {
+        border: 1px solid pink;
+        width: 30%;
+      }
+      .subjectTitle span {
+        border: 1px solid yellow;
+        display: inline;
       }
       #roundSquare1 {
         background-color: white;
@@ -305,12 +316,10 @@
 
         var subjectTitleDiv = document.createElement("div");
         subjectTitleDiv.classList.add("subjectTitle");
+        subjectTitleDiv.textContent = subject;
         var roundSquare1 = document.createElement("div");
         roundSquare1.setAttribute("id", "roundSquare1");
         subjectTitleDiv.appendChild(roundSquare1);
-        var subjectTitle = document.createElement("span");
-        subjectTitle.textContent = subject;
-        subjectTitleDiv.appendChild(subjectTitle);
         infoDiv.appendChild(subjectTitleDiv);
 
         var cheerPhraseSpan = document.createElement("span");
