@@ -146,19 +146,54 @@
       const quizExample = "API에서 넘어올 문제";
 
       document.addEventListener("DOMContentLoaded", function () {
-        var jsonData = [
-          {
-            id: "234",
-            title: "논리 회로와 설계",
-            question: "버블 정렬에 대해 자유롭게 서술하시오.",
-          },
-          {
-            id: "238",
-            title: "알고리즘 개념",
-            question: "버블 정렬에 대해 자유롭게 서술하시오.",
-          },
-        ];
+        // 1. 헤더 렌더링 하기
         createHeader(title);
+        // 2. 서버에서 스토리지 젤 최근 subjectId 값 가지고 서버에서 json data 받기
+        // const recentId = localStorage.getItem("subjectId");
+        // if (recentId) {
+        //   console.log("subjectId: ", recentId);
+        // } else {
+        //   console.log("subjectId 다시 갖고 와.");
+        // }
+
+        // 아래는 테스트용 데이터임
+        var jsonData = {
+          problem: [
+            {
+              id: "234",
+              title: "알고리즘 개념",
+              question: "버블 정렬에 대해 자유롭게 서술하시오",
+            },
+            {
+              id: "238",
+              title: "알고리즘 개념",
+              question: "버블 정렬에 대해 자유롭게 서술하시오",
+            },
+          ],
+        };
+
+        // var recentjsonData = {
+        //   subjectId: recentId,
+        // };
+        // fetch(`https://api.ict.pnu.app/quiz/${recentId})`, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(recentjsonData),
+        // })
+        //   .then((response) => {
+        //     if (!response.ok) {
+        //       throw new Error("네트워크 응답이 옳지 않습니다.");
+        //       console.log("recentId: ", recentId);
+        //     }
+        //     return response.json();
+        //   })
+        //   .then((data) => {
+        //     console.log("성공적인 응답: ", data);
+        //     // 3. 받은 데이터를 이용하여 컴포넌트 생성하기
+        //     createComponent(data);
+        //   });
         createComponent(jsonData);
       });
 
@@ -170,7 +205,7 @@
 
       function createComponent(data) {
         var quizHeader = document.getElementById("quizHeader");
-        data.forEach(function (item) {
+        data.problem.forEach(function (item) {
           var quizTemplate = document.createElement("div");
           quizTemplate.classList.add("quizTemplate");
 
@@ -197,9 +232,9 @@
           answerSubmit.textContent = "제출하기";
           answerSubmit.addEventListener("click", function () {
             var answerVal = quizAnswer.value;
+            var problemId = item.id;
             var jsonData = {
-              problemId: item.id,
-              answer: answerVal,
+              user_answer: answerVal,
             };
             fetch(`https://api.ict.pnu.app/problem/${jsonData.problemId}`, {
               method: "POST",
