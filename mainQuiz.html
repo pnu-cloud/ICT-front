@@ -208,7 +208,7 @@
 
           var quizQuest = document.createElement("div");
           quizQuest.classList.add("quizQuest");
-          quizQuest.textContent = item.question;
+          quizQuest.textContent = item.question.replace(/<br>/g, "<br>");
 
           var quizAnswer = document.createElement("textarea");
           quizAnswer.classList.add("quizAnswer");
