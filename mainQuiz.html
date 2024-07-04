@@ -8,26 +8,121 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
       header {
+        color: white;
         /* border: 2px solid pink; */
-        margin-bottom: 3%;
-        font-size: 200%;
-        font-family: "Nanum Gothic";
+        margin-bottom: 7%;
+      }
+      .first-line {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 35px;
+      }
+      #right {
+        visibility: hidden;
+      }
+      .tab {
+        display: flex;
+        justify-content: center;
+        /* border: 2px solid red; */
+        font-size: 60%;
+        gap: 5%;
+        width: 300px;
+        height: auto;
+      }
+      .tab button {
+        border-radius: 20px;
+        background-color: transparent;
+        color: white;
+        height: 50%;
+      }
+      #subjectManage {
+        border: 1px solid white;
+        color: white;
+      }
+      #gradeStatic {
+        border: 1px solid grey;
+        color: grey;
+      }
+      #studyData {
+        border: 1px solid grey;
+        color: grey;
+      }
+      .info {
+        /* border: 1px solid red; */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      #roundSquare1 {
+        background-color: white;
+        border: none;
+        border-radius: 0%;
+        width: 0.2px;
+        height: 40px;
+      }
+      .subjectTitle {
+        /* border: 1px solid pink; */
+        width: 20%;
+        font-size: 120%;
+        text-align: left;
+        margin-left: -5%;
+        padding-top: 0.4%;
         font-weight: 700;
       }
+      .cheerPhrase {
+        border: 1px solid white;
+        width: 20%;
+        text-align: center;
+        padding-top: 0.4%;
+        border-radius: 20px;
+        margin-left: -5%;
+        font-size: 100%;
+      }
+      .progressGraph {
+        border: 1px solid pink;
+        width: 20%;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .progressSpan1 {
+        font-size: 100%;
+        text-align: center;
+      }
+      .studyPeriod1 {
+        /* border: 1px solid white; */
+        font-size: 100%;
+        text-align: center;
+        padding-top: 0.4%;
+        font-weight: 700;
+      }
+      .studyPeriod2 {
+        /* border: 1px solid white; */
+        font-size: 100%;
+        text-align: center;
+        padding-top: 0.4%;
+      }
+
       body {
         padding: 3% 5%;
         font-family: "Nanum Gothic";
         font-weight: 400;
-        /* background-image: url("./assets/background-main.gif");
-        background-size: cover; */
+        background-image: url("./assets/background-main.gif");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
       }
       .quizTemplate {
         /* border: 2px solid purple; */
         border-radius: 20px;
         height: 150%;
         overflow: hidden;
-        background-color: #ebf5f9;
-        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
         margin-bottom: 40px;
       }
 
@@ -35,15 +130,15 @@
         font-weight: 700;
         /* border: 2px solid black; */
         border-radius: 15px;
-        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        /* box-shadow: 0px 4px 7.2px rgb(0, 0, 0, 0.25); */
         font-size: 150%;
         width: 7%;
-        height: 70px;
         float: left;
-        margin-top: 20px;
+        margin-top: 30px;
         margin-left: 20px;
-        color: #1681ff;
-        background-color: white;
+        color: white;
+        /* color: #1681ff; */
+        /* background-color: white; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,36 +146,40 @@
 
       .quizSpec {
         /* border: 2px solid red; */
-        margin-top: 20px;
+        margin-top: 33px;
         margin-left: 20px;
         width: 75%;
         float: left;
-        margin-bottom: 20px;
+        margin-bottom: 33px;
       }
       .quizQuest {
         /* border: 2px solid green; */
-        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        /* box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25); */
         width: auto;
         border-radius: 10px;
-        font-size: 120%;
-        padding: 1.5%;
+        font-size: 110%;
         line-height: 130%;
-        background-color: rgba(255, 255, 255, 0.8);
+        /* background-color: rgba(255, 255, 255, 0.8); */
       }
       .quizAnswer {
-        /* border: 2px solid blue; */
-        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+        border: 1px solid white;
+        /* box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25); */
         border-radius: 10px;
-        border: none;
-        width: 100%;
+        width: 90%;
         box-sizing: border-box;
-        margin-top: 15px;
-        font-size: 120%;
+        margin-top: 25px;
+        margin-left: 3px;
+        font-size: 110%;
         padding: 1.2%;
         line-height: 130%;
         outline: none;
         font-family: "Nanum Gothic";
-        background-color: (225, 225, 225, 0.8);
+        /* background-color: (225, 225, 225, 0.8); */
+        background-color: transparent;
+        color: white;
+      }
+      textarea::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.3);
       }
 
       .ansJudge {
@@ -104,26 +203,24 @@
 
       .quizButton {
         /* border: 2px solid black; */
-        margin-top: 20px;
-        margin-right: 20px;
-        float: right;
         justify-content: center;
-        text-align: right;
         width: 11%;
         display: flex;
         flex-direction: column;
         gap: 10px;
+        float: left;
+        margin-top: 75px;
       }
       button:active {
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
       }
       button {
-        border-radius: 20px;
+        border-radius: 15px;
         width: 100%;
-        height: 50px;
+        height: 30px;
         box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
         border: none;
-        font-size: 130%;
+        font-size: 90%;
         color: white;
         background-color: #ff8b8be3;
       }
@@ -131,15 +228,16 @@
         cursor: pointer;
       }
       #answerSubmit {
-        background-color: #ff8b8be3;
+        background-color: black;
       }
       #showSolve {
-        background-color: #1683ffa4;
+        border: 1px solid white;
+        background-color: transparent;
       }
     </style>
   </head>
   <body>
-    <div id="quizHeader"></div>
+    <header id="quizHeader"></header>
     <div id="quizContainer"></div>
 
     <script>
@@ -154,17 +252,51 @@
         const quizId = urlParams.get("id");
         console.log("quiz_id: ", quizId);
         // 2. 서버에서 스토리지 젤 최근 subjectId 값 가지고 서버에서 json data 받기
-        // const recentId = localStorage.getItem("quiz_id");
+        // const recentId = localStorage.getItem("subjectId");
         // if (recentId) {
-        //   console.log("quiz_id: ", recentId);
+        //   console.log("subjectId: ", recentId);
         // } else {
-        //   console.log("quiz_id 다시 갖고 와.");
+        //   console.log("subjectId 다시 갖고 와.");
         // }
 
+        // 아래는 테스트용 데이터임
+        // var jsonData = {
+        //   problem: [
+        //     {
+        //       id: "234",
+        //       title: "알고리즘 개념",
+        //       question: "버블 정렬에 대해 자유롭게 서술하시오",
+        //     },
+        //     {
+        //       id: "238",
+        //       title: "알고리즘 개념",
+        //       question: "버블 정렬에 대해 자유롭게 서술하시오",
+        //     },
+        //     {
+        //       id: "239",
+        //       title: "자료구조",
+        //       question: "스택과 큐의 차이점을 설명하시오",
+        //     },
+        //     {
+        //       id: "240",
+        //       title: "자료구조",
+        //       question: "이진 트리의 특징을 설명하시오",
+        //     },
+        //     {
+        //       id: "241",
+        //       title: "네트워크",
+        //       question: "TCP와 UDP의 차이점을 설명하시오",
+        //     },
+        //     {
+        //       id: "242",
+        //       title: "운영체제",
+        //       question: "프로세스와 스레드의 차이점을 설명하시오",
+        //     },
+        //   ],
+        // };
+
         var recentjsonData = "{ 'quiz_id': " + quizId + " }";
-        // var recentjsonData = "{ 'quiz_id': 12 }";
-        fetch(`https://apict.pnu.app/subject/chapter/quiz/${quizId}`, {
-          // fetch("https://apict.pnu.app/subject/chapter/quiz/12", {
+        fetch(`https://apict.pnu.app/quiz/${quizId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -174,7 +306,7 @@
           .then((response) => {
             if (!response.ok) {
               throw new Error("네트워크 응답이 옳지 않습니다.");
-              // console.log("recentId: ", recentId);
+              console.log("recentId: ", recentId);
             }
             return response.json();
           })
@@ -183,32 +315,110 @@
             // 3. 받은 데이터를 이용하여 컴포넌트 생성하기
             createComponent(data);
           });
-        createComponent(jsonData);
+        // createComponent(jsonData);
       });
 
       function createHeader(subject) {
         var header = document.createElement("header");
-        header.textContent = subject + " 시험지";
+
+        var first = document.createElement("div");
+        first.classList.add("first-line");
+        header.appendChild(first);
+
+        var logoImg = document.createElement("img");
+        logoImg.src = "./assets/blueLogo.png";
+        logoImg.style.width = "7%";
+        logoImg.setAttribute("id", "left");
+        first.appendChild(logoImg);
+
+        var tabDiv = document.createElement("div");
+        tabDiv.classList.add("tab");
+        first.appendChild(tabDiv);
+
+        var logoImg2 = document.createElement("img");
+        logoImg2.src = "./assets/blueLogo.png";
+        logoImg2.style.width = "7%";
+        logoImg2.setAttribute("id", "right");
+        first.appendChild(logoImg2);
+
+        var subjectManageBtn = document.createElement("button");
+        subjectManageBtn.id = "subjectManage";
+        subjectManageBtn.textContent = "과목 관리";
+        tabDiv.appendChild(subjectManageBtn);
+
+        var gradeStaticBtn = document.createElement("button");
+        gradeStaticBtn.id = "gradeStatic";
+        gradeStaticBtn.textContent = "성적 통계";
+        tabDiv.appendChild(gradeStaticBtn);
+
+        var studyDataBtn = document.createElement("button");
+        studyDataBtn.id = "studyData";
+        studyDataBtn.textContent = "학습 데이터";
+        tabDiv.appendChild(studyDataBtn);
+
+        var infoDiv = document.createElement("div");
+        infoDiv.classList.add("info");
+
+        var roundSquare1 = document.createElement("button");
+        roundSquare1.setAttribute("id", "roundSquare1");
+        infoDiv.appendChild(roundSquare1);
+        var subjectTitleDiv = document.createElement("div");
+        subjectTitleDiv.classList.add("subjectTitle");
+        subjectTitleDiv.textContent = subject;
+        infoDiv.appendChild(subjectTitleDiv);
+
+        var cheerPhraseSpan = document.createElement("span");
+        cheerPhraseSpan.classList.add("cheerPhrase");
+        cheerPhraseSpan.textContent = "중간고사까지 D-7🔥 할 수 있다!!";
+        infoDiv.appendChild(cheerPhraseSpan);
+
+        var progressGraphDiv = document.createElement("div");
+        progressGraphDiv.classList.add("progressGraph");
+        var progressSpan1 = document.createElement("div");
+        progressSpan1.classList.add("progressSpan2");
+        progressSpan1.textContent = "진도율";
+        progressGraphDiv.appendChild(progressSpan1);
+        var progressSpan2 = document.createElement("div");
+        progressSpan2.innerHTML = "진도율<br>그래프";
+        progressGraphDiv.appendChild(progressSpan2);
+        infoDiv.appendChild(progressGraphDiv);
+
+        var roundSquare2 = document.createElement("div");
+        roundSquare2.setAttribute("id", "roundSquare2");
+        // roundSquare2 속성 추가해주기
+        progressGraphDiv.appendChild(roundSquare2);
+
+        var studyPeriod1 = document.createElement("span");
+        studyPeriod1.classList.add("studyPeriod1");
+        studyPeriod1.textContent = "학습 기간";
+        infoDiv.appendChild(studyPeriod1);
+        var studyPeriod2 = document.createElement("span");
+        studyPeriod2.classList.add("studyPeriod2");
+        studyPeriod2.textContent = "0000.00.00 ~ 0000.00.00";
+        infoDiv.appendChild(studyPeriod2);
+
+        header.appendChild(infoDiv);
+
         document.body.insertBefore(header, document.body.firstChild);
       }
 
       function createComponent(data) {
         var quizHeader = document.getElementById("quizHeader");
         var quizIndex = 1;
-        data.problem.slice(0, 5).forEach(function (item) {
+        data.problem.forEach(function (item) {
           var quizTemplate = document.createElement("div");
           quizTemplate.classList.add("quizTemplate");
 
           var quizNumber = document.createElement("div");
           quizNumber.classList.add("quizNumber");
-          quizNumber.textContent = quizIndex++;
+          quizNumber.textContent = "Q" + quizIndex++ + ".";
 
           var quizSpec = document.createElement("div");
           quizSpec.classList.add("quizSpec");
 
           var quizQuest = document.createElement("div");
           quizQuest.classList.add("quizQuest");
-          quizQuest.textContent = item.question.replace(/<br>/g, "<br>");
+          quizQuest.textContent = item.question;
 
           var quizAnswer = document.createElement("textarea");
           quizAnswer.classList.add("quizAnswer");
@@ -287,8 +497,7 @@
                 console.log("성공적인 응답: ", data);
                 var quizSol = document.createElement("div");
                 quizSol.classList.add("quizSol");
-                var sol = JSON.stringify(data.solution);
-                quizSol.textContent = sol;
+                quizSol.textContent = JSON.stringify(data);
                 quizSpec.appendChild(quizSol);
               })
               .catch((error) => {
