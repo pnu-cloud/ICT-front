@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
+    <style>
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            padding-top: 50px;
+            text-align: center;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        input[type="email"]::placeholder, input[type="password"]::placeholder {
+            color: #aaa;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 10px;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        .options a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="loginForm">
+            <div>
+                <input type="email" id="email" name="email" placeholder="이메일" required>
+            </div>
+            <div>
+                <input type="password" id="password" name="password" placeholder="패스워드" required>
+            </div>
+            <button type="submit">로그인</button>
+        </form>
+        <div class="options">
+            <a href="/find-id">아이디 찾기</a>
+            <a href="/find-password">비밀번호 찾기</a>
+            <a href="/signup">회원가입</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const data = {
+                email: email,
+                pw: password
+            };
+
+            fetch('주소', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    window.location.href = 'index.html';
+                } else if (response.status === 401) {
+                    alert('잘못된 아이디 혹은 비밀번호입니다.');
+                } else {
+                    alert('로그인 중 오류가 발생했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('로그인 중 오류가 발생했습니다.');
+            });
+        });
+    </script>
+</body>
+</html>

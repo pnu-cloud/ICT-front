@@ -1,9 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Block</title>
+    <style>
+        .subject-block {
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            position: relative;
+            cursor: pointer;
+        }
+        .progress-bar-container {
+            width: 80%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px auto;
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 30%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+        }
+        .progress-text {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-weight: bold;
+        }
+        #add-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="subject-block" onclick="location.href='mainCourse.html'">
+        <h2>R을 통한 통계학 이론</h2>
+        <p>아자아자 화이팅! 중간고사까지 D-7🔥</p>
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+            <div class="progress-text">30%</div>
+        </div>
+    </div>
+    
+    <a id="add-button" href="javascript:void(0)" onclick="addSubjectBlock()">과목 추가</a>
+
+    <script>
+        function addSubjectBlock() {
+            const subjectBlock = document.createElement('div');
+            subjectBlock.className = 'subject-block';
+            subjectBlock.onclick = function() {
+                location.href = 'mainCourse.html';
+            };
+            subjectBlock.innerHTML = `
+                <h2>새로운 과목</h2>
+                <p>새로운 설명</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 0%;"></div>
+                    <div class="progress-text">0%</div>
+                </div>
+            `;
+            document.body.insertBefore(subjectBlock, document.getElementById('add-button'));
+        }
+    </script>
+</body>
 </html>
