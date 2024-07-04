@@ -5,33 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모두의 자율학습, MOZA</title>
     <style>
-        header{
-            background-color: red;
-            height: 20%;
-            margin-bottom: 3%;
+        body {
+            padding: 7%;
         }
-        body{
-            padding: 70%, 10%;
+        header {
+            background-color: #1681FF;
+            padding: 5%;
+            margin-bottom: 3%;
+            border-bottom: 2px solid;
+            font-size: 150%;
+        }
+        .container {
+            position: relative;
+            margin-bottom: 10%;
+            border: 2px solid;
+
         }
         .block {
             background: #000000;
             width: 80%;
-            height: 50px;
-
-            /* top: 231px; */
+            height: auto;
             box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
             border-radius: 20px;
-
             color: white;
-            padding : 5%;
+            padding: 5%;
             margin: 5%;
-
+            position: relative;
+        }
+        .quizBox {
+            width: 50%;
+            height: auto;
+            background: #1681FF;
+            border-radius: 20px;
+            color: white;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            right: 22%;
+            transform: translate(50%, -50%);
         }
     </style>
 </head>
 <body>
     <header>
-        d
+        논리 회로와 설계
     </header>
 
     <button id="addBlockButton">+</button>
@@ -41,8 +58,16 @@
         document.getElementById('addBlockButton').addEventListener('click', function() {
             const container = document.getElementById('blocksContainer');
             const newBlock = document.createElement('div');
-            newBlock.className = 'block';
-            newBlock.innerHTML = '<div><div><p style = "color : red">안녕<p></div></div>';
+            newBlock.className = 'container';
+            newBlock.innerHTML = `
+                <div class="block">
+                    <p>pdf</p>
+                    
+                    <div class="quizBox">
+                        <p>quiz</p>
+                    </div>
+                </div>
+            `;
             container.appendChild(newBlock);
         });
     </script>
