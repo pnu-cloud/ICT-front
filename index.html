@@ -100,8 +100,9 @@
                     console.log(item);
                     const subjectBlock = document.createElement('div');
                     subjectBlock.className = 'subject-block';
+                    console.log(item.id);
                     subjectBlock.onclick = function() {
-                        location.href = 'mainCourse.html';
+                        location.href = `mainCourse.html?id=${item.id}`;
                     };
                     subjectBlock.innerHTML = `
                         <h2>${item.title}</h2>
@@ -130,9 +131,7 @@
             
             const subjectBlock = document.createElement('div');
             subjectBlock.className = 'subject-block';
-            subjectBlock.onclick = function() {
-                location.href = 'mainCourse.html';
-            };
+            
             subjectBlock.innerHTML = `
                 <h2>${title}</h2>
                 <p>${text}</p>
@@ -160,6 +159,10 @@
                 if (data.id) { // 서버 응답으로 받은 과목 ID가 있을 경우
                     subjectBlock.querySelector('h2').textContent = data.title;
                     subjectBlock.querySelector('p').textContent = data.text;
+
+                    subjectBlock.onclick = function() {
+                        location.href = `mainCourse.html?id=${data.id}`;
+                    };
                 }
             } catch (error) {
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
