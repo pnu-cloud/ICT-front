@@ -5,29 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모두의 자율학습, MOZA</title>
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+        * {
+            font-family: "Nanum Gothic";
+        }
         body {
-            padding: 7%;
+            padding: 3%;
+            font-weight: 700;
+            height : 100%
         }
         header {
-            padding: 5%;
+            padding: 1%;
             margin-bottom: 3%;
+            background-color: #1681FF;
             border-bottom: 2px solid #1681FF;
-            font-size: 150%;
+            font-size: 200%;
+            margin-bottom: 1%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        #addBlockButton{
+        #addBlockButton {
             background-color: #FF9595;
-            width : 10%;
+            width: 10%;
             font-size: 150%;
             border-radius: 4px;
             border-color: transparent;
-
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+        .chapter {
+            background-color: white;
+            color: #000000;
+            width: 50%;
+            font-size: 120%;
+            border-radius: 4px;
+            border-color: transparent;
+            margin-top: 1%;
+            top: 0;
+            padding: 1%;
+            text-align: left;
+        }
+        .contents {
+            margin-top: 1%;
+            margin-bottom: 3%;
+            margin-left: 3%;
+            background-color: white;
+            color: #000000;
+            width: 35%;
+            font-size: 100%;
+            border-color: transparent;
+            top: 0;
+            padding: 1%;
         }
         .container {
             position: relative;
-            margin-top: 5%;
-            margin-bottom: 5%;
+            margin-top: 2%;
+            margin-bottom: 2%;
             border: 2px solid;
-
+            height: 100%;
+            overflow: hidden; /* 내부 요소가 넘칠 경우 숨기기 */
         }
         .block {
             background: #000000;
@@ -36,47 +73,239 @@
             box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
             border-radius: 20px;
             color: white;
-            padding: 5%;
+            padding: 1%;
+            padding-left: 2%;
             margin: 5%;
             position: relative;
         }
+        .correctionButton {
+            width: 5%;
+            height: auto;
+            background: #FF9595;
+            border-radius: 4px;
+            color: white;
+            padding: 1%;
+            position: absolute;
+            top: 60%;
+            left: 40%;
+            transform: translate(50%, -50%);
+            text-align: center;
+        }
+        .deleteButton {
+            width: 5%;
+            height: auto;
+            background: #FF9595;
+            border-radius: 4px;
+            color: white;
+            padding: 1%;
+            position: absolute;
+            top: 80%;
+            left: 40%;
+            transform: translate(50%, -50%);
+            text-align: center;
+            cursor: pointer;
+        }
         .quizBox {
-            width: 50%;
+            width: 48%;
             height: auto;
             background: #1681FF;
             border-radius: 20px;
             color: white;
             padding: 10px;
             position: absolute;
-            top: 0;
+            top: 20%;
             right: 22%;
             transform: translate(50%, -50%);
+        }
+        .quizTitle {
+            background-color: white;
+            color: black;
+            padding: 1%;
+            width: 30%;
+            top: 13%;
+            margin-top: 1%;
+            margin-left: 5%;
+        }
+        .quizs {
+            background-color: white;
+            color: black;
+            padding: 1%;
+            width: 30%;
+            top: 30%;
+        }
+        .quizBoxDeco {
+            position: absolute;
+            width: 0.8%;
+            height: 80%;
+            right: 5%;
+            top: 13%;
+            background: #000000;
+            border-radius: 78px;
+            z-index: 4;
+            color: transparent;
+        }
+        .add-quiz {
+            background-color: #FF9595;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        논리 회로와 설계
+        <span class="subjectName" contenteditable="false">논리 회로와 설계</span>
+        <button id="editSubjectButton">과목 수정</button>
     </header>
 
     <button id="addBlockButton">+</button>
     <div id="blocksContainer"></div>
 
     <script>
-        document.getElementById('addBlockButton').addEventListener('click', function() {
+        let num = 1;
+
+        document.getElementById('editSubjectButton').addEventListener('click', function() {
+            const subjectName = document.querySelector('.subjectName');
+            if (subjectName.contentEditable === "false") {
+                subjectName.contentEditable = "true";
+                subjectName.focus();
+                this.innerText = "저장";
+            } else {
+                subjectName.contentEditable = "false";
+                this.innerText = "과목 수정";
+            }
+        });
+
+        document.getElementById('addBlockButton').addEventListener('click', function () {
             const container = document.getElementById('blocksContainer');
             const newBlock = document.createElement('div');
             newBlock.className = 'container';
             newBlock.innerHTML = `
                 <div class="block">
-                    <p>pdf</p>
-                    
-                    <div class="quizBox">
-                        <p>quiz</p>
+                    <div class="chapter" contenteditable="false">챕터명을 추가하세요</div>
+                    <div class="contents" contenteditable="false">
+                        <div class="content-item"><label><input type="checkbox" name="content1" value="option1">목차를 추가하세요.</label><button class="delete-content" style="display:none;">X</button></div>
                     </div>
+                    <div class="correctionButton">수정</div>
+                    <div class="deleteButton">삭제</div>
+                    <div class="quizBox">
+                        <div class="quizTitle">QUIZ</div>
+                        <div class="quizs"></div>
+                        <div class="quizBoxDeco">.</div>
+                        <button class="add-quiz">문제 추가</button>
+                    </div>
+                    <button class="add-content" style="display:none;">+ 추가</button>
                 </div>
             `;
             container.appendChild(newBlock);
+
+            // 삭제 버튼 이벤트 리스너 추가
+            newBlock.querySelector('.deleteButton').addEventListener('click', function () {
+                if (confirm('삭제하시겠습니까?')) {
+                    newBlock.remove();
+                }
+            });
+
+            // 수정 버튼 이벤트 리스너 추가
+            newBlock.querySelector('.correctionButton').addEventListener('click', function () {
+                const chapter = newBlock.querySelector('.chapter');
+                const contents = newBlock.querySelector('.contents');
+                const addContentButton = newBlock.querySelector('.add-content');
+                const deleteContentButtons = newBlock.querySelectorAll('.delete-content');
+
+                if (contents.getAttribute('data-editable') === "false" || contents.getAttribute('data-editable') === null) {
+                    chapter.contentEditable = "true";
+                    contents.setAttribute('data-editable', 'true');
+                    addContentButton.style.display = "inline-block";
+                    deleteContentButtons.forEach(button => button.style.display = "inline-block");
+
+                    // Make only text content editable
+                    contents.querySelectorAll('.content-item').forEach(item => {
+                        item.querySelectorAll('label').forEach(label => {
+                            const textNode = document.createTextNode(label.innerText);
+                            label.innerHTML = '';
+                            label.appendChild(textNode);
+                        });
+                        item.contentEditable = "true";
+                    });
+
+                    this.innerText = "저장";
+                } else {
+                    chapter.contentEditable = "false";
+                    contents.setAttribute('data-editable', 'false');
+                    addContentButton.style.display = "none";
+                    deleteContentButtons.forEach(button => button.style.display = "none");
+
+                    // Disable text content editing
+                    contents.querySelectorAll('.content-item').forEach(item => {
+                        item.querySelectorAll('label').forEach(label => {
+                            const text = label.innerText;
+                            label.innerHTML = `<input type="checkbox"> ${text}`;
+                        });
+                        item.contentEditable = "false";
+                    });
+
+                    this.innerText = "수정";
+                }
+            });
+
+            // 추가 버튼 이벤트 리스너 추가
+            newBlock.querySelector('.add-content').addEventListener('click', function () {
+                const contents = newBlock.querySelector('.contents');
+                const newContent = document.createElement('div');
+                newContent.className = 'content-item';
+                newContent.innerHTML = `<label><input type="checkbox" name="content-new" value="new"> 새로운 체크박스</label><button class="delete-content">X</button>`;
+                contents.appendChild(newContent);
+
+                // 개별 삭제 버튼 이벤트 리스너 추가
+                newContent.querySelector('.delete-content').addEventListener('click', function () {
+                    newContent.remove();
+                });
+            });
+
+            // 초기 삭제 버튼 이벤트 리스너 추가
+            newBlock.querySelectorAll('.delete-content').forEach(button => {
+                button.addEventListener('click', function () {
+                    button.parentElement.remove();
+                });
+            });
+
+            // 문제 추가 버튼 이벤트 리스너 추가
+            newBlock.querySelector('.add-quiz').addEventListener('click', function () {
+                const quizs = newBlock.querySelector('.quizs');
+                const newQuiz = document.createElement('div');
+                const subjectName = document.querySelector('.subjectName').innerText;
+                const chapter = newBlock.querySelector('.chapter').innerText;
+                const contents = Array.from(newBlock.querySelectorAll('.content-item label')).map(label => label.innerText.trim());
+
+                newQuiz.innerHTML = `<a href="${subjectName}${num}main.Quiz.html" target="_blank">Quiz ${num}</a>`;
+                quizs.appendChild(newQuiz);
+                num++;
+
+                // JSON 파일 생성
+                const data = {
+                    subjectId : 0,
+                    subjectName: subjectName,
+                    chapter: chapter,
+                    contents: contents
+                };
+
+                const jsonBlob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(jsonBlob);
+                
+                // JSON 파일 전송 (여기서는 다운로드 링크 생성)
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${subjectName}${num}main.Quiz.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            });
+
         });
     </script>
 </body>
