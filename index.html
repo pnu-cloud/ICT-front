@@ -88,16 +88,14 @@
     </form>
     
     <script>
-        try {
-            const response = fetch('https://apict.pnu.app/dev/login');
-        } catch (error) {
-            console.error('로그인 실패', error);
-        }
+        //로그인
+        fetch('https://apict.pnu.app/dev/login', {
+            credentials: 'include'
+          })
         
-      document.addEventListener('DOMContentLoaded', async () => {
-        
+        document.addEventListener('DOMContentLoaded', async () => {
         try {
-            const response = await fetch(' https://apict.pnu.app/subject');
+            const response = await fetch(' https://apict.pnu.app/subject', {credentials: 'include'});
             const data = await response.json();
     
             data.subject.forEach(item => {
@@ -153,7 +151,8 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ title, text })
+                    body: JSON.stringify({ title, text }),
+                    credentials: 'include'
                 });
         
                 const data = await response.json();
