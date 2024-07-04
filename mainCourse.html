@@ -223,7 +223,9 @@
                     chapter.contentEditable = "true";
                     contents.setAttribute('data-editable', 'true');
                     addContentButton.style.display = "inline-block";
-                    deleteContentButtons.forEach(button => button.style.display = "inline-block");
+                    deleteContentButtons.forEach(button => {
+                        button.style.display = "inline-block";  // Ensure buttons are visible in edit mode
+                    });
 
                     // Make only text content editable
                     contents.querySelectorAll('.content-item').forEach(item => {
@@ -240,7 +242,9 @@
                     chapter.contentEditable = "false";
                     contents.setAttribute('data-editable', 'false');
                     addContentButton.style.display = "none";
-                    deleteContentButtons.forEach(button => button.style.display = "none");
+                    deleteContentButtons.forEach(button => {
+                        button.style.display = "none";  // Hide buttons when not in edit mode
+                    });
 
                     // Disable text content editing
                     contents.querySelectorAll('.content-item').forEach(item => {
@@ -260,21 +264,39 @@
                 const contents = newBlock.querySelector('.contents');
                 const newContent = document.createElement('div');
                 newContent.className = 'content-item';
-                newContent.innerHTML = `<label><input type="checkbox" name="content-new" value="new"> 새로운 체크박스</label><button class="delete-content">X</button>`;
+                newContent.innerHTML = `<label><input type="checkbox" name="content-new" value="new"> <span contenteditable='true'> </span></label><button class="delete-content" style="display: inline-block;">X</button>`;
                 contents.appendChild(newContent);
 
                 // 개별 삭제 버튼 이벤트 리스너 추가
                 newContent.querySelector('.delete-content').addEventListener('click', function () {
                     newContent.remove();
                 });
-            });
 
+                // 더블 클릭으로 아이템 제거 추가
+                newContent.addEventListener('dblclick', function () {
+                    // 사용자에게 삭제 확인 요청
+                    if (confirm('이 항목을 삭제하시겠습니까?')) {
+                        newContent.remove();
+                    }
+                });
+                newContent.querySelector('span').focus();
+            });
             // 초기 삭제 버튼 이벤트 리스너 추가
             newBlock.querySelectorAll('.delete-content').forEach(button => {
+                // 일반 클릭 이벤트
                 button.addEventListener('click', function () {
                     button.parentElement.remove();
                 });
+
+                // 더블 클릭 이벤트를 부모 요소에 추가
+                button.parentElement.addEventListener('dblclick', function () {
+                    // 사용자에게 삭제를 확인
+                    if (confirm('이 항목을 삭제하시겠습니까?')) {
+                        this.remove(); // this는 클릭된 요소의 부모 요소를 참조
+                    }
+                });
             });
+
 
             // 문제 추가 버튼 이벤트 리스너 추가
             newBlock.querySelector('.add-quiz').addEventListener('click', function () {
@@ -284,7 +306,8 @@
                 const chapter = newBlock.querySelector('.chapter').innerText;
                 const contents = Array.from(newBlock.querySelectorAll('.content-item label')).map(label => label.innerText.trim());
 
-                newQuiz.innerHTML = `<a href="${subjectName}${num}mainQuiz.html" target="_blank">Quiz ${num}</a>`;
+                //newQuiz.innerHTML = `<a href="${subjectName}${num}mainQuiz.html" target="_blank">Quiz ${num}</a>`;
+                newQuiz.innerHTML = `<a href="mainQuiz.html" target="_blank">Quiz ${num}</a>`;
                 quizs.appendChild(newQuiz);
                 num++;
 
