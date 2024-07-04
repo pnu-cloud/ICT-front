@@ -172,9 +172,7 @@
           ],
         };
 
-        // var recentjsonData = {
-        //   subjectId: recentId,
-        // };
+        // var recentjsonData = "{ 'subjectId': " + recentId + " }";
         // fetch(`https://apiict.pnu.app/quiz/${recentId})`, {
         //   method: "POST",
         //   headers: {
@@ -233,9 +231,10 @@
           answerSubmit.addEventListener("click", function () {
             var answerVal = quizAnswer.value;
             var problemId = item.id;
-            var jsonData = {
-              user_answer: answerVal,
-            };
+            var jsonData = "{ 'user_answer': " + answerVal + " }";
+            // var jsonData = {
+            //   user_answer: answerVal,
+            // };
             fetch(`https://apiict.pnu.app/problem/${jsonData.problemId}`, {
               method: "POST",
               headers: {
@@ -274,9 +273,10 @@
           showSolve.textContent = "풀이보기";
           showSolve.addEventListener("click", function () {
             var quizId = item.id;
-            var jsonData = {
-              id: quizId,
-            };
+            var jsonData = "{ 'id': " + quizId + " }";
+            // var jsonData = {
+            //   id: quizId,
+            // };
             fetch(`https://apiict.pnu.app/solution/${jsonData.quizId}`, {
               method: "POST",
               headers: {
