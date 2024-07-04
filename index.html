@@ -91,37 +91,42 @@
         //로그인
         fetch('https://apict.pnu.app/dev/login', {
             credentials: 'include'
-          })
+        })
         
         document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const response = await fetch(' https://apict.pnu.app/subject', {credentials: 'include'});
-            const data = await response.json();
-    
-            data.subject.forEach(item => {
-                const subjectBlock = document.createElement('div');
-                subjectBlock.className = 'subject-block';
-                subjectBlock.onclick = function() {
-                    location.href = 'mainCourse.html';
-                };
-                subjectBlock.innerHTML = `
-                    <h2>${item.title}</h2>
-                    <p>${item.text}</p>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 30%;"></div> 
-                        <div class="progress-text">30%</div> 
-                    </div>
-                `;
-                document.body.appendChild(subjectBlock);
-            });
-        } catch (error) {
-            console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
-        }
+            try {
+                const response = await fetch('https://apict.pnu.app/subject',{
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log(data.subject);
+        
+                data.subject.forEach(item => {
+                    console.log(item);
+                    const subjectBlock = document.createElement('div');
+                    subjectBlock.className = 'subject-block';
+                    subjectBlock.onclick = function() {
+                        location.href = 'mainCourse.html';
+                    };
+                    subjectBlock.innerHTML = `
+                        <h2>${item.title}</h2>
+                        <p>${item.text}</p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 0%;"></div> 
+                            <div class="progress-text">0%</div>
+                        </div>
+                    `;
+                    document.body.appendChild(subjectBlock);
+                });
+            } catch (error) {
+                console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
+            }
+        });
 
-    });
         function showForm() {
             document.getElementById('subject-form').style.display = 'block';
         }
+        
 
         async function submitForm(event) {
             event.preventDefault();
