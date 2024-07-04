@@ -1,48 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kor">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>모두의 자율학습, MOZA</title>
     <link rel="import" href="mainCourse.html" />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
       header {
-        border: 2px solid pink;
-        margin-bottom: 3%;
+        /* border: 2px solid pink; */
+        margin-bottom: 5%;
         font-size: 150%;
+        font-family: "Nanum Gothic";
+        font-weight: 700;
       }
       body {
-        padding: 7% 10%;
+        padding: 5% 5%;
+        font-family: "Nanum Gothic";
+        font-weight: 400;
       }
       .quizTemplate {
-        border: 2px solid;
+        /* border: 2px solid purple; */
+        border-radius: 20px;
+        height: 150%;
+        overflow: hidden;
+        background-color: #EBF5F9;
+        box-shadow: 0px 4px 7.2px rgba(0,0,0,0.25);
       }
+
       .quizNumber {
-        border: 2px solid black;
+        font-weight: 700;
+        /* border: 2px solid black; */
+        border-radius: 15px;
+        box-shadow: 0px 4px 7.2px rgba(0,0,0,0.25);
+        font-size: 150%;
+        width: 7%;
+        height: 70px;
         float: left;
+        margin-top: 20px;
+        margin-left: 20px;
+        color: #1681FF;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+
       .quizSpec {
-        border: 2px solid red;
-        float: right;
+        /* border: 2px solid red; */
+        margin-top: 20px;
+        margin-left: 20px;
+        width: 75%;
+        float: left;
+        margin-bottom: 20px;
       }
       .quizQuest {
-        border: 2px solid green;
+        /* border: 2px solid green; */
+        box-shadow: 0px 4px 7.2px rgba(0,0,0,0.25);
+        width: auto;
+        border-radius: 5px;
+        font-size: 120%;
+        padding: 1.5%;
       }
       .quizAnswer {
-        border: 2px solid blue;
+        /* border: 2px solid blue; */
+        box-shadow: 0px 4px 7.2px rgba(0,0,0,0.25);
+        border-radius: 5px;
+        border: none;
+        width: auto;
+        margin-top: 10px;
+        font-size: 120%;
+        padding: 1.2%;
+      }
+
+      .quizButton {
+        border: 2px solid black;
+        margin-top: 20px;
+        margin-right: 20px;
+        float: right;
+        justify-content: center;
+        text-align: right;
+        width: 10%;
+      }
+      button {
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      button #answerSubmit {
       }
     </style>
   </head>
   <body>
     <header>mainCourse에서 넘어온 과목 정보</header>
+    <div id="quizContainer"></div>
+
     <div class="quizTemplate">
-      <div class="quizNumber">API에서 넘어온 문제 번호</div>
+      <div class="quizNumber">11</div>
+      <!-- <div class="quizNumber">API에서 넘어온 문제 번호</div> -->
       <div class="quizSpec">
         <div class="quizQuest">API에서 넘어온 문제</div>
-        <div class="quizAnswer">답변 입력 칸</div>
+        <input class="quizAnswer" id="quizAnswer" placeholder="답변 입력 칸"></input>
+      </div>
+      <div class="quizButton">
+        <button id="answerSubmit">제출하기</button>
+        <button id="showSolve">풀이보기</button>
       </div>
     </div>
 
-    <script></script>
+    <script>
+      // async function fetchQuizData(prompt)
+    </script>
   </body>
 </html>
