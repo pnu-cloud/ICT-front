@@ -150,17 +150,20 @@
       document.addEventListener("DOMContentLoaded", function () {
         // 1. 헤더 렌더링 하기
         createHeader(title);
+        const urlParams = new URLSearchParams(window.location.search);
+        const quizId = urlParams.get("id");
+        console.log("quiz_id: ", quizId);
         // 2. 서버에서 스토리지 젤 최근 subjectId 값 가지고 서버에서 json data 받기
-        const recentId = localStorage.getItem("quiz_id");
-        if (recentId) {
-          console.log("quiz_id: ", recentId);
-        } else {
-          console.log("quiz_id 다시 갖고 와.");
-        }
+        // const recentId = localStorage.getItem("quiz_id");
+        // if (recentId) {
+        //   console.log("quiz_id: ", recentId);
+        // } else {
+        //   console.log("quiz_id 다시 갖고 와.");
+        // }
 
-        var recentjsonData = "{ 'quiz_id': " + recentId + " }";
+        var recentjsonData = "{ 'quiz_id': " + quizId + " }";
         // var recentjsonData = "{ 'quiz_id': 12 }";
-        fetch(`https://apict.pnu.app/subject/chapter/quiz/${recentId}`, {
+        fetch(`https://apict.pnu.app/subject/chapter/quiz/${quizId}`, {
           // fetch("https://apict.pnu.app/subject/chapter/quiz/12", {
           method: "GET",
           headers: {
@@ -284,7 +287,8 @@
                 console.log("성공적인 응답: ", data);
                 var quizSol = document.createElement("div");
                 quizSol.classList.add("quizSol");
-                quizSol.textContent = JSON.stringify(data);
+                var sol = JSON.stringify(data.solution);
+                quizSol.textContent = sol;
                 quizSpec.appendChild(quizSol);
               })
               .catch((error) => {
