@@ -53,6 +53,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
       }
       #roundSquare1 {
         background-color: white;
@@ -67,40 +68,45 @@
         font-size: 120%;
         text-align: left;
         margin-left: -5%;
-        padding-top: 0.4%;
         font-weight: 700;
       }
       .cheerPhrase {
         border: 1px solid white;
         width: 20%;
         text-align: center;
-        padding-top: 0.4%;
         border-radius: 20px;
         margin-left: -5%;
         font-size: 100%;
+        padding: 0.5%;
       }
       .progressGraph {
-        border: 1px solid pink;
+        /* border: 1px solid pink; */
         width: 20%;
         height: auto;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        margin-left: 5%;
       }
       .progressSpan1 {
         font-size: 100%;
         text-align: center;
+        font-weight: 700;
       }
       .progress-circle {
+        border: none;
         width: 100px;
         height: 100px;
         background-color: #fff;
         border-radius: 50%;
-        border: 5px solid #000;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #0c6dff;
+        font-weight: 700;
       }
 
       .progress-circle::before {
@@ -112,8 +118,8 @@
         height: 100%;
         border-radius: 50%;
         background: conic-gradient(
-          #4caf50 calc(var(--progress) * 1%),
-          #ddd calc(var(--progress) * 1%)
+          white calc(var(--progress) * 1%),
+          rgb(163, 163, 163) calc(var(--progress) * 1%)
         );
         z-index: 1;
       }
@@ -121,20 +127,19 @@
       .progress-circle span {
         position: relative;
         z-index: 2;
-        font-size: 24px;
+        font-size: 16px;
       }
       .studyPeriod1 {
         /* border: 1px solid white; */
         font-size: 100%;
         text-align: center;
-        padding-top: 0.4%;
         font-weight: 700;
       }
       .studyPeriod2 {
         /* border: 1px solid white; */
+        margin-left: -2%;
         font-size: 100%;
         text-align: center;
-        padding-top: 0.4%;
       }
 
       body {
@@ -411,6 +416,7 @@
         progressSpan1.textContent = "진도율";
         progressGraphDiv.appendChild(progressSpan1);
         var progressSpan2 = document.createElement("div");
+        var progressValue = 70;
         progressSpan2.innerHTML = `
           <div class="progress-circle" id="progressCircle" style="--progress: ${progressValue};">
             <span id="progressText">${progressValue}%</span>
