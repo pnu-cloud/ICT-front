@@ -9,15 +9,17 @@
       @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
       header {
         /* border: 2px solid pink; */
-        margin-bottom: 5%;
-        font-size: 150%;
+        margin-bottom: 3%;
+        font-size: 200%;
         font-family: "Nanum Gothic";
         font-weight: 700;
       }
       body {
-        padding: 5% 5%;
+        padding: 3% 5%;
         font-family: "Nanum Gothic";
         font-weight: 400;
+        background-image: url("./assets/background-main.gif");
+        background-size: cover;
       }
       .quizTemplate {
         /* border: 2px solid purple; */
@@ -59,7 +61,7 @@
         /* border: 2px solid green; */
         box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
         width: auto;
-        border-radius: 5px;
+        border-radius: 10px;
         font-size: 120%;
         padding: 1.5%;
         line-height: 130%;
@@ -68,7 +70,7 @@
       .quizAnswer {
         /* border: 2px solid blue; */
         box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
-        border-radius: 5px;
+        border-radius: 10px;
         border: none;
         width: 100%;
         box-sizing: border-box;
@@ -169,13 +171,31 @@
               title: "알고리즘 개념",
               question: "버블 정렬에 대해 자유롭게 서술하시오",
             },
+            {
+              id: "239",
+              title: "자료구조",
+              question: "스택과 큐의 차이점을 설명하시오",
+            },
+            {
+              id: "240",
+              title: "자료구조",
+              question: "이진 트리의 특징을 설명하시오",
+            },
+            {
+              id: "241",
+              title: "네트워크",
+              question: "TCP와 UDP의 차이점을 설명하시오",
+            },
+            {
+              id: "242",
+              title: "운영체제",
+              question: "프로세스와 스레드의 차이점을 설명하시오",
+            },
           ],
         };
 
-        // var recentjsonData = {
-        //   subjectId: recentId,
-        // };
-        // fetch(`https://api.ict.pnu.app/quiz/${recentId})`, {
+        // var recentjsonData = "{ 'subjectId': " + recentId + " }";
+        // fetch(`https://apict.pnu.app/quiz/${recentId})`, {
         //   method: "POST",
         //   headers: {
         //     "Content-Type": "application/json",
@@ -205,13 +225,14 @@
 
       function createComponent(data) {
         var quizHeader = document.getElementById("quizHeader");
-        data.problem.forEach(function (item) {
+        var quizIndex = 1;
+        data.problem.slice(0, 5).forEach(function (item) {
           var quizTemplate = document.createElement("div");
           quizTemplate.classList.add("quizTemplate");
 
           var quizNumber = document.createElement("div");
           quizNumber.classList.add("quizNumber");
-          quizNumber.textContent = item.id;
+          quizNumber.textContent = quizIndex++;
 
           var quizSpec = document.createElement("div");
           quizSpec.classList.add("quizSpec");
@@ -233,10 +254,11 @@
           answerSubmit.addEventListener("click", function () {
             var answerVal = quizAnswer.value;
             var problemId = item.id;
-            var jsonData = {
-              user_answer: answerVal,
-            };
-            fetch(`https://api.ict.pnu.app/problem/${jsonData.problemId}`, {
+            var jsonData = "{ 'user_answer': " + answerVal + " }";
+            // var jsonData = {
+            //   user_answer: answerVal,
+            // };
+            fetch(`https://apict.pnu.app/problem/${jsonData.problemId}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -274,10 +296,11 @@
           showSolve.textContent = "풀이보기";
           showSolve.addEventListener("click", function () {
             var quizId = item.id;
-            var jsonData = {
-              id: quizId,
-            };
-            fetch(`https://api.ict.pnu.app/solution/${jsonData.quizId}`, {
+            var jsonData = "{ 'id': " + quizId + " }";
+            // var jsonData = {
+            //   id: quizId,
+            // };
+            fetch(`https://apict.pnu.app/solution/${jsonData.quizId}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
