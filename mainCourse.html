@@ -64,13 +64,34 @@
     </style>
 </head>
 <body>
-    <a id="add-button" onclick="showForm()">과목 추가</a>
+    <a id="add-button" onclick="showForm()">챕터 추가</a>
     <form id="chapter-form" onsubmit="submitForm(event)">
         <input type="text" id="chapter-title" placeholder="chapter" required>
         <input type="text" id="chapter-contents" placeholder="contents" required>
         <button type="submit">Submit</button>
     </form>
     <script>
+        async function quizListLoad(id){
+            try {
+                const response = await fetch(`https://apict.pnu.app/subject/chapter/${id}`,{
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log(data);
+                data.quiz.forEach(item => {
+                    const quizNumber = quizCounters[chapterId];
+                    const quizLink = document.createElement('a');
+                    localStorage.setItem("chapterId", chapterId);
+                    quizLink.href = `mainQuiz.html?id=${chapterId}`;
+                    quizLink.innerText = `문제집 ${quizNumber}`;
+                    quizLink.style.display = 'block'; // To display each quiz link on a new line
+                
+                    quizContainer.appendChild(quizLink);
+                });
+            } catch (error) {
+                console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
+            }
+        }
         //load
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -89,14 +110,62 @@
                     chapterBlock.innerHTML = `
                         <h2>${item.title}</h2>
                         <p>${item.content}</p>
-                        <button onclick="location.href='mainQuiz.html?id=${item.id}'">문제 생성</button>
+                        <div id="quizzes-${item.id}"></div>
+                        <button onclick="createQuiz('${item.id}')">문제 생성</button>
                     `;
                     document.body.appendChild(chapterBlock);
+                    quizListLoad(item.id);
                 });
             } catch (error) {
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
             }
+            
         });
+        
+        // Quiz counters stored by chapter ID
+        const quizCounters = {};
+        
+        async function createQuiz(chapterId) {
+            /*
+            const quizContainer = document.getElementById(`quizzes-${chapterId}`);
+            if (!quizCounters[chapterId]) {
+                quizCounters[chapterId] = 1;
+            } else {
+                quizCounters[chapterId]++;
+            }
+        
+            const quizNumber = quizCounters[chapterId];
+            const quizLink = document.createElement('a');
+            localStorage.setItem("chapterId", chapterId);
+            quizLink.href = `mainQuiz.html?id=${chapterId}`;
+            quizLink.innerText = `문제집 ${quizNumber}`;
+            quizLink.style.display = 'block'; // To display each quiz link on a new line
+        
+            quizContainer.appendChild(quizLink); 
+            */
+            //시험지 만들기
+            try {
+                const response = await fetch(`https://apict.pnu.app/subject/chapter/${chapterId}/quiz`,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log(data);
+
+                const quizContainer = document.getElementById(`quizzes-${chapterId}`);
+                const quizLink = document.createElement('a');
+                quizLink.href = `mainQuiz.html?id=${data.quiz_id}`;
+                quizLink.innerText = `문제집 ${data.quiz_id}`;
+                quizLink.style.display = 'block'; // To display each quiz link on a new line
+            
+                quizContainer.appendChild(quizLink);
+            } catch (error) {
+                console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
+            }
+        }
         
         function showForm() {
             document.getElementById('chapter-form').style.display = 'block';
@@ -113,7 +182,8 @@
             chapterBlock.innerHTML = `
                 <h2>${title}</h2>
                 <p>${contents}</p>
-                <button onclick="location.href='mainQuiz.html?id=new'">문제 생성</button>
+                <div id="quizzes-new"></div>
+                <button onclick="createQuiz('new')">문제 생성</button>
             `;
             document.body.insertBefore(chapterBlock, document.getElementById('add-button'));
             document.getElementById('chapter-form').reset();
@@ -133,12 +203,14 @@
                 });
                 const data = await response.json();
                 console.log(data);
-                // After successful post, update the new chapter block with the correct ID
-                chapterBlock.querySelector('button').setAttribute('onclick', `location.href='mainQuiz.html?id=${data.newId}'`);
+                // Update ID for quizzes container and button onclick after chapter creation
+                chapterBlock.querySelector('div').id = `quizzes-${data.id}`;
+                chapterBlock.querySelector('button').setAttribute('onclick', `createQuiz('${data.id}')`);
             } catch (error) {
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
             }
         }
+        
         
     </script>
 </body>
