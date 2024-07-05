@@ -327,7 +327,12 @@
         padding: 10px;
         cursor: pointer;
     }
-    
+    div[class ^= "quizzes-"]{
+      position: absolute;
+      left : 650px;
+      top: 80px;
+      background-color: red;
+    }
     </style>
 </head>
 <body>
@@ -346,11 +351,11 @@
     <a id="add-button" onclick="showForm()">+</a>
     <div id = "Quiz-head">Quiz</div>
 
-    <form id="chapter-form" onsubmit="submitForm(event)">
+    <form id="chapter-form">
         <h1>새로운 챕터와 목차를 입력하세요</h1>
-        <input type="text" id="chapter-title" placeholder="chapter" required>
-        <textarea type="text" id="chapter-contents" placeholder="contents" required></textarea>
-        <button type="submit">Submit</button>
+        <input type="text" name="title" id="chapter-title" placeholder="chapter" required>
+        <textarea type="text" name="contents" id="chapter-contents" placeholder="contents" required></textarea>
+        <button type="button" onclick="submitForm()">Submit</button>
     </form>
     <div id="blocksContainer"></div>
     <script>
@@ -460,7 +465,7 @@
                 const data = await response.json();
                 console.log(data);
 
-                const quizContainer = document.getElementById(`quizzes-${chapterId}`);
+                const quizContainer = document.getElementsByClassName(`quizzes-${chapterId}`)[0];
                 const quizLink = document.createElement('a');
                 quizLink.href = `mainQuiz.html?id=${data.quiz_id}`;
                 quizLink.innerText = `문제집 ${data.quiz_id}`;
@@ -477,36 +482,20 @@
             document.getElementById('chapter-form').style.display = 'block';
         }
         
-        async function submitForm(event) {
-          /*
-            event.preventDefault();
-            const title = document.getElementById('chapter-title').value;
-            const contents = document.getElementById('chapter-contents').value;
-            
-            const chapterBlock = document.createElement('div');
-            chapterBlock.className = 'chapter-block';
-            
-            chapterBlock.innerHTML = `
-                        <div class = "chapternum">01</div>
-                        <h2 class = "chapter-title-style">${title}</h2>
-                        <p class = "chapter-contents-style">${contents}</p>
-                        <div class="chapter-bar">.</div>
-                        
-                        <button class="createButton" onclick="createQuiz(`${}`)" >문제 생성</button>
-                        <div class="quizlist"></div>
-                        <button class="delete-chapter" onclick="deleteChapter('', this)">삭제</button>
-                    `;
-            const container = document.getElementById("blocksContainer");
-            container.appendChild(chapterBlock);
-            document.getElementById('chapter-form').reset();
-            document.getElementById('chapter-form').style.display = 'none';
-        */
+        async function submitForm() {
+
+
             try {
+                const title = document.getElementById('chapter-title').value;
+                const contents = document.getElementById('chapter-contents').value;
+                
+                const chapterBlock = document.createElement('div');
                 const response = await fetch(`https://apict.pnu.app/subject/${id}/chapter`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ 
                         chapter : title,
                         contents : contents
@@ -516,8 +505,23 @@
                 const data = await response.json();
                 console.log(data);
                 // Update ID for quizzes container and button onclick after chapter creation
-                chapterBlock.querySelector('div').id = `quizzes-${data.id}`;
-                chapterBlock.querySelector('button').setAttribute('onclick', `createQuiz('${data.id}')`);
+
+                chapterBlock.className = 'chapter-block';
+                
+                chapterBlock.innerHTML = `
+                            <div class = "chapternum">01</div>
+                            <h2 class = "chapter-title-style">${title}</h2>
+                            <p class = "chapter-contents-style">${contents}</p>
+                            <div class="chapter-bar">.</div>
+                            
+                            <button class="createButton" onclick="createQuiz(${data.id})" >문제 생성</button>
+                            <div class="quizzes-${data.id}"></div>
+                            <button class="delete-chapter" onclick="deleteChapter(${data.id}, this)">삭제</button>
+                        `;
+                const container = document.getElementById("blocksContainer");
+                container.appendChild(chapterBlock);
+                document.getElementById('chapter-form').reset();
+                document.getElementById('chapter-form').style.display = 'none';
             } catch (error) {
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
             }
