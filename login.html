@@ -5,14 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 페이지</title>
     <style>
+        body{
+            background-image: url("./assets/login_circle.gif");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
         .container {
-            max-width: 300px;
-            margin: 0 auto;
-            padding-top: 50px;
+            position : absolute;
+
+            width : 700px;
+            height: 250px;
+
+            top : 100px;
+            left: 350px;
             text-align: center;
+            border-radius: 8px;
+
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(50px);
+            margin : 3%;
         }
         input[type="email"], input[type="password"] {
-            width: 100%;
+            width: 500px;
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
@@ -21,9 +37,9 @@
             color: #aaa;
         }
         button {
-            width: 100%;
+            width: 300px;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #1681ff;
             color: white;
             border: none;
             margin-top: 10px;
@@ -36,12 +52,18 @@
             text-decoration: none;
             color: #000;
         }
+        .options a{
+            color : #D9D9D9;
+        }
+        #inputs{
+            top : 100px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <form id="loginForm">
-            <div>
+            <div id = "inputs" >
                 <input type="email" id="email" name="email" placeholder="이메일" required>
             </div>
             <div>
