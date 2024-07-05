@@ -206,6 +206,7 @@
         box-sizing: border-box;
         margin-top: 25px;
         margin-left: 3px;
+        margin-bottom: 3%;
         font-size: 110%;
         padding: 1.2%;
         line-height: 130%;
@@ -221,21 +222,24 @@
 
       .ansJudge {
         box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
-        width: auto;
-        border-radius: 5px;
-        font-size: 120%;
+        width: 88%;
+        border-radius: 10px;
+        font-size: 110%;
         padding: 1.5%;
         line-height: 130%;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        margin-bottom: 3%;
       }
       .quizSol {
         box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
-        width: auto;
-        border-radius: 5px;
-        font-size: 120%;
+        width: 88%;
+        border-radius: 10px;
+        font-size: 100%;
         padding: 1.5%;
         line-height: 130%;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
       }
 
       .quizButton {
@@ -290,12 +294,19 @@
             "Content-Type": "application/json",
           },
           credentials: "include",
-        }).then((data) => {
-          title = data.title;
-          progressValue = data.progress;
-        });
-
-        createHeader(title, progressValue);
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+              console.log("problemId: ", problemId);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            title = data.title;
+            progressValue = data.progress;
+            createHeader(title, progressValue);
+          });
 
         console.log("quiz_id: ", quizId);
         var recentjsonData = "{ 'quiz_id': " + quizId + " }";
@@ -439,6 +450,9 @@
           answerSubmit.setAttribute("id", "answerSubmit");
           answerSubmit.textContent = "제출하기";
           answerSubmit.addEventListener("click", function () {
+            quizAnswer.disabled = true;
+            answerSubmit.style.display = "none";
+
             var answerVal = quizAnswer.value;
             var problemId = item.id;
             var jsonData = `{ "user_answer": "${answerVal}" }`;
@@ -471,9 +485,12 @@
                 var judgeTF = data.is_correct;
                 if (judgeTF == true) {
                   judgeTF = "정답입니다.";
+                  quizSol.style.color = "blue";
                 } else {
                   judgeTF = "오답입니다.<br>" + data.feedback;
+                  quizSol.style.color = "red";
                 }
+
                 ansJudge.innerHTML = judgeTF;
                 quizSpec.appendChild(ansJudge);
               })
@@ -487,20 +504,22 @@
           showSolve.setAttribute("id", "showSolve");
           showSolve.textContent = "풀이보기";
           showSolve.addEventListener("click", function () {
+            showSolve.disabled = true;
+            showSolve.style.display = "none";
+
             var quizId = item.id;
             // var jsonData = "{ 'id': " + quizId + " }";
             // var jsonData = {
             //   id: quizId,
             // };
             fetch(
-              `https://apict.pnu.app/subject/chapter/quiz/problem/${jsonData.quizId}/solution`,
+              `https://apict.pnu.app/subject/chapter/quiz/problem/${quizId}/solution`,
               {
-                method: "POST",
+                method: "GET",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ id: quizId }),
               }
             )
               .then((response) => {
@@ -514,7 +533,7 @@
                 console.log("성공적인 응답: ", data);
                 var quizSol = document.createElement("div");
                 quizSol.classList.add("quizSol");
-                quizSol.textContent = JSON.stringify(data);
+                quizSol.innerHTML = data.solution;
                 quizSpec.appendChild(quizSol);
               })
               .catch((error) => {
@@ -534,6 +553,31 @@
           quizTemplate.appendChild(quizButton);
 
           quizContainer.appendChild(quizTemplate);
+
+          if (item.user_answer != null) {
+            quizAnswer.innerText = item.user_answer;
+            quizAnswer.disabled = true;
+            answerSubmit.style.display = "none";
+
+            var quizSol = document.createElement("div");
+            quizSol.classList.add("ansJudge");
+            if (item.is_correct == true) {
+              quizSol.style.color = "blue";
+            } else {
+              quizSol.style.color = "red";
+            }
+            quizSol.innerHTML = item.feedback;
+            quizSpec.appendChild(quizSol);
+
+            if (item.solution != null) {
+              showSolve.disabled = true;
+              showSolve.style.display = "none";
+              var quizSol = document.createElement("div");
+              quizSol.classList.add("quizSol");
+              quizSol.innerHTML = item.solution;
+              quizSpec.appendChild(quizSol);
+            }
+          }
         });
       }
     </script>
