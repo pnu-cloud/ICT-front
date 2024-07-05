@@ -62,7 +62,7 @@
         background-repeat: no-repeat;
       }
       .subject-block {
-        border: 1px solid #000;
+        /* border: 1px solid #000; */
         border-radius: 8px;
         padding: 20px;
         margin: 20px;
@@ -70,6 +70,9 @@
         font-family: Arial, sans-serif;
         position: relative;
         cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        color: white;
       }
       .progress-bar-container {
         width: 80%;
@@ -90,6 +93,7 @@
         top: 0;
         right: 10px;
         font-weight: bold;
+        color: #007bffb4;
       }
       #add-button {
         display: block;
@@ -160,10 +164,10 @@
       >
     </header>
 
-    <form id="subject-form" onsubmit="submitForm(event)">
+    <form id="subject-form">
       <input type="text" id="subject-title" placeholder="과목 이름" required />
       <input type="text" id="subject-text" placeholder="다짐" required />
-      <button type="submit">Submit</button>
+      <button onclick="submitForm()">Submit</button>
     </form>
 
     <script>
@@ -202,7 +206,7 @@
         document.getElementById("subject-form").style.display = "block";
       }
 
-      async function submitForm(event) {
+      async function submitForm() {
         // event.preventDefault();
         const title = document.getElementById("subject-title").value;
         const text = document.getElementById("subject-text").value;
@@ -218,10 +222,10 @@
                     <div class="progress-text">0%</div>
                 </div>
             `;
-        document.body.insertBefore(
-          subjectBlock,
-          document.getElementById("add-button")
-        );
+        // document.body.insertBefore(
+        //   subjectBlock,
+        //   document.getElementById("add-button")
+        // );
         document.getElementById("subject-form").reset();
         document.getElementById("subject-form").style.display = "none";
 
@@ -246,6 +250,7 @@
               location.href = `mainCourse.html?id=${data.id}`;
             };
           }
+          location.href = "/";
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }

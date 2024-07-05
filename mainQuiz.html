@@ -441,19 +441,20 @@
           answerSubmit.addEventListener("click", function () {
             var answerVal = quizAnswer.value;
             var problemId = item.id;
-            var jsonData = "{ 'user_answer': " + answerVal + " }";
+            var jsonData = `{ "user_answer": "${answerVal}" }`;
+            console.log(jsonData);
             // var jsonData = {
             //   user_answer: answerVal,
             // };
             fetch(
-              `https://apict.pnu.app/subject/chapter/quiz/problem/${jsonData.problemId}`,
+              `https://apict.pnu.app/subject/chapter/quiz/problem/${problemId}`,
               {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify(jsonData),
+                body: JSON.stringify({ user_answer: answerVal }),
               }
             )
               .then((response) => {
@@ -467,13 +468,13 @@
                 console.log("성공적인 응답: ", data);
                 var ansJudge = document.createElement("div");
                 ansJudge.classList.add("ansJudge");
-                var judgeTF = JSON.stringfy(data.is_correct);
-                if (judgeTF == "true") {
+                var judgeTF = data.is_correct;
+                if (judgeTF == true) {
                   judgeTF = "정답입니다.";
                 } else {
-                  judgeTF = "오답입니다.";
+                  judgeTF = "오답입니다.<br>" + data.feedback;
                 }
-                ansJudge.textContent = judgeTF;
+                ansJudge.innerHTML = judgeTF;
                 quizSpec.appendChild(ansJudge);
               })
               .catch((error) => {
@@ -487,7 +488,7 @@
           showSolve.textContent = "풀이보기";
           showSolve.addEventListener("click", function () {
             var quizId = item.id;
-            var jsonData = "{ 'id': " + quizId + " }";
+            // var jsonData = "{ 'id': " + quizId + " }";
             // var jsonData = {
             //   id: quizId,
             // };
@@ -499,7 +500,7 @@
                   "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify(jsonData),
+                body: JSON.stringify({ id: quizId }),
               }
             )
               .then((response) => {
