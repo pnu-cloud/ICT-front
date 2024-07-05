@@ -354,18 +354,27 @@
     </form>
     <div id="blocksContainer"></div>
     <script>
-        async function quizListLoad(id){
-            try {
-                const response = await fetch(`https://apict.pnu.app/subject/chapter/${chapter_id}`,{
-                    credentials: 'include'
-                });
-                const data = await response.json();
-                console.log(data);
-                data
-            } catch (error) {
-                console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
-            }
-        }
+        async function quizListLoad(chapterId){
+          try {
+              const response = await fetch(`https://apict.pnu.app/subject/chapter/${chapterId}`,{
+                  credentials: 'include'
+              });
+              const data = await response.json();
+              console.log(data);
+
+              const quizContainer = document.getElementsByClassName(`quizzes-${chapterId}`)[0];
+              data.quiz.forEach(item => {
+                  const quizLink = document.createElement('a');
+                  quizLink.href = `mainQuiz.html?id=${chapterId}`;
+                  quizLink.innerText = "문제집";
+                  quizLink.style.display = 'block'; // To display each quiz link on a new line
+              
+                  quizContainer.appendChild(quizLink);
+              });
+          } catch (error) {
+              console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
+          }
+      }
         //load
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -392,9 +401,9 @@
                       <p class = "chapter-contents-style">${item.content}</p>
                       <div class="chapter-bar">.</div>
                       
-                      <button class="createButton" onclick="createQuiz('new')" >문제 생성</button>
-                      <div class="quizlist"></div>
-                      <button class="delete-chapter" onclick="deleteChapter('new', this)">삭제</button>
+                      <button class="createButton" onclick="createQuiz(${item.id})" >문제 생성</button>
+                      <div class="quizzes-${item.id}"></div>
+                      <button class="delete-chapter" onclick="deleteChapter(${item.id}, this)">삭제</button>
                   `;
                   const container = document.getElementById("blocksContainer");
                   container.appendChild(chapterBlock);
@@ -404,7 +413,7 @@
               console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
           }
           
-      });
+      });/*
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const response = await fetch(`https://apict.pnu.app/subject/${id}/chapter`,{
@@ -434,7 +443,7 @@
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
             }
             
-        });
+        });*/
         
         // Quiz counters stored by chapter ID
         const quizCounters = {};
@@ -469,6 +478,7 @@
         }
         
         async function submitForm(event) {
+          /*
             event.preventDefault();
             const title = document.getElementById('chapter-title').value;
             const contents = document.getElementById('chapter-contents').value;
@@ -482,15 +492,15 @@
                         <p class = "chapter-contents-style">${contents}</p>
                         <div class="chapter-bar">.</div>
                         
-                        <button class="createButton" onclick="createQuiz('new')" >문제 생성</button>
+                        <button class="createButton" onclick="createQuiz(`${}`)" >문제 생성</button>
                         <div class="quizlist"></div>
-                        <button class="delete-chapter" onclick="deleteChapter('new', this)">삭제</button>
+                        <button class="delete-chapter" onclick="deleteChapter('', this)">삭제</button>
                     `;
             const container = document.getElementById("blocksContainer");
             container.appendChild(chapterBlock);
             document.getElementById('chapter-form').reset();
             document.getElementById('chapter-form').style.display = 'none';
-        
+        */
             try {
                 const response = await fetch(`https://apict.pnu.app/subject/${id}/chapter`, {
                     method: 'POST',
@@ -512,7 +522,20 @@
                 console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
             }
         }
-        function deleteChapter(chapterId, deleteButton) {
+        async function deleteChapter(chapterId, deleteButton) {
+          if (chapterId !== 'new') {
+              try {
+                  const response = await fetch(`https://apict.pnu.app/subject/chapter/${chapterId}`, {
+                      method: 'DELETE',
+                      credentials: 'include'
+                  });
+                  const data = await response.json();
+                  console.log(data);
+              } catch (error) {
+                  console.error('서버와 통신하는 동안 오류가 발생했습니다:', error);
+                  return;
+              }
+          }
           // Remove the chapter block from the DOM
           const chapterBlock = deleteButton.closest('.chapter-block');
           chapterBlock.remove();
