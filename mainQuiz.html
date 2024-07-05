@@ -439,6 +439,9 @@
           answerSubmit.setAttribute("id", "answerSubmit");
           answerSubmit.textContent = "제출하기";
           answerSubmit.addEventListener("click", function () {
+            quizAnswer.disabled = true;
+            answerSubmit.style.display = "none";
+
             var answerVal = quizAnswer.value;
             var problemId = item.id;
             var jsonData = `{ "user_answer": "${answerVal}" }`;
@@ -487,20 +490,22 @@
           showSolve.setAttribute("id", "showSolve");
           showSolve.textContent = "풀이보기";
           showSolve.addEventListener("click", function () {
+            showSolve.disabled = true;
+            showSolve.style.display = "none";
+
             var quizId = item.id;
             // var jsonData = "{ 'id': " + quizId + " }";
             // var jsonData = {
             //   id: quizId,
             // };
             fetch(
-              `https://apict.pnu.app/subject/chapter/quiz/problem/${jsonData.quizId}/solution`,
+              `https://apict.pnu.app/subject/chapter/quiz/problem/${quizId}/solution`,
               {
-                method: "POST",
+                method: "GET",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ id: quizId }),
               }
             )
               .then((response) => {
@@ -514,7 +519,7 @@
                 console.log("성공적인 응답: ", data);
                 var quizSol = document.createElement("div");
                 quizSol.classList.add("quizSol");
-                quizSol.textContent = JSON.stringify(data);
+                quizSol.innerHTML = JSON.stringify(data);
                 quizSpec.appendChild(quizSol);
               })
               .catch((error) => {
@@ -534,6 +539,31 @@
           quizTemplate.appendChild(quizButton);
 
           quizContainer.appendChild(quizTemplate);
+
+          if (item.user_answer != null) {
+            quizAnswer.innerText = item.user_answer;
+            quizAnswer.disabled = true;
+            answerSubmit.style.display = "none";
+
+            var quizSol = document.createElement("div");
+            quizSol.classList.add("ansJudge");
+            if (item.is_correct == true) {
+              quizSol.style.color = "blue";
+            } else {
+              quizSol.style.color = "red";
+            }
+            quizSol.innerHTML = item.feedback;
+            quizSpec.appendChild(quizSol);
+
+            if (item.solution != null) {
+              showSolve.disabled = true;
+              showSolve.style.display = "none";
+              var quizSol = document.createElement("div");
+              quizSol.classList.add("quizSol");
+              quizSol.innerHTML = item.solution;
+              quizSpec.appendChild(quizSol);
+            }
+          }
         });
       }
     </script>
