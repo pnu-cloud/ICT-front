@@ -486,10 +486,10 @@
                 var judgeTF = data.is_correct;
                 if (judgeTF == true) {
                   judgeTF = "정답입니다.";
-                  quizSol.style.color = "blue";
+                  ansJudge.style.color = "blue";
                 } else {
                   judgeTF = "오답입니다.<br>" + data.feedback;
-                  quizSol.style.color = "red";
+                  ansJudge.style.color = "red";
                 }
 
                 ansJudge.innerHTML = judgeTF;
@@ -564,10 +564,11 @@
             quizSol.classList.add("ansJudge");
             if (item.is_correct == true) {
               quizSol.style.color = "blue";
+              quizSol.innerHTML = "정답입니다.";
             } else {
               quizSol.style.color = "red";
+              quizSol.innerHTML = "오답입니다.<br>" + item.feedback;
             }
-            quizSol.innerHTML = item.feedback;
             quizSpec.appendChild(quizSol);
 
             if (item.solution != null) {
