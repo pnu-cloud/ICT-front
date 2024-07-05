@@ -417,7 +417,7 @@
               const quizContainer = document.getElementsByClassName(`quizzes-${chapterId}`)[0];
               data.quiz.forEach(item => {
                   const quizLink = document.createElement('a');
-                  quizLink.href = `mainQuiz.html?id=${chapterId}`;
+                  quizLink.href = `mainQuiz.html?id=${item.id}`;
                   quizLink.innerText = `문제집 ${item.id}`;
                   quizLink.style.display = 'block'; // To display each quiz link on a new line
               
