@@ -303,11 +303,11 @@
             return response.json();
           })
           .then((data) => {
-            title = data.title;
-            progressValue = data.progress;
-            createHeader(title, progressValue);
+            document.getElementById("subjectTitle").innerHTML = data.title;
+            document.getElementById("progressText").innerHTML =
+              data.progress + "%";
           });
-
+        createHeader(title, progressValue);
         console.log("quiz_id: ", quizId);
         var recentjsonData = "{ 'quiz_id': " + quizId + " }";
         fetch(`https://apict.pnu.app/subject/chapter/quiz/${quizId}`, {
@@ -378,6 +378,7 @@
         infoDiv.appendChild(roundSquare1);
         var subjectTitleDiv = document.createElement("div");
         subjectTitleDiv.classList.add("subjectTitle");
+        subjectTitleDiv.setAttribute("id", "subjectTitle");
         subjectTitleDiv.textContent = subject;
         infoDiv.appendChild(subjectTitleDiv);
 
