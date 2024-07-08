@@ -72,8 +72,8 @@
             <button type="submit">로그인</button>
         </form>
         <div class="options">
-            <a href="yet.html">아이디 찾기</a>
-            <a href="yet.html">비밀번호 찾기</a>
+            <a style="color: gray" onclick="alert('미구현 기능')">아이디 찾기</a>
+            <a style="color: gray" onclick="alert('미구현 기능')">비밀번호 찾기</a>
             <a href="signup.html">회원가입</a>
         </div>
     </div>
@@ -99,11 +99,8 @@
                 const data = await response.json();
 
                 if(response.status === 200){
-                    alert(`${data.name}님 안녕하세요!`);
-                    setTimeout(function() {
-                        window.location.href = 'index.html';
-                    }, 100);
-                } else if (response.status ===  401){
+                    location.href = './index.html';
+                } else {
                     alert(response.message);
                 }
                 
