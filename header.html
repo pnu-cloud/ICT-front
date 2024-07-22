@@ -1,3 +1,34 @@
-<div class="header">
-  <h1>hello</h1>
-</div>
+<!-- header.html -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <img
+        id="logoImg"
+        src="./assets/blueLogo.png"
+        onclick="window.location.href='./index.html'"
+      />
+      <div class="upperBtns">
+        <button id="subjectManage">과목 관리</button>
+        <button id="gradeStat">성적 통계</button>
+      </div>
+      <div id="shortLine">얇은 선</div>
+      <div class="progressInfo">
+        <label for="progressBar">진도율</label>
+        <progress
+          id="progressBar"
+          name="progressBar"
+          max="100"
+          value="70"
+        ></progress>
+        <label for="progressBar">N%</label>
+      </div>
+      <span class="cheerPhrase">예시문구입니다.🔥</span>
+    </header>
+    <script></script>
+  </body>
+</html>
