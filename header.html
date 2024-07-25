@@ -3,31 +3,155 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style></style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+      body {
+        background-color: black;
+        color: white;
+      }
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      header {
+        margin: 58px 65px;
+      }
+      .moveTo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+        margin-bottom: 35px;
+      }
+
+      #logoImg {
+        width: 110px;
+        height: 54px;
+      }
+
+      .upperBtns {
+        /* border: 1px solid yellow; */
+        display: flex;
+        width: 197px;
+        justify-content: space-between;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .upperBtns button {
+        border: 1.8px solid white;
+        background-color: transparent;
+        color: white;
+        border-radius: 9999px;
+        width: 86px;
+        height: 32px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18px;
+        cursor: pointer;
+      }
+      .upperBtns button:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      .upperBtns button:active {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .detailInfo {
+        /* border: 1px solid red; */
+        display: flex;
+        align-items: center;
+        height: 30px;
+      }
+      .subjectInfo {
+        /* border: 1px solid yellow; */
+        width: 253px;
+      }
+      #shortLine {
+        border: 4px solid white;
+        background-color: white;
+        color: black;
+        height: 20px;
+        margin-right: 25px;
+      }
+      .subjectName {
+        font-size: 20px;
+        font-weight: 300;
+      }
+      .progressInfo {
+        /* border: 2px solid red; */
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 400;
+        margin: 0 auto;
+        width: 500px;
+        justify-content: space-between;
+      }
+      .progressInfo #progressBar {
+        appearance: none;
+        width: 368px;
+        height: 5px;
+        border-radius: 9999px;
+      }
+      #progressBar::-webkit-progress-bar {
+        border: 1px solid white;
+        border-radius: 9999px;
+      }
+      #progressBar::-webkit-progress-value {
+        border: 1px solid white;
+        border-radius: 9999px;
+        background-color: #0539fc;
+      }
+      #percentNum {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .cheerPhrase {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 300;
+        border-radius: 9999px;
+        background-color: #0539fc;
+        width: 253px;
+        height: 32px;
+        line-height: 21px;
+        background: linear-gradient(180deg, #0038ff 0%, #f26363 240.63%);
+      }
+    </style>
   </head>
   <body>
     <header>
-      <img
-        id="logoImg"
-        src="./assets/blueLogo.png"
-        onclick="window.location.href='./index.html'"
-      />
-      <div class="upperBtns">
-        <button id="subjectManage">과목 관리</button>
-        <button id="gradeStat">성적 통계</button>
+      <div class="moveTo">
+        <img
+          id="logoImg"
+          src="./assets/blueLogo.png"
+          onclick="window.location.href='./index.html'"
+        />
+        <div class="upperBtns">
+          <button id="subjectManage">과목 관리</button>
+          <button id="gradeStat">성적 통계</button>
+        </div>
       </div>
-      <div id="shortLine">얇은 선</div>
-      <div class="progressInfo">
-        <label for="progressBar">진도율</label>
-        <progress
-          id="progressBar"
-          name="progressBar"
-          max="100"
-          value="70"
-        ></progress>
-        <label for="progressBar">N%</label>
+      <div class="detailInfo">
+        <div class="subjectInfo">
+          <span id="shortLine"></span>
+          <span class="subjectName">과목명</span>
+        </div>
+        <div class="progressInfo">
+          <label for="progressBar">진도율</label>
+          <progress
+            id="progressBar"
+            name="progressBar"
+            max="100"
+            value="70"
+          ></progress>
+          <label id="percentNum" for="progressBar">N%</label>
+        </div>
+        <span class="cheerPhrase">중간고사까지 D-7🔥 할 수 있다!!</span>
       </div>
-      <span class="cheerPhrase">예시문구입니다.🔥</span>
     </header>
     <script></script>
   </body>
