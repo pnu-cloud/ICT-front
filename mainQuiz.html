@@ -5,12 +5,204 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>모두의 자율학습</title>
     <link rel=""import" href="mainCourse.html"/>
-    <style></style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+      * {
+        font-family: "Poppins", sans-serif;
+        color: white;
+      }
+      body {
+        background-image: url("./assets/background-main.gif");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+      }
+      .realBody {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .quizInfo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 365px;
+        padding: 20px 0;
+      }
+      .returnBtn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 19px;
+        height: 19px;
+      }
+      .QuizSpan {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      #thinLine {
+        border: 1px solid white;
+        height: 13px;
+      }
+      .quizTitle {
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .quizBackground {
+        width: 1095px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        padding: 50px;
+        top: 50%;
+        left: 50%;
+        height: auto;
+        overflow-y: scroll;
+      }
+      .quizBackground::-webkit-scrollbar {
+        background-color: none;
+      }
+      .quizBackground::-webkit-scrollbar-button {
+        display: none;
+      }
+      .quizContainer {
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+      }
+      #quizNum {
+        /* border: 1px solid yellow; */
+        font-size: 25px;
+        font-weight: 400;
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        justify-self: center;
+      }
+      #quizContent {
+        /* border: 1px solid yellow; */
+        font-size: 16px;
+        font-weight: 400;
+        grid-column: 2 / 4;
+        grid-row: 1 / 2;
+        display: flex;
+        align-items: center;
+      }
+      #AnsSpan {
+        /* border: 1px solid yellow; */
+        font-size: 25px;
+        font-weight: 400;
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+      #quizAnswer {
+        border: 1px solid white;
+        border-radius: 5px;
+        background: none;
+        width: 722px;
+        height: 98px;
+        padding: 10px;
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
+      #quizAnswer textarea::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .sideBtns {
+        display: flex;
+        flex-direction: column;
+        height: 86px;
+        justify-content: space-between;
+        align-items: center;
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+      }
+      .sideBtns button {
+        width: 134px;
+        height: 35px;
+        border-radius: 76px;
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+      #submitAns {
+        background-color: rgba(0, 0, 0, 1);
+        border: none;
+      }
+      #submitAns:hover {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      #submitAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      #viewAns {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 1);
+      }
+      #viewAns:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      #viewAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    </style>
   </head>
   <body>
     <div id="header"></div>
-    <div id="quizContainer"></div>
+    <div class="realBody">
+      <div class="quizInfo">
+        <button class="returnBtn">
+          <svg
+            width="19"
+            height="19"
+            viewBox="0 0 19 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="9.5"
+              cy="9.5"
+              r="9.5"
+              transform="matrix(1 0 0 -1 0 19)"
+              fill="white"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M6.87796 9.49955L11 13.4394L10.4153 14L6 9.77806V9.21923L10.4153 5L11 5.55973L6.87796 9.49955Z"
+              fill="black"
+              stroke="black"
+            />
+          </svg>
+        </button>
+        <span class="QuizSpan">Quiz</span>
+        <span id="thinLine"></span>
+        <span class="quizTitle">HTML 기초 이해 및 기본 태그</span>
+      </div>
+      <div class="quizBackground">
+        <div class="quizContainer">
+          <span id="quizNum">Q1.</span>
+          <span id="quizContent">버블 정렬에 대해 자유롭게 서술하시오.</span>
+          <span id="AnsSpan">A.</span>
+          <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
+          <div class="sideBtns">
+            <button id="submitAns">제출 하기</button>
+            <button id="viewAns">풀이 보기</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script>
+      window.onload = loadHeader;
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         const quizId = urlParams.get("id");
@@ -57,6 +249,17 @@
             createComponent(data);
           });
       });
+
+      function loadHeader() {
+        fetch("./header.html")
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("header").innerHTML = data;
+          })
+          .catch((drror) =>
+            console.error("header.html 로드 중 에러 발생함 : ", error)
+          );
+      }
     </script>
   </body>
 </html>
