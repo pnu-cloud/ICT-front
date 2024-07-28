@@ -437,7 +437,7 @@
           );
           const data = await response.json();
           data.quiz.forEach((item) => {
-            QuizList(item.id, chapterId);
+            QuizList(item.id, chapterId, item.title);
           });
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
@@ -472,7 +472,7 @@
           console.log(data);
 
           // 퀴즈 리스트 갱신 함수 호출 (예: QuizList)
-          QuizList(data.quiz_id, chapterId);
+          QuizList(data.quiz_id, chapterId, data.title);
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         } finally {
@@ -484,13 +484,13 @@
         }
       }
       //퀴즈 블록 함수
-      function QuizList(itemId, chapterId) {
+      function QuizList(itemId, chapterId, itemTitle) {
         const quizContainer = document.getElementsByClassName(
           `quizzes-${chapterId}`
         )[0];
         const quizLink = document.createElement("a");
         quizLink.href = `quiz.html?id=${itemId}`;
-        quizLink.innerText = `문제집 ${itemId}`;
+        quizLink.innerText = `${itemTitle}`;
         quizLink.style.display = "block";
 
         quizContainer.appendChild(quizLink);
