@@ -132,7 +132,7 @@
         />
         <div class="upperBtns">
           <button id="subjectManage">학습 관리</button>
-          <button id="subjectManage">오답 노트</button>
+          <button id="subjectManage" src>오답 노트</button>
           <button id="gradeStat">성적 통계</button>
         </div>
       </div>
@@ -156,6 +156,34 @@
         >
       </div>
     </header>
-    <script></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const quizId = urlParams.get("id");
+
+      fetch(`https://apict.pnu.app/quiz/${quizId}/subject`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("네트워크 응답이 옳지 않습니다.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          document.getElementById("subjectManage").onclick = function () {
+            location.href = `course.html?id=${id}&&title=${data.title}`;
+          };
+          document.getElementById("subjectName").innerHTML = data.title;
+          document.getElementById("progressBar").value = data.progress;
+          document.getElementById("percentNum").innerHTML = data.progress + "%";
+          document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+            data.text;
+        });
+    </script>
   </body>
 </html>
