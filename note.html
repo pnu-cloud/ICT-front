@@ -17,18 +17,20 @@
         background-attachment: fixed;
         display: flex;
         flex-direction: column;
-        /* align-items: center; */
+        align-items: center;
       }
       .realBody {
-        display: flex;
-        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        height: auto;
       }
       .quizSet {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         display: flex;
         flex-direction: column;
         align-self: center;
         align-items: flex-start;
+        margin: 60px 0;
       }
       .quizInfo {
         /* border: 2px solid yellow; */
@@ -61,6 +63,7 @@
         align-items: center;
       }
       .quizContainer {
+        /* border: 1px solid yellow; */
         display: grid;
         margin: 60px;
         grid-template-columns: auto auto 1fr;
@@ -74,7 +77,7 @@
         font-weight: 400;
         grid-column: 1 / 2;
         grid-row: 1 / 2;
-        align-self: start;
+        justify-self: center;
       }
       .quizContent {
         /* border: 1px solid yellow; */
@@ -91,7 +94,6 @@
         font-weight: 400;
         grid-column: 1 / 2;
         grid-row: 2 / 3;
-        align-self: start;
       }
       .quizAnswer {
         border: 1px solid white;
@@ -112,7 +114,6 @@
       }
       .sideBtns {
         /* border: 1px solid yellow; */
-
         display: flex;
         flex-direction: column;
         height: 120px;
@@ -193,50 +194,61 @@
   </head>
   <body>
     <div id="header"></div>
-    <div class="realBody">
-      <div class="quizSet">
-        <div class="quizInfo" id="quizInfoID">
-          <span class="quizSubject" id="quizSubjectID">과목명</span>
-          <span class="thinLine"></span>
-          <span class="quizChapter" id="quizChapterID">챕터명</span>
-        </div>
-        <div class="quizBackground">
-          <div class="quizContainer" id="quizContainerID">
-            <span class="spanQ">Q.</span>
-            <span class="quizContent" id="quizContentID"
-              >chatGPT 서버에서 보낸 질문 내용</span
-            >
-            <span class="spanA">A.</span>
-            <textarea
-              class="quizAnswer"
-              id="quizAnswerID"
-              placeholder="답변 입력 칸"
-            ></textarea>
-            <div class="sideBtns">
-              <button class="submitAns" id="submitAnsID" onclick="submitAns()">
-                제출 하기
-              </button>
-              <button class="clearAns" id="clearAnsID" onclick="clearAns()">
-                다시 풀기
-              </button>
-              <button class="viewAns" id="viewAnsID" onclick="viewAns()">
-                풀이 보기
-              </button>
-              <div class="quizTF" id="quizTFID"></div>
-              <div class="quizSolution" id="quizSolution"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="realBody"></div>
+    <script src="function.js"></script>
     <script>
       loadHeader();
-      function loadHeader() {
-        fetch("./header.html")
-          .then((response) => response.text())
+      // setData();
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://apict.pnu.app/wrong", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+            }
+            return response.json();
+          })
           .then((data) => {
-            document.getElementById("header").innerHTML = data;
+            console.log(data);
+            createContainer(data);
           });
+      });
+
+      function createContainer(mistakeQuiz) {
+        const realBody = document.getElementById("realBody");
+        console.log(realBody);
+        realBody.innerHTML = "";
+        mistakeQuiz.forEach(function (item) {
+          const quizHTML = `
+            <div class="quizSet" id="quizSet${item.id}">
+              <div class="quizInfo">
+                <span class="quizSubject" id="quizSubject${item.id}">${item.subject_title}</span>
+                <span class="thinLine"></span>
+                <span class="quizChapter" id="quizChapter${item.id}">${item.chapter_title}</span>
+              </div>
+              <div class="quizBackground">
+                <div class="quizContainer" id="quizContainer${item.id}">
+                  <span class="spanQ">Q.</span>
+                  <span class="quizContent" id="quizContent${item.id}">${item.question}</span>
+                  <span class="AnsSpan">A.</span>
+                  <textarea class="quizAnswer" id="quizAnswer${item.id}" placeholder="답변 입력 칸"></textarea>
+                  <div class="sideBtns">
+                    <button class="submitAns" id="submitAns${item.id}" onclick="submitAns(${item.id})">제출 하기</button>
+                    <button class="clearAns" id="clearAns${item.id}" onclick="clearAns(${item.id})">다시 풀기</button>
+                    <button class="viewAns" id="viewAns${item.id}" onclick="viewAns(${item.id})" >풀이 보기</button>
+                  </div>
+                  <div class="quizTF" id="quizTF${item.id}"></div>
+                  <div class="quizSolution" id="quizSolution${item.id}"></div>
+              </div>
+            </div>
+          `;
+          realBody.innerHTML += quizHTML;
+        });
       }
     </script>
   </body>

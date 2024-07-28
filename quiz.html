@@ -19,7 +19,7 @@
         background-attachment: fixed;
         display: flex;
         flex-direction: column;
-        /* align-items: center; */
+        align-items: center;
       }
       .realBody {
         display: flex;
@@ -71,7 +71,7 @@
         gap: 20px;
       }
       #quizNum {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         font-size: 25px;
         font-weight: 400;
         grid-column: 1 / 2;
@@ -79,7 +79,7 @@
         justify-self: center;
       }
       #quizContent {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         font-size: 16px;
         font-weight: 400;
         grid-column: 2 / 4;
@@ -88,7 +88,7 @@
         padding: 10px;
       }
       #AnsSpan {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         font-size: 25px;
         font-weight: 400;
         grid-column: 1 / 2;
@@ -112,7 +112,7 @@
         font-weight: 400;
       }
       .sideBtns {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         display: flex;
         flex-direction: column;
         height: 120px;
@@ -359,7 +359,7 @@
             document.getElementById(`quizAnswer${item.id}`).innerHTML =
               item.user_answer;
             document.getElementById(`quizTF${item.id}`).innerHTML =
-              item.is_correct;
+              item.is_correct ? "정답입니다." : "오답입니다.";
             document.getElementById(`quizSolution${item.id}`).innerHTML =
               item.solution;
           }
