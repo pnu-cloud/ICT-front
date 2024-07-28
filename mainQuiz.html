@@ -60,10 +60,11 @@
         width: 1095px;
         border-radius: 22px;
         background: rgba(255, 255, 255, 0.09);
-        backdrop-filter: blur(50px);
+        backdrop-filter: blur(100px);
         top: 50%;
         left: 50%;
         height: auto;
+        align-items: center;
       }
       .quizContainer {
         display: grid;
@@ -87,7 +88,7 @@
         grid-column: 2 / 4;
         grid-row: 1 / 2;
         display: flex;
-        align-items: center;
+        padding: 10px;
       }
       #AnsSpan {
         /* border: 1px solid yellow; */
@@ -96,7 +97,7 @@
         grid-column: 1 / 2;
         grid-row: 2 / 3;
       }
-      #quizAnswer {
+      .quizAnswer {
         border: 1px solid white;
         border-radius: 5px;
         background: none;
@@ -105,6 +106,8 @@
         padding: 10px;
         grid-column: 2 / 3;
         grid-row: 2 / 3;
+        font-size: 16px;
+        font-weight: 400;
       }
       #quizAnswer textarea::-webkit-input-placeholder {
         color: rgba(255, 255, 255, 0.5);
@@ -128,25 +131,54 @@
         font-weight: 400;
         cursor: pointer;
       }
-      #submitAns {
+      .submitAns {
         background-color: rgba(0, 0, 0, 1);
         border: none;
       }
-      #submitAns:hover {
+      .submitAns:hover {
         border: 1px solid rgba(255, 255, 255, 0.5);
       }
-      #submitAns:active {
+      .submitAns:active {
         color: rgba(255, 255, 255, 0.5);
       }
-      #viewAns {
+      .viewAns {
         background: none;
         border: 1px solid rgba(255, 255, 255, 1);
+        display: none;
       }
-      #viewAns:hover {
+      .viewAns:hover {
         border-color: rgba(255, 255, 255, 0.5);
       }
-      #viewAns:active {
+      .viewAns:active {
         color: rgba(255, 255, 255, 0.5);
+      }
+      .quizTF {
+        display: none;
+        /* border: 1px solid white; */
+        border-radius: 5px;
+        width: 722px;
+        padding: 10px;
+        grid-column: 2 /3;
+        grid-row: 3 / 3;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+      }
+      .quizSolution {
+        display: none;
+        /* border: 1px solid white; */
+        border-radius: 5px;
+        width: 722px;
+        padding: 10px;
+        grid-column: 2 /3;
+        grid-row: 4 / 4;
+        font-size: 16px;
+        font-weight: 400;
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
       }
     </style>
   </head>
@@ -154,7 +186,7 @@
     <div id="header"></div>
     <div class="realBody">
       <div class="quizInfo">
-        <button class="returnBtn">
+        <button class="returnBtn" onclick="returnPage()">
           <svg
             width="19"
             height="19"
@@ -266,26 +298,119 @@
               <span id="quizNum">Q${quizIndex++}.</span>
               <span id="quizContent">${item.question}</span>
               <span id="AnsSpan">A.</span>
-              <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
+              <textarea class="quizAnswer" id="quizAnswer${
+                item.id
+              }" placeholder="답변 입력 칸"></textarea>
               <div class="sideBtns">
-                <button id="submitAns" onclick="submitAns(${
+                <button class="submitAns" id="submitAns${
                   item.id
-                })">제출 하기</button>
-                <button id="viewAns" onclick="viewAns()">풀이 보기</button>
+                }" onclick="submitAns(${item.id})">제출 하기</button>
+                <button class="viewAns" id="viewAns${
+                  item.id
+                }" onclick="viewAns(${item.id})" >풀이 보기</button>
               </div>
+              <div class="quizTF" id="quizTF${item.id}"></div>
+              <div class="quizSolution" id="quizSolution${item.id}"></div>
             </div>
           `;
           quizBackground.innerHTML += quizHTML;
+
+          if (item.is_correct != null) {
+            document.getElementById(`submitAns${item.id}`).style.display =
+              "none";
+            const quizTF = document.getElementById(`quizTF${item.id}`);
+            quizTF.style.display = "block";
+            var judgeTF = item.is_correct;
+            if (judgeTF == true) {
+              judgeTF = "정답입니다.";
+              quizTF.style.color = "blue";
+            } else {
+              judgeTF = "오답입니다.<br>" + item.feedback;
+              quizTF.style.color = "red";
+            }
+            quizTF.innerHTML = judgeTF;
+            document.getElementById(`viewAns${item.id}`).style.display =
+              "block";
+          }
+
+          if (item.solution != null) {
+            document.getElementById(`viewAns${item.id}`).style.display = "none";
+            const quizSolution = document.getElementById(
+              `quizSolution${item.id}`
+            );
+            quizSolution.style.display = "block";
+            quizSolution.innerHTML = item.solution;
+          }
         });
       }
 
       function submitAns(id) {
-        const quizAnswer = document.getElementById("quizAnswer");
-        quizAnswer.disabled = true;
+        const submitAns = document.getElementById(`submitAns${id}`);
+        const quizAnswer = document.getElementById(`quizAnswer${id}`);
+        submitAns.disabled = true;
         submitAns.style.display = "none";
         var jsonData = `{ "user_answer": "${quizAnswer.value}" }`;
+        fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ user_answer: quizAnswer.value }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const quizTF = document.getElementById(`quizTF${id}`);
+            quizTF.style.display = "block";
+            var judgeTF = data.is_correct;
+            if (judgeTF == true) {
+              judgeTF = "정답입니다.";
+              quizTF.style.color = "rgba(12, 109, 255, 1)";
+            } else {
+              judgeTF = "오답입니다.<br>" + data.feedback;
+              quizTF.style.color = "red";
+            }
+            quizTF.innerHTML = judgeTF;
+            document.getElementById(`viewAns${id}`).style.display = "block";
+          });
       }
-      function viewAns() {}
+
+      function viewAns(id) {
+        const viewAns = document.getElementById(`viewAns${id}`);
+        const quizSolution = document.getElementById(`quizSolution${id}`);
+        viewAns.disabled = true;
+        viewAns.style.display = "none";
+        fetch(
+          `https://apict.pnu.app/subject/chapter/quiz/problem/${id}/solution`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+              console.log("quizId: ", quizId);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            quizSolution.style.display = "block";
+            quizSolution.innerHTML = data.solution;
+          });
+      }
+
+      function returnPage() {
+        window.history.back();
+      }
     </script>
   </body>
 </html>
