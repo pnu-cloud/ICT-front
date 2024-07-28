@@ -132,7 +132,7 @@
         />
         <div class="upperBtns">
           <button id="subjectManage">학습 관리</button>
-          <button id="subjectManage" src>오답 노트</button>
+          <button id="mistakeNote">오답 노트</button>
           <button id="gradeStat">성적 통계</button>
         </div>
       </div>
@@ -174,10 +174,17 @@
           return response.json();
         })
         .then((data) => {
-          console.log(data);
-          document.getElementById("subjectManage").onclick = function () {
-            location.href = `course.html?id=${id}&&title=${data.title}`;
+          console.log("data", data);
+          const subjectManage = document
+            .getElementById("subjectManage")
+            .querySelector("button");
+          subjectManage.onclick = function () {
+            console.log("success");
+            location.href = `course.html?id=${quizId}&&title=${data.title}`;
           };
+          const mistakeNote = document.getElementById("mistakeNote");
+          mistakeNote.href = "./note.html";
+          const gradeStat = document.getElementById("gradeStat");
           document.getElementById("subjectName").innerHTML = data.title;
           document.getElementById("progressBar").value = data.progress;
           document.getElementById("percentNum").innerHTML = data.progress + "%";

@@ -22,15 +22,212 @@
       .realBody {
         display: flex;
         flex-direction: column;
+      }
+      .quizSet {
+        border: 1px solid yellow;
+        display: flex;
+        flex-direction: column;
         align-self: center;
         align-items: flex-start;
+      }
+      .quizInfo {
+        /* border: 2px solid yellow; */
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 286px;
+        padding: 20px 0;
+      }
+      .quizSubject {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .thinLine {
+        border: 1px solid white;
+        height: 13px;
+      }
+      .quizChapter {
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .quizBackground {
+        width: 1095px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(100px);
+        top: 50%;
+        left: 50%;
+        height: auto;
+        align-items: center;
+      }
+      .quizContainer {
+        display: grid;
+        margin: 60px;
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+      }
+
+      .spanQ {
+        /* border: 1px solid yellow; */
+        font-size: 25px;
+        font-weight: 400;
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        align-self: start;
+      }
+      .quizContent {
+        /* border: 1px solid yellow; */
+        font-size: 16px;
+        font-weight: 400;
+        grid-column: 2 / 4;
+        grid-row: 1 / 2;
+        display: flex;
+        padding: 10px;
+      }
+      .spanA {
+        /* border: 1px solid yellow; */
+        font-size: 25px;
+        font-weight: 400;
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        align-self: start;
+      }
+      .quizAnswer {
+        border: 1px solid white;
+        border-radius: 5px;
+        background: none;
+        width: 722px;
+        height: 98px;
+        padding: 10px;
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .quizAnswer textarea::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .sideBtns {
+        /* border: 1px solid yellow; */
+
+        display: flex;
+        flex-direction: column;
+        height: 120px;
+        justify-content: space-between;
+        align-items: center;
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+      }
+      .sideBtns button {
+        width: 134px;
+        height: 35px;
+        border-radius: 76px;
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+      .submitAns {
+        background-color: rgba(0, 0, 0, 1);
+        border: none;
+      }
+      .submitAns:hover {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .submitAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .clearAns {
+        background-color: rgba(0, 0, 0, 1);
+        border: none;
+        /* display: none; */
+      }
+      .clearAns:hover {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .clearAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .viewAns {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 1);
+        display: hidden;
+      }
+      .viewAns:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      .viewAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .quizTF {
+        display: none;
+        /* border: 1px solid white; */
+        border-radius: 5px;
+        width: 722px;
+        padding: 10px;
+        grid-column: 2 /3;
+        grid-row: 3 / 3;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
+      }
+      .quizSolution {
+        display: none;
+        /* border: 1px solid white; */
+        border-radius: 5px;
+        width: 722px;
+        padding: 10px;
+        grid-column: 2 /3;
+        grid-row: 4 / 4;
+        font-size: 16px;
+        font-weight: 400;
+        background-color: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        box-shadow: 0px 4px 7.2px rgba(0, 0, 0, 0.25);
       }
     </style>
   </head>
   <body>
     <div id="header"></div>
     <div class="realBody">
-      
+      <div class="quizSet">
+        <div class="quizInfo" id="quizInfoID">
+          <span class="quizSubject" id="quizSubjectID">과목명</span>
+          <span class="thinLine"></span>
+          <span class="quizChapter" id="quizChapterID">챕터명</span>
+        </div>
+        <div class="quizBackground">
+          <div class="quizContainer" id="quizContainerID">
+            <span class="spanQ">Q.</span>
+            <span class="quizContent" id="quizContentID"
+              >chatGPT 서버에서 보낸 질문 내용</span
+            >
+            <span class="spanA">A.</span>
+            <textarea
+              class="quizAnswer"
+              id="quizAnswerID"
+              placeholder="답변 입력 칸"
+            ></textarea>
+            <div class="sideBtns">
+              <button class="submitAns" id="submitAnsID" onclick="submitAns()">
+                제출 하기
+              </button>
+              <button class="clearAns" id="clearAnsID" onclick="clearAns()">
+                다시 풀기
+              </button>
+              <button class="viewAns" id="viewAnsID" onclick="viewAns()">
+                풀이 보기
+              </button>
+              <div class="quizTF" id="quizTFID"></div>
+              <div class="quizSolution" id="quizSolution"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
       loadHeader();
