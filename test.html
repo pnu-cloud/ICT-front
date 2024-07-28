@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=
+    <form id="chapterForm">
+      <h1>새로운 챕터와 목차를 입력하세요</h1>
+      <input
+        type="text"
+        name="title"
+        class="chapterFormNewChapter"
+        placeholder="chapter"
+        required
+      />
+      <textarea
+        type="text"
+        name="contents"
+        class="chapterFormNewContents"
+        placeholder="contents"
+        required
+      ></textarea>
+      <button type="button" onclick="submitChapterForm()">Submit</button>
+    </form>
+
+    <script>
+      // 미리 넣어둘 문자열을 설정
+      const prefillTitle = "미리 입력된 제목";
+
+      // chapterFormNewChapter 클래스를 가진 첫 번째 input 요소를 찾아 value 속성 설정
+      document.getElementsByClassName("chapterFormNewChapter")[0].value =
+        prefillTitle;
+
+      // submitChapterForm 함수는 제출 시 필요한 동작을 정의
+      function submitChapterForm() {
+        // 폼 제출 관련 로직을 여기에 추가
+      }
+    </script>
+    , initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
