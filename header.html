@@ -12,7 +12,7 @@
         color: white;
       }
       header {
-        margin: 58px 65px;
+        margin: 45px 65px;
       }
       .moveTo {
         display: flex;
@@ -32,7 +32,7 @@
       .upperBtns {
         /* border: 1px solid yellow; */
         display: flex;
-        width: 197px;
+        width: 308px;
         justify-content: space-between;
         position: absolute;
         left: 50%;
@@ -131,14 +131,15 @@
           onclick="window.location.href='./index.html'"
         />
         <div class="upperBtns">
-          <button id="subjectManage">과목 관리</button>
+          <button id="subjectManage">학습 관리</button>
+          <button id="subjectManage">오답 노트</button>
           <button id="gradeStat">성적 통계</button>
         </div>
       </div>
       <div class="detailInfo">
         <div class="subjectInfo">
           <span id="shortLine"></span>
-          <span class="subjectName">과목명</span>
+          <span class="subjectName" id="subjectName">과목명</span>
         </div>
         <div class="progressInfo">
           <label for="progressBar">진도율</label>
@@ -146,15 +147,15 @@
             id="progressBar"
             name="progressBar"
             max="100"
-            value="70"
+            value="0"
           ></progress>
           <label id="percentNum" for="progressBar">N%</label>
         </div>
-        <span class="cheerPhrase">중간고사까지 D-7🔥 할 수 있다!!</span>
+        <span class="cheerPhrase" id="cheerPhrase"
+          >중간고사까지 D-7🔥 할 수 있다!!</span
+        >
       </div>
     </header>
-    <script>
-      document;
-    </script>
+    <script></script>
   </body>
 </html>

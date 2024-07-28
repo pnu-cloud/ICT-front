@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>모두의 자율학습</title>
-    <link rel=""import" href="mainCourse.html"/>
+    <link rel="import" href="mainCourse.html" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
       * {
@@ -23,11 +23,12 @@
       .realBody {
         display: flex;
         flex-direction: column;
+        align-self: center;
         align-items: flex-start;
-        position: fixed;
+        /* position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); */
       }
       .quizInfo {
         display: flex;
@@ -60,20 +61,13 @@
         border-radius: 22px;
         background: rgba(255, 255, 255, 0.09);
         backdrop-filter: blur(50px);
-        padding: 50px;
         top: 50%;
         left: 50%;
         height: auto;
-        overflow-y: scroll;
-      }
-      .quizBackground::-webkit-scrollbar {
-        background-color: none;
-      }
-      .quizBackground::-webkit-scrollbar-button {
-        display: none;
       }
       .quizContainer {
         display: grid;
+        margin: 60px;
         grid-template-columns: auto auto 1fr;
         grid-template-rows: auto auto;
         gap: 20px;
@@ -186,29 +180,29 @@
         </button>
         <span class="QuizSpan">Quiz</span>
         <span id="thinLine"></span>
-        <span class="quizTitle">HTML 기초 이해 및 기본 태그</span>
+        <span class="quizTitle" id="quizTitle"
+          >HTML 기초 이해 및 기본 태그</span
+        >
       </div>
-      <div class="quizBackground">
+      <div class="quizBackground" id="quizBackground">
         <div class="quizContainer">
-          <span id="quizNum">Q1.</span>
+          <!-- <span id="quizNum">Q1.</span>
           <span id="quizContent">버블 정렬에 대해 자유롭게 서술하시오.</span>
           <span id="AnsSpan">A.</span>
           <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
           <div class="sideBtns">
             <button id="submitAns">제출 하기</button>
             <button id="viewAns">풀이 보기</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <script>
-      window.onload = loadHeader;
+      loadHeader();
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         const quizId = urlParams.get("id");
 
-        var titleValue;
-        var progressValue;
         fetch(`https://apict.pnu.app/quiz/${quizId}/subject`, {
           method: "GET",
           headers: {
@@ -224,16 +218,19 @@
             return response.json();
           })
           .then((data) => {
-            titleValue = data.title;
-            progressValue = data.progress;
+            document.getElementById("subjectName").innerHTML = data.title;
+            document.getElementById("progressBar").value = data.progress;
+            document.getElementById("percentNum").innerHTML =
+              data.progress + "%";
+            document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+              data.text;
           });
-        console.log("quiz_id: ", quizId);
 
         var recentjsonData = "{ 'quiz_id': " + quizId + " }";
         fetch(`https://apict.pnu.app/subject/chapter/quiz/${quizId}`, {
           method: "GET",
           headers: {
-            "Content-Type": application / json,
+            "Content-Type": "application/json",
           },
           credentials: "include",
         })
@@ -245,8 +242,7 @@
             return response.json();
           })
           .then((data) => {
-            console.log("성공적인 응답: ", data);
-            createComponent(data);
+            createContainer(data);
           });
       });
 
@@ -255,10 +251,28 @@
           .then((response) => response.text())
           .then((data) => {
             document.getElementById("header").innerHTML = data;
-          })
-          .catch((drror) =>
-            console.error("header.html 로드 중 에러 발생함 : ", error)
-          );
+          });
+      }
+      function createContainer(data) {
+        const quizBackground = document.getElementById("quizBackground");
+        quizBackground.innerHTML = "";
+
+        data.problem.forEach((item) => {
+          var quizIndex = 1;
+          document.getElementById("quizTitle").innerHTML = item.chapter; // 이후 다시 확인하기
+          const quizHTML = `
+            <div class="quizContainer">
+              <span id="quizNum">Q${quizIndex++}.</span>
+              <span id="quizContent">${item.question}</span>
+              <span id="AnsSpan">A.</span>
+              <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
+              <div class="sideBtns">
+                <button id="submitAns">제출 하기</button>
+                <button id="viewAns">풀이 보기</button>
+              </div>
+            </div>
+          `;
+        });
       }
     </script>
   </body>
