@@ -10,6 +10,7 @@
       * {
         font-family: "Poppins", sans-serif;
         color: white;
+        user-select: none;
       }
       body {
         background-image: url("./assets/background-main.gif");
@@ -25,10 +26,6 @@
         flex-direction: column;
         align-self: center;
         align-items: flex-start;
-        /* position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); */
       }
       .quizInfo {
         display: flex;
@@ -117,7 +114,7 @@
       .sideBtns {
         display: flex;
         flex-direction: column;
-        height: 86px;
+        height: 120px;
         justify-content: space-between;
         align-items: center;
         grid-column: 3 / 4;
@@ -141,10 +138,21 @@
       .submitAns:active {
         color: rgba(255, 255, 255, 0.5);
       }
+      .clearAns {
+        background-color: rgba(0, 0, 0, 1);
+        border: none;
+        /* display: none; */
+      }
+      .clearAns:hover {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .clearAns:active {
+        color: rgba(255, 255, 255, 0.5);
+      }
       .viewAns {
         background: none;
         border: 1px solid rgba(255, 255, 255, 1);
-        display: none;
+        display: hidden;
       }
       .viewAns:hover {
         border-color: rgba(255, 255, 255, 0.5);
@@ -224,6 +232,7 @@
           <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
           <div class="sideBtns">
             <button id="submitAns" onclick="submitAns()">제출 하기</button>
+            <button id="clearAns" onclick="clearAns()">다시 풀기</button>
             <button id="viewAns" onclick="viewAns()">풀이 보기</button>
           </div> -->
         </div>
@@ -305,6 +314,9 @@
                 <button class="submitAns" id="submitAns${
                   item.id
                 }" onclick="submitAns(${item.id})">제출 하기</button>
+                <button class="clearAns" id="clearAns${
+                  item.id
+                }" onclick="clearAns(${item.id})">다시 풀기</button>
                 <button class="viewAns" id="viewAns${
                   item.id
                 }" onclick="viewAns(${item.id})" >풀이 보기</button>
@@ -316,8 +328,8 @@
           quizBackground.innerHTML += quizHTML;
 
           if (item.is_correct != null) {
-            document.getElementById(`submitAns${item.id}`).style.display =
-              "none";
+            // document.getElementById(`submitAns${item.id}`).style.display =
+            //   "none";
             const quizTF = document.getElementById(`quizTF${item.id}`);
             quizTF.style.display = "block";
             var judgeTF = item.is_correct;
@@ -333,8 +345,17 @@
               "block";
           }
 
+          if (item.user_answer != null) {
+            document.getElementById(`quizAnswer${item.id}`).innerHTML =
+              item.user_answer;
+            document.getElementById(`quizTF${item.id}`).innerHTML =
+              item.is_correct;
+            document.getElementById(`quizSolution${item.id}`).innerHTML =
+              item.solution;
+          }
+
           if (item.solution != null) {
-            document.getElementById(`viewAns${item.id}`).style.display = "none";
+            // document.getElementById(`viewAns${item.id}`).style.display = "none";
             const quizSolution = document.getElementById(
               `quizSolution${item.id}`
             );
@@ -347,8 +368,8 @@
       function submitAns(id) {
         const submitAns = document.getElementById(`submitAns${id}`);
         const quizAnswer = document.getElementById(`quizAnswer${id}`);
-        submitAns.disabled = true;
-        submitAns.style.display = "none";
+        if (quizAnswer.value.length == 0) return;
+        // submitAns.style.display = "none";
         var jsonData = `{ "user_answer": "${quizAnswer.value}" }`;
         fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}`, {
           method: "POST",
@@ -365,6 +386,8 @@
             return response.json();
           })
           .then((data) => {
+            submitAns.disabled = true;
+            quizAnswer.disabled = true;
             const quizTF = document.getElementById(`quizTF${id}`);
             quizTF.style.display = "block";
             var judgeTF = data.is_correct;
@@ -376,15 +399,35 @@
               quizTF.style.color = "red";
             }
             quizTF.innerHTML = judgeTF;
+            document.getElementById(`clearAns${id}`).style.display = "block";
             document.getElementById(`viewAns${id}`).style.display = "block";
           });
+      }
+
+      function clearAns(id) {
+        const quizAnswer = document.getElementById(`quizAnswer${id}`);
+        const quizTF = document.getElementById(`quizTF${id}`);
+        const quizSolution = document.getElementById(`quizSolution${id}`);
+        fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        quizAnswer.disabled = false;
+        quizAnswer.value = "";
+        quizTF.innerHTML = "";
+        quizTF.style.display = "none";
+        quizSolution.innerHTML = "";
+        quizSolution.style.display = "none";
       }
 
       function viewAns(id) {
         const viewAns = document.getElementById(`viewAns${id}`);
         const quizSolution = document.getElementById(`quizSolution${id}`);
         viewAns.disabled = true;
-        viewAns.style.display = "none";
+        // viewAns.style.display = "none";
         fetch(
           `https://apict.pnu.app/subject/chapter/quiz/problem/${id}/solution`,
           {
