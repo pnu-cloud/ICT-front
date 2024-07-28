@@ -139,6 +139,34 @@
     </style>
   </head>
   <body>
+    <script></script>
+    <header id="mainHeader">
+      <div class="first-line">
+        <img
+          src="./assets/blueLogo.png"
+          id="left"
+          alt="svg logo"
+          style="width: 7%"
+          onclick="location.href='./index.html';"
+        />
+        <div class="tab">
+          <button id="subjectManage">과목 관리</button>
+          <button id="gradeStatic">성적 통계</button>
+          <button id="studyData">학습 데이터</button>
+        </div>
+        <img
+          src="./assets/blueLogo.png"
+          id="right"
+          alt="svg logo"
+          style="width: 7%"
+          onclick="location.href='./index.html';"
+        />
+      </div>
+      <a id="add-button" href="javascript:void(0)" onclick="showForm()"
+        >과목 추가</a
+      >
+    </header>
+
     <form id="subject-form">
       <input type="text" id="subject-title" placeholder="과목 이름" required />
       <input type="text" id="subject-text" placeholder="다짐" required />
