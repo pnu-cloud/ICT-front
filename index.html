@@ -387,6 +387,22 @@
           }
         }
       }
+      apitest();
+
+      async function apitest() {
+        try {
+          const response = await fetch(`https://apict.pnu.app/grade`, {
+            method: "GET",
+            credentials: "include",
+          });
+          const data = await response.json();
+          console.log("api");
+          console.log(data);
+        } catch (error) {
+          console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
+          return;
+        }
+      }
     </script>
   </body>
 </html>

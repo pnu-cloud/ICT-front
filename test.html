@@ -1,42 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=
-    <form id="chapterForm">
-      <h1>새로운 챕터와 목차를 입력하세요</h1>
-      <input
-        type="text"
-        name="title"
-        class="chapterFormNewChapter"
-        placeholder="chapter"
-        required
-      />
-      <textarea
-        type="text"
-        name="contents"
-        class="chapterFormNewContents"
-        placeholder="contents"
-        required
-      ></textarea>
-      <button type="button" onclick="submitChapterForm()">Submit</button>
-    </form>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>원형 프로그레스 바</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("./assets/login_circle.gif");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .progress-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: 1px solid conic-gradient(white 0% 75%, #807c7c 75% 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .progress-circle-inner {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #progress-text {
+        font-size: 20px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-circle" id="progress-circle">
+      <div class="progress-circle-inner">
+        <span id="progress-text">75%</span>
+      </div>
+    </div>
 
     <script>
-      // 미리 넣어둘 문자열을 설정
-      const prefillTitle = "미리 입력된 제목";
+      document.addEventListener("DOMContentLoaded", () => {
+        const progressCircle = document.getElementById("progress-circle");
+        const progressText = document.getElementById("progress-text");
+        const progressValue = 80; // 이 값을 동적으로 설정할 수 있습니다.
 
-      // chapterFormNewChapter 클래스를 가진 첫 번째 input 요소를 찾아 value 속성 설정
-      document.getElementsByClassName("chapterFormNewChapter")[0].value =
-        prefillTitle;
-
-      // submitChapterForm 함수는 제출 시 필요한 동작을 정의
-      function submitChapterForm() {
-        // 폼 제출 관련 로직을 여기에 추가
-      }
+        progressCircle.style.background = `conic-gradient(white 0% ${progressValue}%, #807c7c ${progressValue}% 100%)`;
+        progressText.textContent = `${progressValue}%`;
+      });
     </script>
-    , initial-scale=1.0">
-    <title>Document</title>
-  </head>
-  <body></body>
+  </body>
 </html>
