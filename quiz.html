@@ -71,7 +71,7 @@
         gap: 20px;
       }
       #quizNum {
-        /* border: 1px solid yellow; */
+        border: 1px solid yellow;
         font-size: 25px;
         font-weight: 400;
         grid-column: 1 / 2;
@@ -79,7 +79,7 @@
         justify-self: center;
       }
       #quizContent {
-        /* border: 1px solid yellow; */
+        border: 1px solid yellow;
         font-size: 16px;
         font-weight: 400;
         grid-column: 2 / 4;
@@ -88,7 +88,7 @@
         padding: 10px;
       }
       #AnsSpan {
-        /* border: 1px solid yellow; */
+        border: 1px solid yellow;
         font-size: 25px;
         font-weight: 400;
         grid-column: 1 / 2;
@@ -112,6 +112,7 @@
         font-weight: 400;
       }
       .sideBtns {
+        border: 1px solid yellow;
         display: flex;
         flex-direction: column;
         height: 120px;
@@ -259,6 +260,15 @@
             return response.json();
           })
           .then((data) => {
+            const subjectManage = document.getElementById("subjectManage");
+            subjectManage.onclick = function () {
+              location.href = `course.html?id=${quizId}&&title=${data.title}`;
+            };
+            const mistakeNote = document.getElementById("mistakeNote");
+            mistakeNote.onclick = function () {
+              location.href = "note.html";
+            };
+            const gradeStat = document.getElementById("gradeStat");
             document.getElementById("subjectName").innerHTML = data.title;
             document.getElementById("progressBar").value = data.progress;
             document.getElementById("percentNum").innerHTML =
