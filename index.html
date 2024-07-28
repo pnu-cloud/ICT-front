@@ -5,272 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subject Block</title>
     <style>
-      header {
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+      * {
+        font-family: "Poppins", sans-serif;
         color: white;
-        /* border: 2px solid red; */
-        box-sizing: border-box;
-        width: 100%;
-        padding: 3% 5%;
-        background-color: rgba(255, 255, 255, 0.09);
-        backdrop-filter: blur(50px);
-        height: 300px;
-        margin-bottom: 10%;
-      }
-      .first-line {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-bottom: 35px;
-      }
-      #right {
-        visibility: hidden;
-      }
-      .tab {
-        display: flex;
-        justify-content: center;
-        /* border: 2px solid red; */
-        font-size: 60%;
-        gap: 5%;
-        width: 300px;
-        height: auto;
-      }
-      .tab button {
-        border-radius: 20px;
-        background-color: transparent;
-        color: white;
-        height: 50%;
-        font-size: 100%;
-        width: 100%;
-      }
-      #subjectManage {
-        border: 1px solid white;
-        color: white;
-      }
-      #gradeStatic {
-        border: 1px solid grey;
-        color: grey;
-      }
-      #studyData {
-        border: 1px solid grey;
-        color: grey;
       }
       body {
-        background-image: url("./assets/background-main.gif");
+        background-image: url("./assets/login_circle.gif");
         background-size: cover;
-        background-attachment: fixed;
-        background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
       }
-      .subject-block {
-        /* border: 1px solid #000; */
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-        position: relative;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.09);
-        backdrop-filter: blur(50px);
-        color: white;
-      }
-      .progress-bar-container {
-        width: 80%;
-        height: 20px;
-        background-color: #e0e0e0;
-        border-radius: 10px;
-        margin: 20px auto;
-        position: relative;
-      }
-      .progress-bar {
-        height: 100%;
-        width: 30%;
-        background-color: #4caf50;
-        border-radius: 10px;
-      }
-      .progress-text {
+      #cover {
         position: absolute;
-        top: 0;
-        right: 10px;
-        font-weight: bold;
-        color: #007bffb4;
+        top: 0px;
+        width: 100%;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(50px);
+        z-index: -1;
       }
-      #add-button {
+      .subjectContainer {
+        position: absolute;
+        width: 1016px;
+        height: 185px;
+        left: calc(50% - 1016px / 2 + 2px);
+        top: 335px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(50px);
+        border-radius: 20px;
+      }
+      /*추가 버튼*/
+      .subjectHead {
+        background-color: red;
+      }
+      #subjectHeadText {
+        position: absolute;
+        color: #d9d9d9;
+        width: 100px;
+        left: 180px;
+        font-size: 30px;
+        top: 240px;
+      }
+      #addSubjectBnt {
         display: block;
-        width: 200px;
-        margin: 0px auto;
-        padding-top: 25px;
-        background-color: #007bffb4;
-        color: white;
+        padding: 3px;
+        color: black;
         text-align: center;
-        border-radius: 8px;
+        border-radius: 50%;
         text-decoration: none;
-        font-size: 16px;
+        font-size: 10x;
         cursor: pointer;
-        height: 50px;
+        position: absolute;
+        width: 19px;
+        height: 19px;
+        left: 320px;
+        top: 250px;
+        background: #d9d9d9;
+        transform: matrix(1, 0, 0, -1, 0, 0);
       }
-      #subject-form {
+      #addSubjectBnt:hover {
+        color: #d9d9d9;
+        background-color: #1681ff;
+      }
+
+      /*폼*/
+      #subjectForm,
+      #SubjectEditForm {
+        top: 50px;
         display: none;
-        margin: 20px;
+        position: relative;
+        z-index: 9999;
+        margin: 80px 20px 20px 20px;
         padding: 20px;
         border: 1px solid #000;
         border-radius: 8px;
         background-color: #f9f9f9;
+        z-index: 1;
       }
-      #subject-form input {
+      #subjectForm h1,
+      #SubjectEditForm h1 {
+        font-size: 30px;
+        text-align: center;
+        color: black;
+      }
+      #subjectForm input,
+      #SubjectEditForm input {
         display: block;
         width: 80%;
         margin: 10px auto;
         padding: 10px;
         font-size: 16px;
+        color: black;
       }
-      #subject-form button {
+      #subjectForm button,
+      #SubjectEditForm button {
         display: block;
         width: 200px;
         margin: 10px auto;
         padding: 10px;
         font-size: 16px;
-        background-color: #4caf50;
-        color: white;
+        background-color: #1681ff;
+        color: #d9d9d9;
         text-align: center;
         border-radius: 8px;
         border: transparent;
+        font-weight: 700;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <script>
-      fetch("https://apict.pnu.app/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-        .then((response) => {
-          if (response.status == 403) {
-            location.href = "/landing.html";
-          }
-        })
-        .catch((error) => console.log("error:", error));
-    </script>
-    <header id="mainHeader">
-      <div class="first-line">
-        <img
-          src="./assets/blueLogo.png"
-          id="left"
-          alt="svg logo"
-          style="width: 7%"
-          onclick="location.href='./index.html';"
-        />
-        <div class="tab">
-          <button id="subjectManage">과목 관리</button>
-          <button id="gradeStatic">성적 통계</button>
-          <button id="studyData">학습 데이터</button>
-        </div>
-        <img
-          src="./assets/blueLogo.png"
-          id="right"
-          alt="svg logo"
-          style="width: 7%"
-          onclick="location.href='./index.html';"
-        />
-      </div>
-      <a id="add-button" href="javascript:void(0)" onclick="showForm()"
-        >과목 추가</a
-      >
-    </header>
+    <div id="header"></div>
+    <div id="cover"></div>
+    <div class="SubjectHead">
+      <div id="subjectHeadText">Subject</div>
+      <a id="addSubjectBnt" onclick="subjectForm()">+</a>
+    </div>
+    <div class="subjectContainer"></div>
 
-    <form id="subject-form">
-      <input type="text" id="subject-title" placeholder="과목 이름" required />
-      <input type="text" id="subject-text" placeholder="다짐" required />
-      <button onclick="submitForm()">Submit</button>
+    <form id="subjectForm">
+      <h1>새로운 과목과 목차를 입력하세요</h1>
+      <input
+        type="text"
+        id="subjectFormTitle"
+        placeholder="과목 이름"
+        required
+      />
+      <input type="text" id="subjectFormText" placeholder="다짐" required />
+      <button onclick="submitsubjectForm()">Submit</button>
     </form>
 
     <script>
+      //header
+      loadHeader();
+      //load
       document.addEventListener("DOMContentLoaded", async () => {
         try {
           const response = await fetch("https://apict.pnu.app/subject", {
             credentials: "include",
           });
           const data = await response.json();
-          console.log(data.subject);
-
           data.subject.forEach((item) => {
-            console.log(item);
-            const subjectBlock = document.createElement("div");
-            subjectBlock.className = "subject-block";
-            console.log(item.id);
-            subjectBlock.onclick = function () {
-              location.href = `course.html?id=${item.id}&&title=${item.title}`;
-            };
-            subjectBlock.innerHTML = `
-                        <h2>${item.title}</h2>
-                        <p>${item.text}</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 0%;"></div> 
-                            <div class="progress-text">0%</div>
-                        </div>
-                    `;
-            document.body.appendChild(subjectBlock);
+            LoadSubjectContainer(item.id, item.title, item.text);
           });
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
       });
-
-      function showForm() {
-        document.getElementById("subject-form").style.display = "block";
+      //subjectContainer생성
+      function LoadSubjectContainer(subjectId, subjectTitle, subjectText) {
+        const subjectBlock = document.createElement("div");
+        subjectBlock.className = "subjectContainer";
+        subjectBlock.onclick = function () {
+          location.href = `course.html?id=${subjectId}&&title=${subjectTitle}`;
+        };
+        subjectBlock.innerHTML = `
+                    <h2>${subjectTitle}</h2>
+                    <p>${subjectText}</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        <div class="progress-text">0%</div>
+                    </div>
+                `;
+        document.body.appendChild(subjectBlock);
       }
 
-      async function submitForm() {
-        // event.preventDefault();
-        const title = document.getElementById("subject-title").value;
-        const text = document.getElementById("subject-text").value;
-
-        const subjectBlock = document.createElement("div");
-        subjectBlock.className = "subject-block";
-
-        subjectBlock.innerHTML = `
-                <h2>${title}</h2>
-                <p>${text}</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 0%;"></div>
-                    <div class="progress-text">0%</div>
-                </div>
-            `;
-        // document.body.insertBefore(
-        //   subjectBlock,
-        //   document.getElementById("add-button")
-        // );
-        document.getElementById("subject-form").reset();
-        document.getElementById("subject-form").style.display = "none";
-
-        try {
-          const response = await fetch("https://apict.pnu.app/subject", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ title, text }),
-            credentials: "include",
+      //header
+      function loadHeader() {
+        fetch("./header.html")
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("header").innerHTML = data;
+          })
+          .then(() => {
+            var detailInfo = document.querySelector(".detailInfo");
+            if (detailInfo) {
+              detailInfo.remove();
+            }
           });
+      }
 
-          const data = await response.json();
-
-          if (data.id) {
-            // 서버 응답으로 받은 과목 ID가 있을 경우
-            subjectBlock.querySelector("h2").textContent = data.title;
-            subjectBlock.querySelector("p").textContent = data.text;
-
-            subjectBlock.onclick = function () {
-              location.href = `mainCourse.html?id=${data.id}`;
-            };
-          }
-          location.href = "/";
-        } catch (error) {
-          console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
-        }
+      //form
+      function subjectForm() {
+        document.getElementById("subjectForm").style.display = "block";
       }
     </script>
   </body>
