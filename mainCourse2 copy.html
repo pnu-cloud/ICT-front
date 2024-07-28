@@ -568,8 +568,6 @@
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
       }
-
-      //챕터 삭제
       async function deleteChapter(chapterId, deleteButton) {
         if (chapterId !== "new") {
           try {
@@ -587,6 +585,7 @@
             return;
           }
         }
+        // Remove the chapter block from the DOM
         const chapterBlock = deleteButton.closest(".chapter-block");
         chapterBlock.remove();
       }
