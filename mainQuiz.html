@@ -191,8 +191,8 @@
           <span id="AnsSpan">A.</span>
           <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
           <div class="sideBtns">
-            <button id="submitAns">제출 하기</button>
-            <button id="viewAns">풀이 보기</button>
+            <button id="submitAns" onclick="submitAns()">제출 하기</button>
+            <button id="viewAns" onclick="viewAns()">풀이 보기</button>
           </div> -->
         </div>
       </div>
@@ -242,7 +242,9 @@
             return response.json();
           })
           .then((data) => {
-            createContainer(data);
+            document.getElementById("quizTitle").innerHTML = data.chapter.title;
+            createContainer(data.problem);
+            console.log(data.problem);
           });
       });
 
@@ -253,13 +255,12 @@
             document.getElementById("header").innerHTML = data;
           });
       }
-      function createContainer(data) {
+      function createContainer(problems) {
         const quizBackground = document.getElementById("quizBackground");
         quizBackground.innerHTML = "";
 
-        data.problem.forEach((item) => {
-          var quizIndex = 1;
-          document.getElementById("quizTitle").innerHTML = item.chapter; // 이후 다시 확인하기
+        let quizIndex = 1;
+        problems.forEach(function (item) {
           const quizHTML = `
             <div class="quizContainer">
               <span id="quizNum">Q${quizIndex++}.</span>
@@ -267,13 +268,24 @@
               <span id="AnsSpan">A.</span>
               <textarea id="quizAnswer" placeholder="답변 입력 칸"></textarea>
               <div class="sideBtns">
-                <button id="submitAns">제출 하기</button>
-                <button id="viewAns">풀이 보기</button>
+                <button id="submitAns" onclick="submitAns(${
+                  item.id
+                })">제출 하기</button>
+                <button id="viewAns" onclick="viewAns()">풀이 보기</button>
               </div>
             </div>
           `;
+          quizBackground.innerHTML += quizHTML;
         });
       }
+
+      function submitAns(id) {
+        const quizAnswer = document.getElementById("quizAnswer");
+        quizAnswer.disabled = true;
+        submitAns.style.display = "none";
+        var jsonData = `{ "user_answer": "${quizAnswer.value}" }`;
+      }
+      function viewAns() {}
     </script>
   </body>
 </html>
