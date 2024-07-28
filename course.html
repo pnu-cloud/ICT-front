@@ -400,6 +400,7 @@
           LoadChapterBlock(title, contents, data.id);
           document.getElementById("chapterForm").reset();
           document.getElementById("chapterForm").style.display = "none";
+          window.location = "/";
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
@@ -525,6 +526,7 @@
           }
         }
       }
+      //edit
       function chapterEditForm(dataId) {
         var form = document.getElementById("chapterEditForm");
         form.style.display = "block";
@@ -555,9 +557,8 @@
           submitChapterEditForm(dataId);
         };
       }
-      //수정 제출시 아직 안 함.
+      //수정 제출
       async function submitChapterEditForm(dataId) {
-        console.log("되나");
         try {
           const title = document.getElementsByClassName(
             "chapterFormNewChapter"
