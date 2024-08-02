@@ -10,9 +10,13 @@
         /* color: rgba(154, 182, 252, 0.84); */
         border-color: rgba(119, 156, 249, 0.84);
       }
+      #detailInfo {
+        visibility: hidden;
+      }
       * {
         font-family: "Poppins", sans-serif;
         color: white;
+        text-align: center;
       }
       body {
         background-image: url("./assets/background-main.gif");
@@ -23,11 +27,195 @@
         flex-direction: column;
         align-items: center;
       }
+      .realBody {
+        top: 50%;
+        left: 50%;
+        height: auto;
+      }
+      .manageContainer {
+        border: 1px solid yellow;
+        width: 1095px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(100px);
+        top: 50%;
+        left: 50%;
+        height: auto;
+        align-items: center;
+      }
+      .subjectInfo2 {
+        border: 1px solid yellow;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        /* width: 286px; */
+        width: 500px;
+        padding: 20px 0;
+      }
+      .subjectName2 {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .subjectProgress {
+        font-size: 20px;
+      }
+      .subjectCorrect {
+        font-size: 20px;
+      }
+      .mainBox {
+        border: 1px solid yellow;
+        padding: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+      .imgSrc {
+        border: 1px solid yellow;
+        width: 150px;
+        height: 150px;
+        border-radius: 22px;
+      }
+      .chapterAll {
+        border: 1px solid yellow;
+      }
+      .chapterContainer {
+        border: 1px solid yellow;
+        width: 750px;
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-bottom: 50px;
+      }
+      .chapterInfo {
+        /* border: 3px solid green; */
+        width: 365px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .chapterNum {
+        border: 1px solid yellow;
+        border-radius: 9999px;
+        width: 120px;
+      }
+      .chapterProgress {
+        border: 1px solid yellow;
+      }
+      .chapterCorrect {
+        border: 1px solid yellow;
+      }
+      .allProgress {
+      }
+      .progressGraph {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
     <div id="header"></div>
-    <script src="function.js"></script>
+    <div id="realBody">
+      <div class="manageContainer" id="manageContainer${item.id}">
+        <div class="subjectInfo2">
+          <span class="subjectName2" id="subjectName2${item.id}">과목명</span>
+          <span class="subjectProgress" id="subjectProgress${item.id}"
+            >진행률 : N%</span
+          >
+          <span class="subjectCorrect" id="subjectCorrect${item.id}"
+            >정답률 : M%</span
+          >
+        </div>
+        <div class="mainBox">
+          <div class="imgSrc"></div>
+          <div class="chapterAll" id="chapterAll${item.id}">
+            <div class="chapterContainer" id="chapterContainer${item.id}">
+              <div class="chapterInfo">
+                <span class="chapterNum" id="chapterNum${item.id}"
+                  >Chapter 01</span
+                >
+                <span class="chapterProgress" id="chapterProgress${item.id}"
+                  >총 문항 수 : K</span
+                >
+                <span class="chapterCorrect" id="chapterCorrect${item.id}"
+                  >정답률 : J%</span
+                >
+              </div>
+              <div class="allProgress">
+                <progress
+                  class="progressGraph"
+                  id="progressGraph${item.id}"
+                  max="100"
+                  value="70"
+                ></progress>
+              </div>
+            </div>
+            <div class="chapterContainer" id="chapterContainer${item.id}">
+              <div class="chapterInfo">
+                <span class="chapterNum" id="chapterNum${item.id}"
+                  >Chapter 01</span
+                >
+                <span class="chapterProgress" id="chapterProgress${item.id}"
+                  >총 문항 수 : K</span
+                >
+                <span class="chapterCorrect" id="chapterCorrect${item.id}"
+                  >정답률 : J%</span
+                >
+              </div>
+              <div class="allProgress">
+                <progress
+                  class="progressGraph"
+                  id="progressGraph${item.id}"
+                  max="100"
+                  value="70"
+                ></progress>
+              </div>
+            </div>
+            <div class="chapterContainer" id="chapterContainer${item.id}">
+              <div class="chapterInfo">
+                <span class="chapterNum" id="chapterNum${item.id}"
+                  >Chapter 01</span
+                >
+                <span class="chapterProgress" id="chapterProgress${item.id}"
+                  >총 문항 수 : K</span
+                >
+                <span class="chapterCorrect" id="chapterCorrect${item.id}"
+                  >정답률 : J%</span
+                >
+              </div>
+              <div class="allProgress">
+                <progress
+                  class="progressGraph"
+                  id="progressGraph${item.id}"
+                  max="100"
+                  value="70"
+                ></progress>
+              </div>
+            </div>
+            <div class="chapterContainer" id="chapterContainer${item.id}">
+              <div class="chapterInfo">
+                <span class="chapterNum" id="chapterNum${item.id}"
+                  >Chapter 01</span
+                >
+                <span class="chapterProgress" id="chapterProgress${item.id}"
+                  >총 문항 수 : K</span
+                >
+                <span class="chapterCorrect" id="chapterCorrect${item.id}"
+                  >정답률 : J%</span
+                >
+              </div>
+              <div class="allProgress">
+                <progress
+                  class="progressGraph"
+                  id="progressGraph${item.id}"
+                  max="100"
+                  value="70"
+                ></progress>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./function.js"></script>
     <script>
       loadHeader();
     </script>
