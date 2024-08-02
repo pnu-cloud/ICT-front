@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인 페이지</title>
     <style>
+      * {
+        font-size: 16px;
+      }
       body {
         background-image: url("./assets/login_circle.gif");
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      img {
+        width: 200px;
+        margin: 100px;
       }
       .container {
         text-align: center;
@@ -22,13 +32,26 @@
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(50px);
         border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      #loginForm {
+        /* border: 1px solid yellow; */
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
       }
       input[type="email"],
       input[type="password"] {
         width: 500px;
         padding: 10px;
-        margin: 10px 0;
+        /* margin: 10px 0; */
         box-sizing: border-box;
+        color: white;
       }
       input[type="email"]::placeholder,
       input[type="password"]::placeholder {
@@ -39,11 +62,14 @@
         /*position: absolute;*/
         width: 357px;
         height: 45px;
-        top: 487px;
         background-color: transparent;
         border: 1px solid #ffffff;
         border-radius: 10px;
         color: white;
+        cursor: pointer;
+      }
+      button:active {
+        background-color: #7e85e074;
       }
       .options {
         margin-top: 20px;
@@ -69,6 +95,7 @@
     </style>
   </head>
   <body>
+    <img src="./assets/blueLogo.png" />
     <div class="container">
       <form id="loginForm">
         <div class="forminputs">
