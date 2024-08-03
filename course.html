@@ -11,85 +11,177 @@
         color: white;
       }
       body {
-        background-image: url("./assets/background-main.gif");
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
         display: flex;
         flex-direction: column;
       }
-      .chapterHead {
-        background-color: red;
-      }
+
       #chapterHeadText {
         position: absolute;
         color: #d9d9d9;
         width: 100px;
-        left: 180px;
+        left: 140px;
         font-size: 30px;
-        top: 200px;
+        font-weight: 600;
+        top: -60px;
       }
       #addChapterBnt {
-        display: block;
-        padding: 3px;
-        color: black;
-        text-align: center;
-        border-radius: 50%;
-        text-decoration: none;
-        font-size: 10x;
-        cursor: pointer;
         position: absolute;
-        width: 19px;
-        height: 19px;
-        left: 320px;
-        top: 210px;
-        background: #d9d9d9;
-        transform: matrix(1, 0, 0, -1, 0, 0);
+        width: 30px;
+        height: 30px;
+        left: 280px;
+        top: -52px;
       }
-      #addChapterBnt:hover {
+      #addChapterBnt .material-symbols-outlined {
         color: #d9d9d9;
-        background-color: #1681ff;
+        font-size: 30px;
       }
       #quizHead {
         position: absolute;
         color: #d9d9d9;
         width: 100px;
-        left: 800px;
+        right: 170px;
         font-size: 30px;
-        top: 200px;
+        font-weight: 600;
+        top: -60px;
       }
-      /*챕터만들기 폼*/
+      /*폼*/
       #chapterForm,
       #chapterEditForm {
         top: 50px;
         display: none;
-        position: relative;
         z-index: 9999;
-        margin: 80px 20px 20px 20px;
         padding: 20px;
         border: 1px solid #000;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        z-index: 1;
+        position: relative;
+        width: 995px;
+        height: 501px;
+        left: 0px;
+        top: 70px;
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 22px;
+        flex-wrap: wrap;
       }
       #chapterForm h1,
       #chapterEditForm h1 {
-        font-size: 30px;
         text-align: center;
-        color: black;
+        position: absolute;
+        width: 180px;
+        height: 36px;
+        top: 25px;
+        left: calc(50% - 180px / 2);
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #d9d9d9;
       }
       #chapterForm input,
       #chapterEditForm input {
-        display: block;
-        width: 80%;
-        margin: 10px auto;
-        padding: 10px;
-        font-size: 16px;
-        color: black;
+        width: 442px;
+        height: 56.71px;
+        left: calc(50% - 442px / 2 - 15px);
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 20px;
+        border-color: transparent;
+        margin: 10px;
+        position: absolute;
+        padding: 20px;
+        box-sizing: border-box;
+        font-size: 20px;
+      }
+      #chapterFormFile {
+        height: 120px;
+        display: none;
+      }
+      #chapterForm textarea,
+      #chapterEditForm textarea {
+        width: 442px;
+        height: 120px;
+        left: calc(50% - 442px / 2 - 15px);
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 20px;
+        border-color: transparent;
+        margin: 10px;
+        position: absolute;
+        font-size: 15px;
+      }
+      .chapterFormTitleHead,
+      .chapterFormContentsHead,
+      .chapterFormFileHead {
+        position: absolute;
+        box-sizing: border-box;
+        left: calc(50% - 442px / 2);
+        font-size: 22px;
+        font-weight: 600;
+        color: #d9d9d9;
+      }
+      .chapterFormTitleHead {
+        top: 130px;
+      }
+      .chapterFormContentsHead {
+        cursor: pointer;
+        border: 3px solid grey;
+        padding: 0px 10px 0px 10px;
+
+        box-sizing: border-box;
+        position: absolute;
+        border: 1.8px solid white;
+        border-radius: 76px;
+        color: #d9d9d9;
+        background-color: transparent;
+        cursor: pointer;
+        top: 240px;
+      }
+
+      .chapterFormFileHead {
+        cursor: pointer;
+        border: 3px solid grey;
+        left: 590px;
+        padding: 0px 10px 0px 10px;
+
+        box-sizing: border-box;
+        position: absolute;
+        border: 1.8px solid white;
+        border-radius: 76px;
+        color: #d9d9d9;
+        background-color: transparent;
+        cursor: pointer;
+        top: 240px;
+      }
+      .chapterFormContentsHead:hover,
+      .chapterFormFileHead:hover {
+        background-color: #1681ff;
+      }
+      #chapterFormTitle,
+      #chapterFormEditTitle {
+        top: 155px;
+      }
+      #chapterFormContents,
+      #chapterFormEditContents {
+        box-sizing: border-box;
+        top: 280px;
+        resize: none;
+        padding: 20px;
+      }
+      #chapterFormFile {
+        box-sizing: border-box;
+        top: 280px;
+        padding: 0;
       }
       #chapterForm button,
       #chapterEditForm button {
-        display: block;
         width: 200px;
         margin: 10px auto;
         padding: 10px;
@@ -101,30 +193,44 @@
         border: transparent;
         font-weight: 700;
         cursor: pointer;
+        height: 50px;
+        left: calc(50% - 200px / 2);
+        position: absolute;
+        top: 420px;
       }
-      .chapterFormNewContents {
-        display: block;
-        width: 80%;
-        margin: 10px auto;
-        padding: 10px;
-        font-size: 16px;
-        height: 100px;
-        color: black;
+      .FormLine {
+        position: absolute;
+        width: 122px;
+        height: 0px;
+        left: calc(50% - 122px / 2);
+        top: 100px;
+        border: 1px solid #ededed;
+      }
+      #chapterFormClose,
+      #chapterEditFormClose {
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+        font-size: 30px;
       }
 
       /*챕터 블럭*/
       #blocksContainer {
         position: absolute;
-        top: 300px;
-        left: 100px;
+        top: 280px;
+        left: calc(50% - 1035px / 2 + 0.5px);
+        width: 1035px;
       }
 
       .chapterBigBlock {
         position: relative;
-        width: 80px;
-        height: 300px;
-        left: 80px;
-        margin-bottom: 80px; /* 각 요소 사이의 간격을 줄이기 위해 설정 */
+        box-sizing: border-box;
+        width: 1035px;
+        height: 350px;
+        left: 0px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 30px; /* 각 요소 사이의 간격을 줄이기 위해 설정 */
       }
 
       .chapterBlock {
@@ -132,9 +238,9 @@
         border-radius: 8px;
         padding: 30px;
         font-family: Arial, sans-serif;
-        width: 1000px;
+        width: 850px;
         height: 250px;
-        left: 0;
+        right: 0;
         background: rgba(255, 255, 255, 0.09);
         backdrop-filter: blur(50px);
       }
@@ -142,41 +248,82 @@
       .chapterBlockBack {
         position: absolute;
         z-index: -1;
-        width: 1000px;
+        width: 855px;
         height: 38px;
-        left: 25px;
-        top: 290px; /* chapterBlock 아래로 이동 */
+        right: 25px;
+        top: 285px; /* chapterBlock 아래로 이동 */
         background: linear-gradient(90deg, #3da2ff 0%, #512499 100%);
         backdrop-filter: blur(50px);
         border-radius: 12px;
       }
-      div[class^="chapterTitle-"] {
+      h2[id^="chapterTitle-"] {
         color: #d9d9d9;
-        font-size: 30px;
+        font-size: 25px;
+        width: 580px;
+        position: absolute;
+        top: 35px;
+        box-sizing: border-box;
+        margin: 0;
+        left: 35px;
       }
-      div[class^="chapterContents-"] {
+      p[id^="chapterContents-"] {
         color: #d9d9d9;
         font-size: 18px;
-        background-color: red;
+        color: #d9d9d9;
+        font-size: 18px;
+        width: 550px;
+        position: absolute;
+        top: 83px;
+        box-sizing: border-box;
+        height: 200px;
+        left: 35px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 10px;
+        padding-left: 20px;
+
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
       }
+
+      p[id^="chapterContents-"]::-webkit-scrollbar,
+      div[id^="quizzes-"]::-webkit-scrollbar {
+        width: 10px; /* Width of the scrollbar */
+        height: 12px; /* Height of the horizontal scrollbar */
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.2);
+        left: -10px;
+      }
+      p[id^="chapterContents-"]::-webkit-scrollbar-track,
+      div[id^="quizzes-"]::-webkit-scrollbar-track {
+        background: transparent; /* Track color */
+      }
+
+      p[id^="chapterContents-"]::-webkit-scrollbar-thumb,
+      div[id^="quizzes-"]::-webkit-scrollbar-thumb {
+        background: #bdbdbd; /* Thumb color */
+        border-radius: 10px; /* Rounded corners for the thumb */
+      }
+
       .chapterBar {
         position: absolute;
-        width: 3px;
+        width: 1.5px;
         height: 230px;
         left: 620px;
-        top: 35px;
+        top: 50px;
 
         background: #d9d9d9;
         color: transparent;
         border-radius: 9999px;
       }
       .createBtn {
-        left: 650px;
+        left: 685px;
         border-radius: 4px;
         box-sizing: border-box;
         position: absolute;
         width: 150px;
-        top: 40px;
+        top: 35px;
         border: 1.8px solid white;
         border-radius: 76px;
         color: #d9d9d9;
@@ -190,69 +337,59 @@
       }
       .chapterNum {
         position: absolute;
-        left: -100px;
+        left: -80px;
         top: 20px;
         color: #d9d9d9;
         font-size: 50px;
       }
-      .deleteChapterBtn {
-        position: absolute;
-        top: 250px;
-        right: 20px;
-        background-color: black;
-        color: #d9d9d9;
-        border: 1.8px solid black;
-        border-radius: 8px;
-        padding: 8px;
-        left: 480px;
-        border-radius: 4px;
-        box-sizing: border-box;
-        width: 100px;
-        border-radius: 76px;
-        color: #d9d9d9;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      .deleteChapterBtn:hover {
-        border: 1.8px solid grey;
-      }
-      /*수정 버튼*/
+      .deleteChapterBtn,
       .editChapterBtn {
         position: absolute;
-        top: 250px;
-        right: 20px;
-        background-color: transparent;
+        left: -80px;
+        top: 80px;
         color: #d9d9d9;
-        border-radius: 8px;
-        padding: 8px;
-        left: 370px;
-        border-radius: 4px;
         box-sizing: border-box;
-        width: 100px;
-        border-radius: 76px;
-        color: #d9d9d9;
-        border: 1.8px solid white;
-        font-size: 12px;
-        font-weight: 600;
+        left: -85px;
         cursor: pointer;
+        background-color: transparent;
+        border: none;
       }
-      .editChapterBtn:hover {
-        border: 1.8px solid grey;
+      .deleteChapterBtn .material-symbols-outlined,
+      .editChapterBtn .material-symbols-outlined {
+        font-size: 40px;
+        color: #d9d9d9;
       }
-      div[class^="quizzes-"] {
+      .deleteChapterBtn {
+        top: 110px;
+      }
+      .editChapterBtn {
+        top: 180px;
+      }
+      /*수정 버튼*/
+      div[id^="quizzes-"] {
         padding: 10px;
         position: absolute;
         left: 650px;
-        top: 80px;
-        line-height: 1.5;
+        color: #d9d9d9;
+        font-size: 18px;
+        color: #d9d9d9;
+        font-size: 18px;
+        width: 230px;
+        top: 83px;
+        box-sizing: border-box;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        margin: 0;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
       }
-      div[class^="quizzes-"] a {
+      div[id^="quizzes-"] a {
         text-decoration: none;
         color: #d9d9d9;
         font-size: 20px;
       }
-      div[class^="quizzes-"] a:hover {
+      div[id^="quizzes-"] a:hover {
         color: #1681ff;
         text-decoration: underline;
       }
@@ -285,65 +422,90 @@
         z-index: 999;
       }
     </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="header"></div>
 
-    <div class="chapterHead">
-      <div id="chapterHeadText">Chapter</div>
-      <a id="addChapterBnt" onclick="chapterForm()">+</a>
-      <div id="quizHead">Quiz</div>
-    </div>
-    <div id="creatingQuiz">
-      퀴즈를 생성하는 중입니다.<br />
-      잠시만 기다려 주세요.
-    </div>
+    <div id="creatingQuiz">로딩중...</div>
     <div id="overlay"></div>
+
+    <div id="blocksContainer">
+      <div class="chapterHead">
+        <div id="chapterHeadText">Chapter</div>
+        <a id="addChapterBnt" onclick="chapterForm()">
+          <span class="material-symbols-outlined"> add_circle </span>
+        </a>
+        <div id="quizHead">Quiz</div>
+      </div>
+    </div>
     <!-- new -->
     <form id="chapterForm">
-      <h1>새로운 챕터와 목차를 입력하세요</h1>
+      <h1>신규 챕터 생성</h1>
+      <span
+        class="material-symbols-outlined"
+        id="chapterFormClose"
+        onclick="chapterFormClose()"
+      >
+        close
+      </span>
+      <div class="FormLine"></div>
+      <div class="chapterFormTitleHead">챕터명</div>
       <input
         type="text"
         name="chapter"
-        class="chapterFormNewChapter"
-        placeholder="chapter"
+        id="chapterFormTitle"
+        placeholder="   챕터명"
         required
       />
+      <div class="chapterFormContentsHead" onclick="fileClose()">목차 작성</div>
       <textarea
         type="text"
         name="contents"
-        class="chapterFormNewContents"
-        placeholder="contents"
+        id="chapterFormContents"
+        placeholder="   목차"
       ></textarea>
+      <div class="chapterFormFileHead" onclick="filePop()">파일 업로드</div>
       <input
         type="file"
         name="file"
-        class="chapterFormNewFile"
+        id="chapterFormFile"
         placeholder="file"
+        style="height: 120px"
       />
       <button type="button" onclick="submitChapterForm()">Submit</button>
     </form>
     <!-- 수정 -->
     <form id="chapterEditForm">
-      <h1>챕터 혹은 목차를 수정하세요</h1>
+      <h1>기존 챕터 수정</h1>
+      <span
+        class="material-symbols-outlined"
+        id="chapterEditFormClose"
+        onclick="chapterEditFormClose()"
+      >
+        close
+      </span>
+      <div class="FormLine"></div>
+      <div class="chapterFormTitleHead">챕터명</div>
       <input
         type="text"
-        name="title"
-        class="chapterFormNewChapter"
-        placeholder="chapter"
+        name="chapter"
+        id="chapterFormEditTitle"
+        placeholder="   챕터명"
         required
       />
+      <div class="chapterFormContentsHead">목차 작성</div>
       <textarea
         type="text"
         name="contents"
-        class="chapterFormNewContents"
-        placeholder="contents"
-        required
+        id="chapterFormEditContents"
+        placeholder="   목차"
       ></textarea>
-      <button type="button"></button>
+      <button type="button">Submit</button>
     </form>
-
-    <div id="blocksContainer"></div>
 
     <script>
       //load
@@ -364,16 +526,60 @@
             }
           );
           const data = await response.json();
-          console.log(data);
           data.chapter.forEach((item) => {
-            console.log(item);
             LoadChapterBlock(item.title, item.content, item.id);
             quizListLoad(item.id, id);
           });
+          window.location = "/";
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
+        //다짐
+        try {
+          const response = await fetch(`https://apict.pnu.app/subject/${id}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          });
+          const data = await response.json();
+          document.getElementById("subjectName").innerHTML = data.title;
+          document.getElementById("progressBar").value = data.progress;
+          document.getElementById("percentNum").innerHTML = data.progress + "%";
+
+          document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+            data.text;
+        } catch (error) {
+          console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
+        }
+        /*
+        fetch(`https://apict.pnu.app/subject/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+              console.log("problemId: ", problemId);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const gradeStat = document.getElementById("gradeStat");
+            document.getElementById("subjectName").innerHTML = data.title;
+            document.getElementById("progressBar").value = data.progress;
+            document.getElementById("percentNum").innerHTML =
+              data.progress + "%";
+            document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+              data.text;
+          });
+          */
       });
+
       //header
       function loadHeader() {
         fetch("./header.html")
@@ -385,13 +591,13 @@
           .then(() => {
             const subjectNameElement = document.getElementById("subjectName");
             if (subjectNameElement) {
-              console.log(title);
               subjectNameElement.innerText = title;
             } else {
               console.error("Element with ID 'subjectName' not found");
             }
           });
       }
+
       //챕터 만들기 폼
       function chapterForm() {
         document.getElementById("chapterForm").style.display = "block";
@@ -402,23 +608,16 @@
         const formData = new FormData();
 
         const form = document.getElementById("chapterForm");
-        const title = document.getElementsByClassName(
-          "chapterFormNewChapter"
-        )[0].value;
+        const title = document.getElementById("chapterFormTitle").value;
         formData.append("chapter", title);
-
-        if (document.getElementsByClassName("chapterFormNewFile") != null) {
-          const fileInput =
-            document.getElementsByClassName("chapterFormNewFile")[0];
-          console.log(fileInput);
+        console.log(document.getElementById("chapterFormFile"));
+        if (document.getElementById("chapterFormFile") != null) {
+          const fileInput = document.getElementById("chapterFormFile");
           const file = fileInput.files[0];
           formData.append("file", file);
         } else {
-          console.log(document.getElementsByClassName("chapterFormNewFile"));
         }
-        const contents = document.getElementsByClassName(
-          "chapterFormNewContents"
-        )[0].value;
+        const contents = document.getElementById("chapterFormContents").value;
         formData.append("contents", contents);
 
         const url = `https://apict.pnu.app/subject/${id}/chapter`;
@@ -431,9 +630,12 @@
           });
 
           if (response.ok) {
-            const result = await response.json();
-            console.log("Form submitted successfully:", result);
-            alert("Form submitted successfully");
+            const data = await response.json();
+            console.log(data);
+            LoadChapterBlock(title, contents, data.id);
+            document.getElementById("chapterForm").reset();
+            document.getElementById("chapterForm").style.display = "none";
+            window.location = "/";
           } else {
             console.error("Form submission failed:", response.statusText);
             alert("Form submission failed");
@@ -442,43 +644,6 @@
           console.error("Error submitting form:", error);
           alert("Error submitting form");
         }
-
-        /*
-            try {
-              const title = document.getElementsByClassName(
-                "chapterFormNewChapter"
-              )[0].value;
-              const contents = document.getElementsByClassName(
-                "chapterFormNewContents"
-              )[0].value;
-
-              const response = await fetch(
-                `https://apict.pnu.app/subject/${id}/chapter`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include",
-                  body: JSON.stringify({
-                    chapter: title,
-                    contents: contents,
-                  }),
-                  credentials: "include",
-                }
-              );
-              */
-        const data = await response.json();
-        console.log(data);
-        LoadChapterBlock(title, contents, data.id);
-        document.getElementById("chapterForm").reset();
-        document.getElementById("chapterForm").style.display = "none";
-        window.location = "/";
-        /*
-            } catch (error) {
-              console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
-            }
-              */
       }
       //챕터 블럭 만들기
       function LoadChapterBlock(title, contents, dataId) {
@@ -494,14 +659,20 @@
                               <div class = "chapterNum">${String(
                                 chapterNum
                               ).padStart(2, "0")}</div>
-                              <h2 class = "chapterTitle-${dataId}">${title}</h2>
-                              <p class = "chapterContents-${dataId}">${contents}</p>
+
+                              <button class="deleteChapterBtn" onclick="deleteChapter(${dataId}, this)">
+                                <span class="material-symbols-outlined">delete</span>
+                              </button>
+                              <button class="editChapterBtn" onclick="chapterEditForm(${dataId})">
+                                <span class="material-symbols-outlined"> edit_square </span>
+                              </button>
+
+                              <h2 id = "chapterTitle-${dataId}">${title}</h2>
+                              <p id = "chapterContents-${dataId}">${contents}</p>
                               <div class="chapterBar">.</div>
 
-                              <button class="createBtn" onclick="createQuiz(${dataId})" >문제 생성</button>
-                              <div class="quizzes-${dataId}"></div>
-                              <button class="editChapterBtn" onclick="chapterEditForm(${dataId})">수정</button>
-                              <button class="deleteChapterBtn" onclick="deleteChapter(${dataId}, this)">삭제</button>
+                              <button class="createBtn" onclick="createQuiz(${dataId})">문제 생성</button>
+                              <div id="quizzes-${dataId}"></div>
                           `;
 
         chapterBigBlock.appendChild(chapterBlock);
@@ -570,9 +741,7 @@
       }
       //퀴즈 블록 함수
       function QuizList(itemId, chapterId, itemTitle) {
-        const quizContainer = document.getElementsByClassName(
-          `quizzes-${chapterId}`
-        )[0];
+        const quizContainer = document.getElementById(`quizzes-${chapterId}`);
         const quizLink = document.createElement("a");
         quizLink.href = `quiz.html?id=${itemId}`;
         quizLink.innerText = `${itemTitle}`;
@@ -604,9 +773,9 @@
             }
           }
           // Remove the chapter block from the DOM
-          const chapterBlock = deleteButton.closest(".chapterBlock");
-          if (chapterBlock) {
-            chapterBlock.remove();
+          const chapterBigBlock = deleteButton.closest(".chapterBigBlock");
+          if (chapterBigBlock) {
+            chapterBigBlock.remove();
           }
         }
       }
@@ -615,28 +784,23 @@
         var form = document.getElementById("chapterEditForm");
         form.style.display = "block";
         //원래 챕터명
-        const originTitle = document.getElementsByClassName(
+        const originTitle = document.getElementById(
           `chapterTitle-${dataId}`
-        )[0].textContent;
-        document.getElementsByClassName("chapterFormNewChapter")[1].value =
-          originTitle;
+        ).textContent;
+        document.getElementById("chapterFormEditTitle").value = originTitle;
 
         //원래 챕터 목차
-        const originContents = document.getElementsByClassName(
+        const originContents = document.getElementById(
           `chapterContents-${dataId}`
-        )[0].textContent;
+        ).textContent;
         console.log(originContents);
-        document.getElementsByClassName("chapterFormNewContents")[1].value =
+        document.getElementById("chapterFormEditContents").value =
           originContents;
 
         const buttonContainer = document
           .getElementById("chapterEditForm")
           .querySelector("button");
 
-        // innerHTML로 버튼의 내용을 설정하고, onclick 속성을 추가합니다.
-        buttonContainer.innerHTML = `${dataId} Submit`;
-
-        // JavaScript로 onclick 이벤트 핸들러를 설정합니다.
         buttonContainer.onclick = function () {
           submitChapterEditForm(dataId);
         };
@@ -644,12 +808,10 @@
       //수정 제출
       async function submitChapterEditForm(dataId) {
         try {
-          const title = document.getElementsByClassName(
-            "chapterFormNewChapter"
-          )[1].value;
-          const contents = document.getElementsByClassName(
-            "chapterFormNewContents"
-          )[1].value;
+          const title = document.getElementById("chapterFormEditTitle").value;
+          const contents = document.getElementById(
+            "chapterFormEditContents"
+          ).value;
           console.log(title);
           console.log(contents);
           const response = await fetch(
@@ -670,9 +832,28 @@
           console.log("됏다");
           document.getElementById("chapterEditForm").reset();
           document.getElementById("chapterEditForm").style.display = "none";
+          window.location = "/";
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
+      }
+      function chapterFormClose() {
+        document.getElementById("chapterForm").reset();
+        document.getElementById("chapterForm").style.display = "none";
+      }
+      function chapterEditFormClose() {
+        document.getElementById("chapterEditForm").reset();
+        document.getElementById("chapterEditForm").style.display = "none";
+      }
+      function filePop() {
+        const chapterFormFile = document.getElementById("chapterFormFile");
+        const displayStyle = window.getComputedStyle(chapterFormFile).display;
+        chapterFormFile.style.display = "block";
+      }
+      function fileClose() {
+        const chapterFormFile = document.getElementById("chapterFormFile");
+        const displayStyle = window.getComputedStyle(chapterFormFile).display;
+        chapterFormFile.style.display = "none";
       }
     </script>
   </body>

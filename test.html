@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>원형 프로그레스 바</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("./assets/login_circle.gif");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .progress-circle {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        mask-image: radial-gradient(circle, transparent 60%, black 61%);
+      }
+
+      .progress-text {
+        position: absolute;
+        font-size: 20px;
+        color: white;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-circle" id="progress-circle"></div>
+    <span class="progress-text" id="progress-text">75%</span>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const progressCircle = document.getElementById("progress-circle");
+        const progressText = document.getElementById("progress-text");
+        const progressValue = 30; // 이 값을 동적으로 설정할 수 있습니다.
+
+        progressCircle.style.background = `conic-gradient(#222222 0% ${progressValue}%, #e6e6e6 ${progressValue}% 100%)`;
+        progressText.textContent = `${progressValue}%`;
+      });
+    </script>
+  </body>
+</html>

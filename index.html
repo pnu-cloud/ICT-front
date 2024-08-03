@@ -152,24 +152,11 @@
         justify-content: center;
         /* Note: backdrop-filter has minimal browser support */
       }
-      .circleGraph,
       .promiseText {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-      }
-      .circleGraph {
-        width: 100px; /* 원하는 크기로 설정 */
-        height: 100px;
-        border-radius: 50%;
-        background: conic-gradient(
-          #4e79a7 25%,
-          #f28e2b 25% 50%,
-          #e15759 50% 75%,
-          #76b7b2 75% 100%
-        );
-        transition: opacity 0.3s ease;
       }
 
       .promiseText {
@@ -186,11 +173,12 @@
         left: 20px;
         top: 220px;
         text-decoration: none;
+        font-size: 20px;
       }
       .subjectTitleDeco {
         position: absolute;
         width: 0px;
-        height: 20px;
+        height: 22px;
         left: 5px;
         top: 220px;
 
@@ -223,7 +211,8 @@
         right: 35%;
       }
 
-      .subjectBlock:hover .circleGraph {
+      .subjectBlock:hover .progress-circle,
+      .subjectBlock:hover .progress-text {
         opacity: 0; /* 그래프가 사라지도록 설정 */
         transition: opacity 0.3s ease;
       }
@@ -294,6 +283,9 @@
         border-color: transparent;
         margin: 10px;
         position: absolute;
+        padding: 20px;
+        box-sizing: border-box;
+        font-size: 20px;
       }
       .subjectFormTitleHead,
       .subjectFormTextHead {
@@ -351,6 +343,31 @@
         cursor: pointer;
         font-size: 30px;
       }
+      .progress-circle {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        mask-image: radial-gradient(circle, transparent 60%, black 61%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px; /* 원하는 크기로 설정 */
+        height: 100px;
+        border-radius: 50%;
+      }
+
+      .progress-text {
+        position: absolute;
+        font-size: 20px;
+        color: white;
+        z-index: 2;
+        top: 80px;
+        left: 135px;
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
@@ -359,7 +376,7 @@
   </head>
   <body>
     <div id="header"></div>
-    <div id="indexHead">과목리스트</div>
+    <!-- <div id="indexHead">과목리스트</div> -->
     <!-- <a id="addSubjectBnt" onclick="subjectForm()">+</a> -->
     <div id="subjectContainer">
       <div class="subjectBigBlock">
@@ -441,14 +458,19 @@
           });
           const data = await response.json();
           data.subject.forEach((item) => {
-            LoadSubjectBlock(item.id, item.title, item.text);
+            LoadSubjectBlock(item.id, item.title, item.text, item.progress);
           });
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
       });
       //SubjectBlock생성
-      function LoadSubjectBlock(subjectId, subjectTitle, subjectText) {
+      function LoadSubjectBlock(
+        subjectId,
+        subjectTitle,
+        subjectText,
+        progress
+      ) {
         const subjectBigBlock = document.createElement("div");
         subjectBigBlock.className = "subjectBigBlock";
         /*subjectBlock.onclick = function () {
@@ -456,7 +478,8 @@
         };*/
         subjectBigBlock.innerHTML = `
                     <div href class="subjectBlock">
-                      <div class="circleGraph"></div>
+                      <div class="progress-circle" style = "background : conic-gradient(#222222 0% ${progress}%, #e6e6e6 ${progress}% 100%)"></div>
+                      <span class="progress-text">${progress}%</span>
                       <a class="promiseText" id="subjectText-${subjectId}" href = "course.html?id=${subjectId}&&title=${subjectTitle}">${subjectText}</a>
                       <button class="deleteSubjectBtn" onclick="deleteSubject(${subjectId}, this)">
                         <span class="material-symbols-outlined">delete</span>
@@ -468,6 +491,8 @@
                     <div class="subjectTitleDeco"></div>
                     <a class = "subjectTitle" id="subjectTitle-${subjectId}" href = "course.html?id=${subjectId}&&title=${subjectTitle}">${subjectTitle}</a>
                     <div class="subjectBlockBack"></div>
+
+                    
                 `;
 
         const container = document.getElementById("subjectContainer");
@@ -482,9 +507,19 @@
             document.getElementById("header").innerHTML = data;
           })
           .then(() => {
-            var detailInfo = document.querySelector(".detailInfo");
-            if (detailInfo) {
-              detailInfo.remove();
+            var cheer = document.querySelector(".cheer");
+            if (cheer) {
+              cheer.style.visibility = "hidden";
+            }
+            var progressInfo = document.querySelector(".progressInfo");
+            if (progressInfo) {
+              progressInfo.style.visibility = "hidden";
+            }
+          })
+          .then(() => {
+            const subjectName = document.getElementById("subjectName");
+            if (subjectName) {
+              subjectName.innerText = "과목리스트";
             }
           });
       }
@@ -522,7 +557,7 @@
           const data = await response.json();
 
           if (data.id) {
-            LoadSubjectBlock(data.id, data.title, data.text);
+            LoadSubjectBlock(data.id, data.title, data.text, data.progress);
           }
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
