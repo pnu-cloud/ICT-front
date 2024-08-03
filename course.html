@@ -115,20 +115,40 @@
       /*챕터 블럭*/
       #blocksContainer {
         position: absolute;
-        top: 250px;
-        left: 150px;
+        top: 300px;
+        left: 100px;
       }
+
+      .chapterBigBlock {
+        position: relative;
+        width: 80px;
+        height: 300px;
+        left: 80px;
+        margin-bottom: 80px; /* 각 요소 사이의 간격을 줄이기 위해 설정 */
+      }
+
       .chapterBlock {
+        position: absolute;
         border-radius: 8px;
         padding: 30px;
-        margin-bottom: 30px;
         font-family: Arial, sans-serif;
-        width: 1200px;
+        width: 1000px;
         height: 250px;
-        left: 190px;
-
+        left: 0;
         background: rgba(255, 255, 255, 0.09);
         backdrop-filter: blur(50px);
+      }
+
+      .chapterBlockBack {
+        position: absolute;
+        z-index: -1;
+        width: 1000px;
+        height: 38px;
+        left: 25px;
+        top: 290px; /* chapterBlock 아래로 이동 */
+        background: linear-gradient(90deg, #3da2ff 0%, #512499 100%);
+        backdrop-filter: blur(50px);
+        border-radius: 12px;
       }
       div[class^="chapterTitle-"] {
         color: #d9d9d9;
@@ -169,7 +189,7 @@
       }
       .chapterNum {
         position: absolute;
-        left: -80px;
+        left: -100px;
         top: 20px;
         color: #d9d9d9;
         font-size: 50px;
@@ -407,6 +427,11 @@
       }
       //챕터 블럭 만들기
       function LoadChapterBlock(title, contents, dataId) {
+        const chapterBigBlock = document.createElement("div");
+        chapterBigBlock.className = "chapterBigBlock";
+        const container = document.getElementById("blocksContainer");
+        container.appendChild(chapterBigBlock);
+
         chapterNum++;
         const chapterBlock = document.createElement("div");
         chapterBlock.className = "chapterBlock";
@@ -417,15 +442,19 @@
                           <h2 class = "chapterTitle-${dataId}">${title}</h2>
                           <p class = "chapterContents-${dataId}">${contents}</p>
                           <div class="chapterBar">.</div>
-
+                          
                           <button class="createBtn" onclick="createQuiz(${dataId})" >문제 생성</button>
                           <div class="quizzes-${dataId}"></div>
                           <button class="editChapterBtn" onclick="chapterEditForm(${dataId})">수정</button>
                           <button class="deleteChapterBtn" onclick="deleteChapter(${dataId}, this)">삭제</button>
-
                       `;
-        const container = document.getElementById("blocksContainer");
-        container.appendChild(chapterBlock);
+
+        chapterBigBlock.appendChild(chapterBlock);
+
+        const chapterBlockBack = document.createElement("div");
+        chapterBlockBack.className = "chapterBlockBack";
+
+        chapterBigBlock.appendChild(chapterBlockBack);
       }
       //퀴즈 load
       async function quizListLoad(chapterId) {

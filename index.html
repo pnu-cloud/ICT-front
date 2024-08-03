@@ -17,21 +17,74 @@
         background-attachment: fixed;
         display: flex;
         flex-direction: column;
+        align-items: center;
       }
-      #cover {
+      #indexHead {
         position: absolute;
-        top: 0px;
-        width: 100%;
-        height: 300px;
-        background: rgba(255, 255, 255, 0.09);
-        backdrop-filter: blur(50px);
-        z-index: -1;
+        width: 1035px;
+        height: 0px;
+        left: calc(50% - 1035px / 2 + 0.5px);
+        top: 179px;
+        border: 1px solid #ededed;
       }
       #subjectContainer {
-        top: 335px;
-        width: 100%;
+        top: 250px;
+        left: 100px;
+
+        display: flex;
+        flex-wrap: wrap; /* 여러 줄로 감싸기 */
+        gap: 10px 67px;
         position: absolute;
+        left: calc(50% - 1035px / 2 + 0.5px);
+        width: 1035px;
         /*background-color: red;*/
+      }
+      .subjectBigBlock {
+        position: relative;
+        width: 300px;
+        height: 250px;
+        margin: 0;
+        padding: 0;
+      }
+      #ADDsubjectBlock {
+        /* Rectangle 104 */
+        position: absolute;
+        width: 293.31px;
+        height: 186.42px;
+        top: 25px;
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(153, 153, 153, 0.2) 100%
+        );
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 22px;
+      }
+      #ADDsubjectBlockBack {
+        /* Rectangle 104 */
+        position: absolute;
+        width: 293.31px;
+        height: 186.42px;
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 22px;
+        z-index: -1;
+      }
+      #addSubjectBnt {
+        /* Ellipse 31 */
+        /* Ellipse 31 */
+
+        position: absolute;
+        width: 58.66px;
+        height: 58.26px;
+        left: 245.33px;
+        top: 312.71px;
+
+        background: linear-gradient(180deg, #e5e5e5 0%, #7f7f7f 100%);
       }
       .subjectBlock {
         border-radius: 8px;
@@ -52,9 +105,7 @@
 
         border-radius: 20px;
       }
-      /*추가 버튼*/
-      .subjectHead {
-        background-color: red;
+      .subjectBlockBack {
       }
       #subjectHeadText {
         /*position: absolute;*/
@@ -63,27 +114,6 @@
         left: 180px;
         font-size: 30px;
         top: 240px;
-      }
-      #addSubjectBnt {
-        display: block;
-        padding: 3px;
-        color: black;
-        text-align: center;
-        border-radius: 50%;
-        text-decoration: none;
-        font-size: 10x;
-        cursor: pointer;
-        position: absolute;
-        width: 19px;
-        height: 19px;
-        left: 320px;
-        top: 250px;
-        background: #d9d9d9;
-        transform: matrix(1, 0, 0, -1, 0, 0);
-      }
-      #addSubjectBnt:hover {
-        color: #d9d9d9;
-        background-color: #1681ff;
       }
 
       /*폼*/
@@ -180,12 +210,26 @@
   </head>
   <body>
     <div id="header"></div>
-    <div id="cover"></div>
-    <div class="SubjectHead">
-      <div id="subjectHeadText">Subject</div>
-      <a id="addSubjectBnt" onclick="subjectForm()">+</a>
+    <div id="indexHead"></div>
+    <!-- <a id="addSubjectBnt" onclick="subjectForm()">+</a> -->
+    <div id="subjectContainer">
+      <div class="subjectBigBlock">
+        <div id="ADDsubjectBlock"></div>
+        <div id="ADDsubjectBlockBack"></div>
+      </div>
+      <div class="subjectBigBlock">
+        <div id="ADDsubjectBlock"></div>
+        <div id="ADDsubjectBlockBack"></div>
+      </div>
+      <div class="subjectBigBlock">
+        <div id="ADDsubjectBlock"></div>
+        <div id="ADDsubjectBlockBack"></div>
+      </div>
+      <div class="subjectBigBlock">
+        <div id="ADDsubjectBlock"></div>
+        <div id="ADDsubjectBlockBack"></div>
+      </div>
     </div>
-    <div id="subjectContainer"></div>
 
     <form id="subjectForm">
       <h1>새로운 과목과 목차를 입력하세요</h1>
