@@ -19,10 +19,7 @@
         text-align: center;
       }
       body {
-        background-image: url("./assets/background-main.gif");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        background-color: black;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -36,15 +33,14 @@
         border: 1px solid yellow;
         width: 1095px;
         border-radius: 22px;
-        background: rgba(255, 255, 255, 0.09);
-        backdrop-filter: blur(100px);
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(153, 153, 153, 0.2));
         top: 50%;
         left: 50%;
         height: auto;
         align-items: center;
       }
       .subjectInfo2 {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -63,28 +59,29 @@
         font-size: 20px;
       }
       .mainBox {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         padding: 30px;
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
       }
       .imgSrc {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
+        background-color: rgba(0, 0, 0, 0.3);
         width: 150px;
         height: 150px;
         border-radius: 22px;
       }
       .chapterAll {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
       }
       .chapterContainer {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
         width: 750px;
-        height: 70px;
+        height: 90px;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         margin-bottom: 50px;
       }
       .chapterInfo {
@@ -94,20 +91,58 @@
         justify-content: space-between;
       }
       .chapterNum {
-        border: 1px solid yellow;
+        border: 1px solid white;
         border-radius: 9999px;
+        font-weight: 500;
         width: 120px;
       }
       .chapterProgress {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
       }
       .chapterCorrect {
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
       }
       .allProgress {
+        /* border: 1px solid green; */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
       }
-      .progressGraph {
-        width: 100%;
+      .graph {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      progress {
+        width: 230px;
+        height: 10px;
+        border-radius: 0;
+      }
+      progress::-webkit-progress-bar {
+        background-color: #ddd;
+        border-radius: 0;
+      }
+      #correctBar::-webkit-progress-value {
+        background-color: rgba(61, 162, 255, 1);
+        border-radius: 0;
+      }
+      #wrongBar::-webkit-progress-value {
+        background-color: rgba(255, 97, 75, 1);
+        border-radius: 0;
+      }
+      #notsubmitBar::-webkit-progress-value {
+        background-color: black;
+        border-radius: 0;
+      }
+      .num {
+        color: rgba(255, 255, 255, 0.5)
+      }
+      .downGradient {
+        position: absolute;
+        background-color: blue;
+        z-index: 0;
+        top: calc(100% + 10px);
+        height: 50px;
       }
     </style>
   </head>
@@ -140,79 +175,38 @@
                 >
               </div>
               <div class="allProgress">
-                <progress
-                  class="progressGraph"
-                  id="progressGraph${item.id}"
-                  max="100"
-                  value="70"
-                ></progress>
-              </div>
-            </div>
-            <div class="chapterContainer" id="chapterContainer${item.id}">
-              <div class="chapterInfo">
-                <span class="chapterNum" id="chapterNum${item.id}"
-                  >Chapter 01</span
-                >
-                <span class="chapterProgress" id="chapterProgress${item.id}"
-                  >총 문항 수 : K</span
-                >
-                <span class="chapterCorrect" id="chapterCorrect${item.id}"
-                  >정답률 : J%</span
-                >
-              </div>
-              <div class="allProgress">
-                <progress
-                  class="progressGraph"
-                  id="progressGraph${item.id}"
-                  max="100"
-                  value="70"
-                ></progress>
-              </div>
-            </div>
-            <div class="chapterContainer" id="chapterContainer${item.id}">
-              <div class="chapterInfo">
-                <span class="chapterNum" id="chapterNum${item.id}"
-                  >Chapter 01</span
-                >
-                <span class="chapterProgress" id="chapterProgress${item.id}"
-                  >총 문항 수 : K</span
-                >
-                <span class="chapterCorrect" id="chapterCorrect${item.id}"
-                  >정답률 : J%</span
-                >
-              </div>
-              <div class="allProgress">
-                <progress
-                  class="progressGraph"
-                  id="progressGraph${item.id}"
-                  max="100"
-                  value="70"
-                ></progress>
-              </div>
-            </div>
-            <div class="chapterContainer" id="chapterContainer${item.id}">
-              <div class="chapterInfo">
-                <span class="chapterNum" id="chapterNum${item.id}"
-                  >Chapter 01</span
-                >
-                <span class="chapterProgress" id="chapterProgress${item.id}"
-                  >총 문항 수 : K</span
-                >
-                <span class="chapterCorrect" id="chapterCorrect${item.id}"
-                  >정답률 : J%</span
-                >
-              </div>
-              <div class="allProgress">
-                <progress
-                  class="progressGraph"
-                  id="progressGraph${item.id}"
-                  max="100"
-                  value="70"
-                ></progress>
+                <div class="graph">
+                  <progress
+                    class="bar"
+                    id="correctBar"
+                    max="100"
+                    value="70"
+                  ></progress>
+                  <span class="num" id="correctNum${item.id}">맞힘:N</span>
+                </div>
+                <div class="graph">
+                  <progress
+                    class="bar"
+                    id="wrongBar"
+                    max="100"
+                    value="70"
+                  ></progress>
+                  <span class="num" id="wrongNum${item.id}">틀림:N</span>
+                </div>
+                <div class="graph">
+                  <progress
+                    class="bar"
+                    id="notsubmitBar"
+                    max="100"
+                    value="70"
+                  ></progress>
+                  <span class="num" id="notsubmitNum${item.id}">미제출:N</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="downGradient"></div>
       </div>
     </div>
     <script src="./function.js"></script>
