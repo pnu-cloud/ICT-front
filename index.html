@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subject Block</title>
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
       * {
@@ -11,7 +12,8 @@
         color: white;
       }
       body {
-        background-image: url("./assets/login_circle.gif");
+        /*background-image: url("./assets/login_circle.gif");*/
+        background-color: black;
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -46,6 +48,7 @@
         margin: 0;
         padding: 0;
       }
+      .subjectBlock,
       #ADDsubjectBlock {
         /* Rectangle 104 */
         position: absolute;
@@ -62,6 +65,7 @@
         /* Note: backdrop-filter has minimal browser support */
         border-radius: 22px;
       }
+      .subjectBlockBack,
       #ADDsubjectBlockBack {
         /* Rectangle 104 */
         position: absolute;
@@ -74,38 +78,139 @@
         border-radius: 22px;
         z-index: -1;
       }
-      #addSubjectBnt {
-        /* Ellipse 31 */
-        /* Ellipse 31 */
-
+      #ADDSubjectBnt {
         position: absolute;
-        width: 58.66px;
-        height: 58.26px;
-        left: 245.33px;
-        top: 312.71px;
-
+        width: 60px;
+        height: 60px;
+        left: calc(50% - 60px / 2 + 0.5px);
+        top: calc(50% - 60px / 2 + 0.5px);
+        z-index: 100;
         background: linear-gradient(180deg, #e5e5e5 0%, #7f7f7f 100%);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+      }
+      #ADDSubjectBnt:hover {
+        background: linear-gradient(90deg, #3da2ff 0%, #512499 100%);
+      }
+      #ADDSubjectBntPlus {
+        top: -20px;
+        margin: 0 auto;
+        position: absolute;
+        color: black;
+        font-weight: 300;
+        font-size: 70px;
+        padding: 0px;
+      }
+      #ADDSubjectBntPlus:hover {
+        color: #e5e5e5;
       }
       .subjectBlock {
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-        position: relative;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.09);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(153, 153, 153, 0.1) 100%
+        );
         backdrop-filter: blur(50px);
-        color: white;
-
-        width: 1016px;
-        height: 185px;
-        margin: 0 auto;
-        margin-top: 10px;
-
-        border-radius: 20px;
+        /* Note: backdrop-filter has minimal browser support */
+      }
+      .subjectBlock:hover {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(153, 153, 153, 0.4) 100%
+        );
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
       }
       .subjectBlockBack {
+        background: linear-gradient(90deg, #3da2ff 0%, #512499 100%);
+        backdrop-filter: blur(50px);
+        display: flex;
+        justify-content: center;
+        /* Note: backdrop-filter has minimal browser support */
+      }
+      .circleGraph,
+      .promiseText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .circleGraph {
+        width: 100px; /* 원하는 크기로 설정 */
+        height: 100px;
+        border-radius: 50%;
+        background: conic-gradient(
+          #4e79a7 25%,
+          #f28e2b 25% 50%,
+          #e15759 50% 75%,
+          #76b7b2 75% 100%
+        );
+        transition: opacity 0.3s ease;
+      }
+
+      .promiseText {
+        display: none;
+        text-align: center;
+      }
+      .subjectTitle {
+        position: absolute;
+        width: 293.31px;
+        height: 20px;
+        left: 20px;
+        top: 220px;
+      }
+      .subjectTitleDeco {
+        position: absolute;
+        width: 0px;
+        height: 20px;
+        left: 5px;
+        top: 220px;
+
+        border: 2px solid #ededed;
+      }
+
+      .deleteSubjectBtn,
+      .editSubjectBtn {
+        display: none;
+        text-align: center;
+        box-sizing: border-box;
+        top: 70%;
+        position: absolute;
+        border-radius: 50%;
+        cursor: pointer;
+        background-color: transparent;
+        border: transparent;
+        padding: auto;
+      }
+      .material-symbols-outlined {
+        color: #ededed;
+        font-size: 48px;
+      }
+      /*삭제버튼*/
+      .deleteSubjectBtn {
+        left: 35%;
+      }
+      /*수정버튼*/
+      .editSubjectBtn {
+        right: 35%;
+      }
+
+      .subjectBlock:hover .circleGraph {
+        opacity: 0; /* 그래프가 사라지도록 설정 */
+        transition: opacity 0.3s ease;
+      }
+
+      .subjectBlock:hover .promiseText {
+        display: block; /* 문장이 나타나도록 설정 */
+      }
+      .subjectBlock:hover .editSubjectBtn {
+        display: block; /* 문장이 나타나도록 설정 */
+      }
+      .subjectBlock:hover .deleteSubjectBtn {
+        display: block; /* 문장이 나타나도록 설정 */
       }
       #subjectHeadText {
         /*position: absolute;*/
@@ -160,53 +265,11 @@
         font-weight: 700;
         cursor: pointer;
       }
-      /*삭제버튼*/
-      .deleteSubjectBtn {
-        position: absolute;
-        top: 180px;
-        right: 20px;
-        background-color: black;
-        color: #d9d9d9;
-        border: 1.8px solid black;
-        border-radius: 8px;
-        padding: 8px;
-        left: 480px;
-        border-radius: 4px;
-        box-sizing: border-box;
-        width: 100px;
-        border-radius: 76px;
-        color: #d9d9d9;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      .deleteSubjectBtn:hover {
-        border: 1.8px solid grey;
-      }
-      /*수정버튼*/
-      .editSubjectBtn {
-        position: absolute;
-        top: 180px;
-        right: 20px;
-        background-color: transparent;
-        color: #d9d9d9;
-        border-radius: 8px;
-        padding: 8px;
-        left: 370px;
-        border-radius: 4px;
-        box-sizing: border-box;
-        width: 100px;
-        border-radius: 76px;
-        color: #d9d9d9;
-        border: 1.8px solid white;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      .editSubjectBtn:hover {
-        border: 1.8px solid grey;
-      }
     </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="header"></div>
@@ -214,12 +277,29 @@
     <!-- <a id="addSubjectBnt" onclick="subjectForm()">+</a> -->
     <div id="subjectContainer">
       <div class="subjectBigBlock">
-        <div id="ADDsubjectBlock"></div>
+        <div id="ADDsubjectBlock">
+          <div id="ADDSubjectBnt" onclick="subjectForm()">
+            <div id="ADDSubjectBntPlus">+</div>
+          </div>
+        </div>
         <div id="ADDsubjectBlockBack"></div>
       </div>
       <div class="subjectBigBlock">
-        <div id="ADDsubjectBlock"></div>
-        <div id="ADDsubjectBlockBack"></div>
+        <div class="subjectBlock">
+          <div class="circleGraph"></div>
+          <div class="promiseText">다짐</div>
+          <button class="deleteSubjectBtn">
+            <span class="material-symbols-outlined">delete</span>
+            <!-- onclick="deleteSubject(${subjectId}, this)" -->
+          </button>
+          <button class="editSubjectBtn">
+            <!-- onclick="SubjectEditForm(${subjectId})" -->
+            <span class="material-symbols-outlined">edit</span>
+          </button>
+        </div>
+        <div class="subjectTitleDeco"></div>
+        <div class="subjectTitle">선형대수학</div>
+        <div class="subjectBlockBack"></div>
       </div>
       <div class="subjectBigBlock">
         <div id="ADDsubjectBlock"></div>
