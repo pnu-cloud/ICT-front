@@ -33,7 +33,6 @@
       #logoImg {
         width: 110px;
         height: 54px;
-        cursor: pointer;
       }
 
       .upperBtns {
@@ -141,17 +140,17 @@
   <body>
     <header>
       <div class="moveTo">
-        <img
-          id="logoImg"
-          src="./assets/mainLogo.svg"
-          onclick="window.location.href='./index.html'"
-        />
+        <img id="logoImg" src="./assets/mainLogo.svg" />
         <div class="upperBtns">
-          <button id="subjectManage">학습 관리</button>
+          <button id="subjectManage" onclick="location.href='./index.html'">
+            학습 하기
+          </button>
           <button id="mistakeNote" onclick="location.href='./note.html'">
             오답 노트
           </button>
-          <button id="gradeStat">성적 통계</button>
+          <button id="gradeStat" onclick="location.href='./stat.html'">
+            성적 통계
+          </button>
         </div>
       </div>
       <div class="detailInfo" id="detailInfo">
@@ -193,13 +192,13 @@
         })
         .then((data) => {
           console.log("data", data);
-          const subjectManage = document
-            .getElementById("subjectManage")
-            .querySelector("button");
-          subjectManage.onclick = function () {
-            console.log("success");
-            location.href = `course.html?id=${quizId}&&title=${data.title}`;
-          };
+          const subjectManage = document;
+          //   .getElementById("subjectManage")
+          //   .querySelector("button");
+          // subjectManage.onclick = function () {
+          //   console.log("success");
+          //   location.href = `course.html?id=${quizId}&&title=${data.title}`;
+          // };
           const mistakeNote = document.getElementById("mistakeNote");
           mistakeNote.href = "./note.html";
           const gradeStat = document.getElementById("gradeStat");
