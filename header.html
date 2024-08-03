@@ -10,6 +10,7 @@
       }
       body {
         color: white;
+        background-color: black;
       }
       header {
         margin: 45px 65px;
@@ -39,7 +40,7 @@
         transform: translateX(-50%);
       }
       .upperBtns button {
-        border: 1.8px solid white;
+        border: 1px solid white;
         background-color: transparent;
         color: white;
         border-radius: 9999px;
@@ -60,51 +61,31 @@
       .detailInfo {
         /* border: 1px solid red; */
         display: flex;
+        width: auto;
         align-items: center;
-        height: 30px;
+        flex-direction: row;
+        justify-content: space-around;
+        box-sizing: border-box;
       }
       .subjectInfo {
         /* border: 1px solid yellow; */
-        width: 253px;
+        width: 30%;
       }
-      #shortLine {
-        border: 4px solid white;
-        background-color: white;
-        color: black;
-        height: 20px;
-        margin-right: 25px;
-      }
-      .subjectName {
-        font-size: 20px;
-        font-weight: 300;
-      }
-      .progressInfo {
-        /* border: 2px solid red; */
-        display: flex;
-        align-items: center;
-        font-size: 18px;
+      #subjectName {
+        /* border: 1px solid yellow; */
+        font-size: 24px;
         font-weight: 400;
-        margin: 0 auto;
-        width: 500px;
-        justify-content: space-between;
       }
-      .progressInfo #progressBar {
-        appearance: none;
-        width: 368px;
-        height: 5px;
-        border-radius: 9999px;
+      .cheer {
+        /* border: 1px solid blue; */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 35%;
+        justify-content: space-evenly;
       }
-      #progressBar::-webkit-progress-bar {
-        border: 1px solid white;
-        border-radius: 9999px;
-      }
-      #progressBar::-webkit-progress-value {
-        border: 1px solid white;
-        border-radius: 9999px;
-        background-color: #0539fc;
-      }
-      #percentNum {
-        font-size: 22px;
+      #cheerHead {
+        font-size: 14px;
         font-weight: 600;
       }
       .cheerPhrase {
@@ -113,12 +94,39 @@
         justify-content: center;
         font-size: 14px;
         font-weight: 300;
-        border-radius: 9999px;
-        background-color: #0539fc;
-        width: 253px;
+        width: auto;
         height: 32px;
         line-height: 21px;
-        background: linear-gradient(180deg, #0038ff 0%, #f26363 240.63%);
+        text-align: center;
+      }
+      .progressInfo {
+        /* border: 2px solid red; */
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0 auto;
+        width: 30%;
+        justify-content: space-between;
+      }
+      .progressInfo #progressBar {
+        appearance: none;
+        flex: 0.9;
+        height: 5px;
+        border-radius: 9999px;
+      }
+      #progressBar::-webkit-progress-bar {
+        /* border: 1px solid white; */
+        border-radius: 9999px;
+      }
+      #progressBar::-webkit-progress-value {
+        /* border: 1px solid white; */
+        border-radius: 9999px;
+        background-color: rgba(110, 185, 255, 1);
+      }
+      #percentNum {
+        font-size: 15px;
+        font-weight: 400;
       }
     </style>
   </head>
@@ -127,7 +135,7 @@
       <div class="moveTo">
         <img
           id="logoImg"
-          src="./assets/blueLogo.png"
+          src="./assets/mainLogo.svg"
           onclick="window.location.href='./index.html'"
         />
         <div class="upperBtns">
@@ -139,9 +147,12 @@
         </div>
       </div>
       <div class="detailInfo" id="detailInfo">
-        <div class="subjectInfo">
-          <span id="shortLine"></span>
-          <span class="subjectName" id="subjectName">과목명</span>
+        <div class="subjectInfo" id="subjectName">과목명</div>
+        <div class="cheer">
+          <span id="cheerHead">나의 다짐</span>
+          <span class="cheerPhrase" id="cheerPhrase"
+            >중간고사까지 D-7🔥 할 수 있다!!</span
+          >
         </div>
         <div class="progressInfo">
           <label for="progressBar">진도율</label>
@@ -149,13 +160,10 @@
             id="progressBar"
             name="progressBar"
             max="100"
-            value="0"
+            value="70"
           ></progress>
           <label id="percentNum" for="progressBar">N%</label>
         </div>
-        <span class="cheerPhrase" id="cheerPhrase"
-          >중간고사까지 D-7🔥 할 수 있다!!</span
-        >
       </div>
     </header>
     <script>
