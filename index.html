@@ -21,13 +21,34 @@
         flex-direction: column;
         align-items: center;
       }
+      /* 스크롤바 전체 기본 꾸미기 */
+      body::-webkit-scrollbar {
+        right: 10%;
+        width: 3px;
+        background-color: black;
+      }
+      /* 스크롤바 막대 꾸미기 */
+      body::-webkit-scrollbar-thumb {
+        background: #ffffff;
+        border-radius: 9999px;
+      }
+
+      /* 스크롤바 트랙 꾸미기 */
+      body::-webkit-scrollbar-track {
+        background-color: black;
+      }
       #indexHead {
         position: absolute;
         width: 1035px;
-        height: 0px;
         left: calc(50% - 1035px / 2 + 0.5px);
-        top: 179px;
-        border: 1px solid #ededed;
+        top: 143px;
+        border-bottom: 1px solid #ededed;
+        font-size: 24px;
+        padding-bottom: 5px;
+
+        padding-top: 0;
+        margin-top: 0;
+        border-top: 0;
       }
       #subjectContainer {
         top: 250px;
@@ -35,7 +56,7 @@
 
         display: flex;
         flex-wrap: wrap; /* 여러 줄로 감싸기 */
-        gap: 10px 67px;
+        gap: 15px 67px;
         position: absolute;
         left: calc(50% - 1035px / 2 + 0.5px);
         width: 1035px;
@@ -152,15 +173,19 @@
       }
 
       .promiseText {
+        top: 40%;
         display: none;
         text-align: center;
+        text-decoration: none;
       }
+
       .subjectTitle {
         position: absolute;
         width: 293.31px;
         height: 20px;
         left: 20px;
         top: 220px;
+        text-decoration: none;
       }
       .subjectTitleDeco {
         position: absolute;
@@ -212,6 +237,7 @@
       .subjectBlock:hover .deleteSubjectBtn {
         display: block; /* 문장이 나타나도록 설정 */
       }
+
       #subjectHeadText {
         /*position: absolute;*/
         color: #d9d9d9;
@@ -226,33 +252,74 @@
       #SubjectEditForm {
         top: 50px;
         display: none;
-        position: relative;
         z-index: 9999;
-        margin: 80px 20px 20px 20px;
         padding: 20px;
         border: 1px solid #000;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        z-index: 1;
+        position: relative;
+        width: 995px;
+        height: 501px;
+        left: 0px;
+        top: 70px;
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 22px;
+        flex-wrap: wrap;
       }
       #subjectForm h1,
       #SubjectEditForm h1 {
-        font-size: 30px;
         text-align: center;
-        color: black;
+        position: absolute;
+        width: 180px;
+        height: 36px;
+        top: 25px;
+        left: calc(50% - 180px / 2);
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #d9d9d9;
       }
       #subjectForm input,
       #SubjectEditForm input {
-        display: block;
-        width: 80%;
-        margin: 10px auto;
-        padding: 10px;
-        font-size: 16px;
-        color: black;
+        width: 442px;
+        height: 56.71px;
+        left: calc(50% - 442px / 2 - 15px);
+
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 20px;
+        border-color: transparent;
+        margin: 10px;
+        position: absolute;
+      }
+      .subjectFormTitleHead,
+      .subjectFormTextHead {
+        position: absolute;
+        box-sizing: border-box;
+        left: calc(50% - 442px / 2);
+        font-size: 22px;
+        font-weight: 600;
+        color: #d9d9d9;
+      }
+      .subjectFormTitleHead {
+        top: 150px;
+      }
+      .subjectFormTextHead {
+        top: 272px;
+      }
+      #subjectFormTitle,
+      #subjectFormEditTitle {
+        top: 180px;
+      }
+      #subjectFormText,
+      #subjectFormEditText {
+        top: 300px;
       }
       #subjectForm button,
       #SubjectEditForm button {
-        display: block;
         width: 200px;
         margin: 10px auto;
         padding: 10px;
@@ -264,6 +331,25 @@
         border: transparent;
         font-weight: 700;
         cursor: pointer;
+        height: 50px;
+        left: calc(50% - 200px / 2);
+        position: absolute;
+        top: 420px;
+      }
+      .FormLine {
+        position: absolute;
+        width: 122px;
+        height: 0px;
+        left: calc(50% - 122px / 2);
+        top: 100px;
+        border: 1px solid #ededed;
+      }
+      #subjectFormClose,
+      #subjectEditFormClose {
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+        font-size: 30px;
       }
     </style>
     <link
@@ -273,7 +359,7 @@
   </head>
   <body>
     <div id="header"></div>
-    <div id="indexHead"></div>
+    <div id="indexHead">과목리스트</div>
     <!-- <a id="addSubjectBnt" onclick="subjectForm()">+</a> -->
     <div id="subjectContainer">
       <div class="subjectBigBlock">
@@ -284,66 +370,61 @@
         </div>
         <div id="ADDsubjectBlockBack"></div>
       </div>
-      <div class="subjectBigBlock">
-        <div class="subjectBlock">
-          <div class="circleGraph"></div>
-          <div class="promiseText">다짐</div>
-          <button class="deleteSubjectBtn">
-            <span class="material-symbols-outlined">delete</span>
-            <!-- onclick="deleteSubject(${subjectId}, this)" -->
-          </button>
-          <button class="editSubjectBtn">
-            <!-- onclick="SubjectEditForm(${subjectId})" -->
-            <span class="material-symbols-outlined">edit</span>
-          </button>
-        </div>
-        <div class="subjectTitleDeco"></div>
-        <div class="subjectTitle">선형대수학</div>
-        <div class="subjectBlockBack"></div>
-      </div>
-      <div class="subjectBigBlock">
-        <div id="ADDsubjectBlock"></div>
-        <div id="ADDsubjectBlockBack"></div>
-      </div>
-      <div class="subjectBigBlock">
-        <div id="ADDsubjectBlock"></div>
-        <div id="ADDsubjectBlockBack"></div>
-      </div>
     </div>
 
     <form id="subjectForm">
-      <h1>새로운 과목과 목차를 입력하세요</h1>
+      <h1>신규 과목 생성</h1>
+      <span
+        class="material-symbols-outlined"
+        id="subjectFormClose"
+        onclick="subjectFormClose()"
+      >
+        close
+      </span>
+      <div class="FormLine"></div>
+      <div class="subjectFormTitleHead">과목명</div>
       <input
         type="text"
         name="title"
         id="subjectFormTitle"
-        placeholder="과목 이름"
+        placeholder="   과목명"
         required
       />
+      <div class="subjectFormTextHead">나의 다짐</div>
       <input
         type="text"
         name="text"
         id="subjectFormText"
-        placeholder="다짐"
+        placeholder="   다짐"
         required
       />
-      <button type="button" onclick="submitsubjectForm()">Submit</button>
+      <button type="submit" onclick="submitsubjectForm()">Submit</button>
     </form>
 
     <form id="SubjectEditForm">
-      <h1>새로운 과목과 목차를 입력하세요</h1>
+      <h1>기존 과목 생성</h1>
+      <span
+        class="material-symbols-outlined"
+        id="subjectEditFormClose"
+        onclick="subjectEditFormClose()"
+      >
+        close
+      </span>
+      <div class="FormLine"></div>
+      <div class="subjectFormTitleHead">과목명</div>
       <input
         type="text"
         name="title"
         id="subjectFormEditTitle"
-        placeholder="과목 이름"
+        placeholder="   과목명"
         required
       />
+      <div class="subjectFormTextHead">나의 다짐</div>
       <input
         type="text"
         name="text"
         id="subjectFormEditText"
-        placeholder="다짐"
+        placeholder="   다짐"
         required
       />
       <button type="button"></button>
@@ -360,7 +441,6 @@
           });
           const data = await response.json();
           data.subject.forEach((item) => {
-            console.log(item.text);
             LoadSubjectBlock(item.id, item.title, item.text);
           });
         } catch (error) {
@@ -369,21 +449,29 @@
       });
       //SubjectBlock생성
       function LoadSubjectBlock(subjectId, subjectTitle, subjectText) {
-        const subjectBlock = document.createElement("div");
-        subjectBlock.className = "subjectBlock";
+        const subjectBigBlock = document.createElement("div");
+        subjectBigBlock.className = "subjectBigBlock";
         /*subjectBlock.onclick = function () {
           location.href = `course.html?id=${subjectId}&&title=${subjectTitle}`;
         };*/
-        console.log(subjectText);
-        subjectBlock.innerHTML = `
-                    <h2 id="subjectTitle-${subjectId}">${subjectTitle}</h2>
-                    <p id="subjectText-${subjectId}">${subjectText}</p>
-                    <a href = "course.html?id=${subjectId}&&title=${subjectTitle}"">go</a>
-                    <button class="editSubjectBtn" onclick="SubjectEditForm(${subjectId})">수정</button>
-                    <button class="deleteSubjectBtn" onclick="deleteSubject(${subjectId}, this)">삭제</button>
+        subjectBigBlock.innerHTML = `
+                    <div href class="subjectBlock">
+                      <div class="circleGraph"></div>
+                      <a class="promiseText" id="subjectText-${subjectId}" href = "course.html?id=${subjectId}&&title=${subjectTitle}">${subjectText}</a>
+                      <button class="deleteSubjectBtn" onclick="deleteSubject(${subjectId}, this)">
+                        <span class="material-symbols-outlined">delete</span>
+                      </button>
+                      <button class="editSubjectBtn" onclick="SubjectEditForm(${subjectId})">
+                        <span class="material-symbols-outlined"> edit_square </span>
+                      </button>
+                    </div>
+                    <div class="subjectTitleDeco"></div>
+                    <a class = "subjectTitle" id="subjectTitle-${subjectId}" href = "course.html?id=${subjectId}&&title=${subjectTitle}">${subjectTitle}</a>
+                    <div class="subjectBlockBack"></div>
                 `;
+
         const container = document.getElementById("subjectContainer");
-        container.appendChild(subjectBlock);
+        container.appendChild(subjectBigBlock);
       }
 
       //header
@@ -404,6 +492,14 @@
       //form
       function subjectForm() {
         document.getElementById("subjectForm").style.display = "block";
+      }
+      function subjectFormClose() {
+        document.getElementById("subjectForm").reset();
+        document.getElementById("subjectForm").style.display = "none";
+      }
+      function subjectEditFormClose() {
+        document.getElementById("SubjectEditForm").reset();
+        document.getElementById("SubjectEditForm").style.display = "none";
       }
       //form 제출시 생성
       async function submitsubjectForm() {
@@ -451,7 +547,7 @@
         const buttonContainer = document
           .getElementById("SubjectEditForm")
           .querySelector("button");
-        buttonContainer.innerHTML = `${dataId} Submit`;
+        buttonContainer.innerHTML = `Submit`;
         buttonContainer.onclick = function () {
           submitSubjectEditForm(dataId);
         };
@@ -498,16 +594,15 @@
                 }
               );
               const data = await response.json();
-              console.log(data);
             } catch (error) {
               console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
               return;
             }
           }
           // Remove the chapter block from the DOM
-          const subjectBlock = deleteButton.closest(".subjectBlock");
-          if (subjectBlock) {
-            subjectBlock.remove();
+          const subjectBigBlock = deleteButton.closest(".subjectBigBlock");
+          if (subjectBigBlock) {
+            subjectBigBlock.remove();
           }
         }
       }
@@ -520,8 +615,6 @@
             credentials: "include",
           });
           const data = await response.json();
-          console.log("api");
-          console.log(data);
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
           return;

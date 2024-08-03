@@ -157,6 +157,7 @@
       div[class^="chapterContents-"] {
         color: #d9d9d9;
         font-size: 18px;
+        background-color: red;
       }
       .chapterBar {
         position: absolute;
@@ -313,7 +314,6 @@
         name="contents"
         class="chapterFormNewContents"
         placeholder="contents"
-        required
       ></textarea>
       <input
         type="file"
@@ -405,16 +405,21 @@
         const title = document.getElementsByClassName(
           "chapterFormNewChapter"
         )[0].value;
+        formData.append("chapter", title);
+
+        if (document.getElementsByClassName("chapterFormNewFile") != null) {
+          const fileInput =
+            document.getElementsByClassName("chapterFormNewFile")[0];
+          console.log(fileInput);
+          const file = fileInput.files[0];
+          formData.append("file", file);
+        } else {
+          console.log(document.getElementsByClassName("chapterFormNewFile"));
+        }
         const contents = document.getElementsByClassName(
           "chapterFormNewContents"
         )[0].value;
-        const fileInput =
-          document.getElementsByClassName("chapterFormNewFile")[0];
-        const file = fileInput.files[0];
-
-        formData.append("chapter", title);
         formData.append("contents", contents);
-        formData.append("file", file);
 
         const url = `https://apict.pnu.app/subject/${id}/chapter`;
 
