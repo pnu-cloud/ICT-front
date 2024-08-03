@@ -144,3 +144,5 @@ function viewAns(id) {
       quizSolution.innerHTML = data.solution;
     });
 }
+
+function setStat() {}

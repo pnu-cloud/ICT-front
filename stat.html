@@ -33,7 +33,11 @@
         border: 1px solid yellow;
         width: 1095px;
         border-radius: 22px;
-        background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(153, 153, 153, 0.2));
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.2),
+          rgba(153, 153, 153, 0.2)
+        );
         top: 50%;
         left: 50%;
         height: auto;
@@ -135,7 +139,7 @@
         border-radius: 0;
       }
       .num {
-        color: rgba(255, 255, 255, 0.5)
+        color: rgba(255, 255, 255, 0.5);
       }
       .downGradient {
         position: absolute;
@@ -212,6 +216,27 @@
     <script src="./function.js"></script>
     <script>
       loadHeader();
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://apict.pnu.app/grade", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("네트워크 응답이 옳지 않습니다.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            createContainer(data);
+          });
+      });
+
+      function createContainer(gradeStat) {}
     </script>
   </body>
 </html>
