@@ -34,14 +34,17 @@
         width: 1095px;
         border-radius: 22px;
         background: linear-gradient(
-          to top,
+          to bottom,
           rgba(255, 255, 255, 0.2),
-          rgba(153, 153, 153, 0.2)
+          rgba(153, 153, 153, 0.314)
         );
         top: 50%;
         left: 50%;
         height: auto;
         align-items: center;
+        margin-bottom: 150px;
+        box-shadow: 0 50px 40px rgba(61, 162, 255, 0.4);
+        padding: 40px 0px;
       }
       .subjectInfo2 {
         /* border: 1px solid yellow; */
@@ -50,7 +53,7 @@
         justify-content: space-around;
         /* width: 286px; */
         width: 500px;
-        padding: 20px 0;
+        padding: 5px 0;
       }
       .subjectName2 {
         font-size: 24px;
@@ -141,78 +144,18 @@
       .num {
         color: rgba(255, 255, 255, 0.5);
       }
-      .downGradient {
+      /* .downGradient {
         position: absolute;
         background-color: blue;
         z-index: 0;
         top: calc(100% + 10px);
         height: 50px;
-      }
+      } */
     </style>
   </head>
   <body>
     <div id="header"></div>
-    <div id="realBody">
-      <div class="manageContainer" id="manageContainer${item.id}">
-        <div class="subjectInfo2">
-          <span class="subjectName2" id="subjectName2${item.id}">과목명</span>
-          <span class="subjectProgress" id="subjectProgress${item.id}"
-            >진행률 : N%</span
-          >
-          <span class="subjectCorrect" id="subjectCorrect${item.id}"
-            >정답률 : M%</span
-          >
-        </div>
-        <div class="mainBox">
-          <div class="imgSrc"></div>
-          <div class="chapterAll" id="chapterAll${item.id}">
-            <div class="chapterContainer" id="chapterContainer${item.id}">
-              <div class="chapterInfo">
-                <span class="chapterNum" id="chapterNum${item.id}"
-                  >Chapter 01</span
-                >
-                <span class="chapterProgress" id="chapterProgress${item.id}"
-                  >총 문항 수 : K</span
-                >
-                <span class="chapterCorrect" id="chapterCorrect${item.id}"
-                  >정답률 : J%</span
-                >
-              </div>
-              <div class="allProgress">
-                <div class="graph">
-                  <progress
-                    class="bar"
-                    id="correctBar"
-                    max="100"
-                    value="70"
-                  ></progress>
-                  <span class="num" id="correctNum${item.id}">맞힘:N</span>
-                </div>
-                <div class="graph">
-                  <progress
-                    class="bar"
-                    id="wrongBar"
-                    max="100"
-                    value="70"
-                  ></progress>
-                  <span class="num" id="wrongNum${item.id}">틀림:N</span>
-                </div>
-                <div class="graph">
-                  <progress
-                    class="bar"
-                    id="notsubmitBar"
-                    max="100"
-                    value="70"
-                  ></progress>
-                  <span class="num" id="notsubmitNum${item.id}">미제출:N</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="downGradient"></div> -->
-      </div>
-    </div>
+    <div id="realBody"></div>
     <script src="./function.js"></script>
     <script>
       loadHeader();
@@ -236,15 +179,102 @@
           });
       });
 
-      // function createContainer(gradeStat) {
-      //   const realBody = document.getElementById("realBody");
-      //   realBody.innerHTML = "";
-      //   gradeStat.forEach(function (item) {
-      //     const statHTML = `
+      function createContainer(data) {
+        const realBody = document.getElementById("realBody");
+        realBody.innerHTML = "";
 
-      //     `;
-      //   });
-      // }
+        if (!Array.isArray(data.subject)) {
+          console.error(
+            "Expected an array for subjects but got:",
+            data.subject
+          );
+          return;
+        }
+
+        data.subject.forEach(function (item) {
+          const chaptersHTML = item.chapter
+            .map(
+              (chapter) => `
+            <div class="chapterContainer" id="chapterContainer${chapter.id}">
+                <div class="chapterInfo">
+                    <span class="chapterNum" id="chapterNum${
+                      chapter.id
+                    }">Chapter ${chapter.id}</span>
+                    <span class="chapterProgress" id="chapterProgress${
+                      chapter.id
+                    }">
+                        총 문항 수 : ${chapter.total_count}
+                    </span>
+                    <span class="chapterCorrect" id="chapterCorrect${
+                      chapter.id
+                    }">
+                        정답률 : ${
+                          Math.round(
+                            (chapter.correct_count / chapter.submit_count) * 100
+                          ) || 0
+                        }%
+                    </span>
+                </div>
+                <div class="allProgress">
+                    <div class="graph">
+                        <progress class="bar" id="correctBar" max="100" value="${
+                          Math.round(
+                            (chapter.correct_count * 100) / chapter.total_count
+                          ) || 0
+                        }"></progress>
+                        <span class="num" id="correctNum${chapter.id}">맞힘: ${
+                chapter.correct_count
+              }</span>
+                    </div>
+                    <div class="graph">
+                        <progress class="bar" id="wrongBar" max="100" value="${
+                          ((chapter.submit_count - chapter.correct_count) *
+                            100) /
+                            chapter.total_count || 0
+                        }"></progress>
+                        <span class="num" id="wrongNum${chapter.id}">틀림: ${
+                chapter.submit_count - chapter.correct_count
+              }</span>
+                    </div>
+                    <div class="graph">
+                        <progress class="bar" id="notsubmitBar" max="100" value="${0}"></progress>
+                        <span class="num" id="notsubmitNum${
+                          chapter.id
+                        }">미제출: ${0}</span>
+                    </div>
+                </div>
+            </div>
+        `
+            )
+            .join("");
+
+          const statHTML = `
+            <div class="manageContainer" id="manageContainer${item.id}">
+                <div class="subjectInfo2">
+                    <span class="subjectName2" id="subjectName2${item.id}">${
+            item.title
+          }</span>
+                    <span class="subjectProgress" id="subjectProgress${
+                      item.id
+                    }">${item.progress}%</span>
+                    <span class="subjectCorrect" id="subjectCorrect${item.id}">
+                        ${
+                          Math.round(item.correct_count / item.submit_count) *
+                            100 || 0
+                        }%
+                    </span>
+                </div>
+                <div class="mainBox">
+                    <div class="imgSrc"></div>
+                    <div class="chapterAll" id="chapterAll${item.id}">
+                        ${chaptersHTML}
+                    </div>
+                </div>
+            </div>
+        `;
+          realBody.innerHTML += statHTML;
+        });
+      }
     </script>
   </body>
 </html>
