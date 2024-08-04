@@ -146,3 +146,23 @@ function viewAns(id) {
 }
 
 function setStat() {}
+
+function loadModal(callback) {
+  fetch("./modal.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("modal").innerHTML = data;
+
+      const modal = document.getElementById("loading-back");
+
+      window.showModal = function () {
+        modal.style.display = "block";
+      };
+
+      window.hideModal = function () {
+        modal.style.display = "none";
+      };
+      if (callback) callback();
+    })
+    .catch((error) => console.error("Error fetching modal.html: ", error));
+}
