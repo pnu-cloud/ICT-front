@@ -738,6 +738,7 @@
 
           // 퀴즈 리스트 갱신 함수 호출 (예: QuizList)
           QuizList(data.quiz_id, chapterId, data.title);
+          window.location.reload();
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         } finally {
