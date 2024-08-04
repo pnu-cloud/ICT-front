@@ -256,8 +256,11 @@
                     }">진행률 : ${item.progress}%</span>
                     <span class="subjectCorrect" id="subjectCorrect${item.id}">
                         정답률 : ${
-                          Math.round(item.correct_count / item.submit_count) *
-                            100 || 0
+                          item.submit_count > 0
+                            ? Math.round(
+                                (item.correct_count / item.submit_count) * 100
+                              )
+                            : 0
                         }%
                     </span>
                 </div>
