@@ -535,48 +535,50 @@
         }
         //다짐
         try {
-          const response = await fetch(`https://apict.pnu.app/subject/${id}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          });
+          const response = await fetch(
+            `https://apict.pnu.app/quiz/${id}/subject`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
           const data = await response.json();
           document.getElementById("subjectName").innerHTML = data.title;
           document.getElementById("progressBar").value = data.progress;
           document.getElementById("percentNum").innerHTML = data.progress + "%";
-
           document.getElementsByClassName("cheerPhrase")[0].innerHTML =
             data.text;
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
         /*
-        fetch(`https://apict.pnu.app/subject/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
+      fetch(`https://apict.pnu.app/subject/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("네트워크 응답이 옳지 않습니다.");
+            console.log("problemId: ", problemId);
+          }
+          return response.json();
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("네트워크 응답이 옳지 않습니다.");
-              console.log("problemId: ", problemId);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const gradeStat = document.getElementById("gradeStat");
-            document.getElementById("subjectName").innerHTML = data.title;
-            document.getElementById("progressBar").value = data.progress;
-            document.getElementById("percentNum").innerHTML =
-              data.progress + "%";
-            document.getElementsByClassName("cheerPhrase")[0].innerHTML =
-              data.text;
-          });
-          */
+        .then((data) => {
+          const gradeStat = document.getElementById("gradeStat");
+          document.getElementById("subjectName").innerHTML = data.title;
+          document.getElementById("progressBar").value = data.progress;
+          document.getElementById("percentNum").innerHTML =
+            data.progress + "%";
+          document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+            data.text;
+        });
+        */
       });
 
       //header
@@ -634,7 +636,7 @@
             LoadChapterBlock(title, contents, data.id);
             document.getElementById("chapterForm").reset();
             document.getElementById("chapterForm").style.display = "none";
-            window.location = "/";
+            window.location.reload();
           } else {
             console.error("Form submission failed:", response.statusText);
             alert("Form submission failed");
@@ -655,24 +657,24 @@
         const chapterBlock = document.createElement("div");
         chapterBlock.className = "chapterBlock";
         chapterBlock.innerHTML = `
-                              <div class = "chapterNum">${String(
-                                chapterNum
-                              ).padStart(2, "0")}</div>
+                                  <div class = "chapterNum">${String(
+                                    chapterNum
+                                  ).padStart(2, "0")}</div>
 
-                              <button class="deleteChapterBtn" onclick="deleteChapter(${dataId}, this)">
-                                <span class="material-symbols-outlined">delete</span>
-                              </button>
-                              <button class="editChapterBtn" onclick="chapterEditForm(${dataId})">
-                                <span class="material-symbols-outlined"> edit_square </span>
-                              </button>
+                                  <button class="deleteChapterBtn" onclick="deleteChapter(${dataId}, this)">
+                                    <span class="material-symbols-outlined">delete</span>
+                                  </button>
+                                  <button class="editChapterBtn" onclick="chapterEditForm(${dataId})">
+                                    <span class="material-symbols-outlined"> edit_square </span>
+                                  </button>
 
-                              <h2 id = "chapterTitle-${dataId}">${title}</h2>
-                              <p id = "chapterContents-${dataId}">${contents}</p>
-                              <div class="chapterBar">.</div>
+                                  <h2 id = "chapterTitle-${dataId}">${title}</h2>
+                                  <p id = "chapterContents-${dataId}">${contents}</p>
+                                  <div class="chapterBar">.</div>
 
-                              <button class="createBtn" onclick="createQuiz(${dataId})">문제 생성</button>
-                              <div id="quizzes-${dataId}"></div>
-                          `;
+                                  <button class="createBtn" onclick="createQuiz(${dataId})">문제 생성</button>
+                                  <div id="quizzes-${dataId}"></div>
+                              `;
 
         chapterBigBlock.appendChild(chapterBlock);
 
@@ -831,7 +833,7 @@
           console.log("됏다");
           document.getElementById("chapterEditForm").reset();
           document.getElementById("chapterEditForm").style.display = "none";
-          window.location = "/";
+          window.location.reload();
         } catch (error) {
           console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
         }
