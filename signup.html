@@ -14,11 +14,7 @@
         color: white;
       }
       body {
-        background-image: url("./assets/login_circle.gif");
-        background-size: cover;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
+        background: black;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -34,9 +30,9 @@
         height: 500px;
         left: calc(50% - 715px / 2 - 0.5px);
         top: calc(50% - 540px / 2 - 23px);
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(50px);
-        border-radius: 20px;
+        background: rgba(153, 153, 153, 0.2);
+        box-shadow: 0 10px 100px rgba(61, 162, 255, 0.4);
+        border-radius: 50px;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -76,6 +72,12 @@
         color: white;
         cursor: pointer;
       }
+      button:hover,
+      button:focus {
+        border-color: rgba(110, 185, 255, 1);
+        color: rgba(110, 185, 255, 1);
+        outline: none;
+      }
       button:active {
         background-color: #7e85e074;
       }
@@ -97,7 +99,7 @@
     </style>
   </head>
   <body>
-    <img src="./assets/blueLogo.png" />
+    <img src="./assets/mainLogo.svg" />
     <div class="container">
       <h1>회원가입</h1>
       <form id="signup-form">
