@@ -174,41 +174,6 @@
         </div>
       </div>
     </header>
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const quizId = urlParams.get("id");
-
-      fetch(`https://apict.pnu.app/quiz/${quizId}/subject`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("네트워크 응답이 옳지 않습니다.");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("data", data);
-          const subjectManage = document;
-          //   .getElementById("subjectManage")
-          //   .querySelector("button");
-          // subjectManage.onclick = function () {
-          //   console.log("success");
-          //   location.href = `course.html?id=${quizId}&&title=${data.title}`;
-          // };
-          const mistakeNote = document.getElementById("mistakeNote");
-          mistakeNote.href = "./note.html";
-          const gradeStat = document.getElementById("gradeStat");
-          document.getElementById("subjectName").innerHTML = data.title;
-          document.getElementById("progressBar").value = data.progress;
-          document.getElementById("percentNum").innerHTML = data.progress + "%";
-          document.getElementsByClassName("cheerPhrase")[0].innerHTML =
-            data.text;
-        });
-    </script>
+    <script></script>
   </body>
 </html>
