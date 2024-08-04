@@ -272,10 +272,10 @@
             return response.json();
           })
           .then((data) => {
-            const subjectManage = document.getElementById("subjectManage");
-            subjectManage.onclick = function () {
-              location.href = `course.html?id=${quizId}&&title=${data.title}`;
-            };
+            // const subjectManage = document.getElementById("subjectManage");
+            // subjectManage.onclick = function () {
+            //   location.href = `course.html?id=${quizId}&&title=${data.title}`;
+            // };
             const mistakeNote = document.getElementById("mistakeNote");
             mistakeNote.onclick = function () {
               location.href = "note.html";
