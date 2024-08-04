@@ -65,9 +65,11 @@ function loadHeader() {
 function submitAns(id) {
   const submitAns = document.getElementById(`submitAns${id}`);
   const quizAnswer = document.getElementById(`quizAnswer${id}`);
+  const modal = document.getElementById("loading-modal");
   if (quizAnswer.value.length == 0) return;
   // submitAns.style.display = "none";
   var jsonData = `{ "user_answer": "${quizAnswer.value}" }`;
+  modal.style.display = "block";
   fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}`, {
     method: "POST",
     headers: {
@@ -98,6 +100,9 @@ function submitAns(id) {
       quizTF.innerHTML = judgeTF;
       document.getElementById(`clearAns${id}`).style.display = "block";
       document.getElementById(`viewAns${id}`).style.display = "block";
+    })
+    .finally(() => {
+      modal.style.display = "none";
     });
 }
 
@@ -123,8 +128,10 @@ function clearAns(id) {
 function viewAns(id) {
   const viewAns = document.getElementById(`viewAns${id}`);
   const quizSolution = document.getElementById(`quizSolution${id}`);
+  const modal = document.getElementById("loading-modal");
   viewAns.disabled = true;
   // viewAns.style.display = "none";
+  modal.style.display = "block";
   fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}/solution`, {
     method: "GET",
     headers: {
@@ -142,27 +149,19 @@ function viewAns(id) {
     .then((data) => {
       quizSolution.style.display = "block";
       quizSolution.innerHTML = data.solution;
+    })
+    .finally(() => {
+      modal.style.display = "none";
     });
 }
 
 function setStat() {}
 
-function loadModal(callback) {
+function loadModal() {
   fetch("./modal.html")
     .then((response) => response.text())
     .then((data) => {
       document.getElementById("modal").innerHTML = data;
-
-      const modal = document.getElementById("loading-back");
-
-      window.showModal = function () {
-        modal.style.display = "block";
-      };
-
-      window.hideModal = function () {
-        modal.style.display = "none";
-      };
-      if (callback) callback();
     })
     .catch((error) => console.error("Error fetching modal.html: ", error));
 }
