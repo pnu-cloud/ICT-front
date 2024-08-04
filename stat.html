@@ -53,7 +53,7 @@
         justify-content: space-around;
         /* width: 286px; */
         width: 500px;
-        padding: 5px 0;
+        padding: 5px 40px;
       }
       .subjectName2 {
         font-size: 24px;
@@ -122,35 +122,28 @@
       }
       progress {
         width: 230px;
-        height: 10px;
-        border-radius: 0;
+        height: 13px;
+        border-radius: 9999px;
       }
       progress::-webkit-progress-bar {
         background-color: #ddd;
-        border-radius: 0;
+        border-radius: 9999px;
+      }
+      progress::-webkit-progress-value {
+        border-radius: 9999px; /* Make the ends rounded */
       }
       #correctBar::-webkit-progress-value {
         background-color: rgba(61, 162, 255, 1);
-        border-radius: 0;
       }
       #wrongBar::-webkit-progress-value {
         background-color: rgba(255, 97, 75, 1);
-        border-radius: 0;
       }
       #notsubmitBar::-webkit-progress-value {
         background-color: black;
-        border-radius: 0;
       }
       .num {
         color: rgba(255, 255, 255, 0.5);
       }
-      /* .downGradient {
-        position: absolute;
-        background-color: blue;
-        z-index: 0;
-        top: calc(100% + 10px);
-        height: 50px;
-      } */
     </style>
   </head>
   <body>
@@ -192,6 +185,7 @@
         }
 
         data.subject.forEach(function (item) {
+          let chapterNumber = 1;
           const chaptersHTML = item.chapter
             .map(
               (chapter) => `
@@ -199,11 +193,11 @@
                 <div class="chapterInfo">
                     <span class="chapterNum" id="chapterNum${
                       chapter.id
-                    }">Chapter ${chapter.id}</span>
+                    }">Chapter ${chapterNumber++}</span>
                     <span class="chapterProgress" id="chapterProgress${
                       chapter.id
                     }">
-                        총 문항 수 : ${chapter.total_count}
+                        총 문항 수 : ${chapter.total_count || 0}
                     </span>
                     <span class="chapterCorrect" id="chapterCorrect${
                       chapter.id
@@ -223,7 +217,7 @@
                           ) || 0
                         }"></progress>
                         <span class="num" id="correctNum${chapter.id}">맞힘: ${
-                chapter.correct_count
+                chapter.correct_count || 0
               }</span>
                     </div>
                     <div class="graph">
@@ -233,14 +227,16 @@
                             chapter.total_count || 0
                         }"></progress>
                         <span class="num" id="wrongNum${chapter.id}">틀림: ${
-                chapter.submit_count - chapter.correct_count
+                chapter.submit_count - chapter.correct_count || 0
               }</span>
                     </div>
                     <div class="graph">
                         <progress class="bar" id="notsubmitBar" max="100" value="${0}"></progress>
                         <span class="num" id="notsubmitNum${
                           chapter.id
-                        }">미제출: ${0}</span>
+                        }">미제출: ${
+                Math.max(chapter.total_count - chapter.submit_count, 0) || 0
+              }</span>
                     </div>
                 </div>
             </div>
@@ -256,9 +252,9 @@
           }</span>
                     <span class="subjectProgress" id="subjectProgress${
                       item.id
-                    }">${item.progress}%</span>
+                    }">진행률 : ${item.progress}%</span>
                     <span class="subjectCorrect" id="subjectCorrect${item.id}">
-                        ${
+                        정답률 : ${
                           Math.round(item.correct_count / item.submit_count) *
                             100 || 0
                         }%
