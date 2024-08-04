@@ -90,10 +90,10 @@ function submitAns(id) {
       var judgeTF = data.is_correct;
       if (judgeTF == true) {
         judgeTF = "정답입니다.";
-        quizTF.style.color = "rgba(12, 109, 255, 1)";
+        quizTF.style.color = "#3333ff";
       } else {
         judgeTF = "오답입니다.<br>" + data.feedback;
-        quizTF.style.color = "red";
+        quizTF.style.color = "#cc0000";
       }
       quizTF.innerHTML = judgeTF;
       document.getElementById(`clearAns${id}`).style.display = "block";
