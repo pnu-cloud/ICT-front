@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    const id = 53;
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Ensure `id` is defined
+      // Replace with actual id or a method to get the id
+
+      try {
+        const response = await fetch(`https://apict.pnu.app/subject/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        // Check if response is JSON
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const data = await response.json();
+          console.log(data);
+          document.getElementById("subjectName").innerHTML = data.title;
+          document.getElementById("progressBar").value = data.progress;
+          document.getElementById("percentNum").innerHTML = data.progress + "%";
+          document.getElementsByClassName("cheerPhrase")[0].innerHTML =
+            data.text;
+        } else {
+          const errorText = await response.text();
+          console.error("서버 응답이 JSON 형식이 아닙니다:", errorText);
+          document.body.innerHTML = errorText; // Display the HTML error for debugging
+        }
+      } catch (error) {
+        console.error("서버와 통신하는 동안 오류가 발생했습니다:", error);
+      }
+    });
+  </script>
+</html>
