@@ -248,9 +248,11 @@
         </div>
       </div>
     </div>
+    <div id="modal"></div>
     <script src="./function.js"></script>
     <script>
       loadHeader();
+      loadModal();
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         const quizId = urlParams.get("id");
