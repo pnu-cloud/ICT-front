@@ -85,7 +85,7 @@ function submitAns(id) {
       return response.json();
     })
     .then((data) => {
-      submitAns.disabled = true;
+      // submitAns.disabled = true;
       quizAnswer.disabled = true;
       const quizTF = document.getElementById(`quizTF${id}`);
       quizTF.style.display = "block";
@@ -129,7 +129,7 @@ function viewAns(id) {
   const viewAns = document.getElementById(`viewAns${id}`);
   const quizSolution = document.getElementById(`quizSolution${id}`);
   const modal = document.getElementById("loading-modal");
-  viewAns.disabled = true;
+  // viewAns.disabled = true;
   // viewAns.style.display = "none";
   modal.style.display = "block";
   fetch(`https://apict.pnu.app/subject/chapter/quiz/problem/${id}/solution`, {
