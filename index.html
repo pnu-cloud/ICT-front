@@ -466,7 +466,7 @@
         };*/
         subjectBigBlock.innerHTML = `
                     <div href class="subjectBlock">
-                      <div class="progress-circle" style = "background : conic-gradient(#222222 0% ${progress}%, #e6e6e6 ${progress}% 100%)"></div>
+                      <div class="progress-circle" style = "background : conic-gradient( #A4E9FF 0% ${progress}%, rgba(255, 255, 255, 0.2) ${progress}% 100%)"></div>
                       <span class="progress-text">${progress}%</span>
                       <a class="promiseText" id="subjectText-${subjectId}" href = "course.html?id=${subjectId}&&title=${subjectTitle}&&progress=${progress}&&cheer=${subjectText}">${subjectText}</a>
                       <button class="deleteSubjectBtn" onclick="deleteSubject(${subjectId}, this)">
