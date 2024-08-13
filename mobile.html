@@ -1,0 +1,11 @@
+모바일 페이지는 지원하지 않습니다<br>
+가로 크기 1024 이상 PC 브라우저에서 접속해주세요
+<script>
+    function checkWidth() {
+        if (window.innerWidth > 1024) {
+            window.location.href = "/index.html";
+        }
+    }
+    window.onload = checkWidth;
+    window.onresize = checkWidth;
+</script>

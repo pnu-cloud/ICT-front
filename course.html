@@ -444,6 +444,13 @@
         }
       })
       .catch((error) => console.log("error:", error));
+      function checkWidth() {
+        if (window.innerWidth <= 1024) {
+          window.location.href = "/mobile.html";
+        }
+      }
+      window.onload = checkWidth;
+      window.onresize = checkWidth;
     </script>
     <div id="header"></div>
 
