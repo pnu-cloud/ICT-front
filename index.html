@@ -363,6 +363,21 @@
     />
   </head>
   <body>
+    <script>
+      fetch('https://apict.pnu.app/user', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          credentials: 'include'
+      })
+      .then((response) => {
+        if (response.status == 403) {
+          location.href = '/login.html';
+        }
+      })
+      .catch((error) => console.log("error:", error));
+    </script>
     <div id="header"></div>
     <!-- <div id="indexHead">과목리스트</div> -->
     <!-- <a id="addSubjectBnt" onclick="subjectForm()">+</a> -->
