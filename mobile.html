@@ -1,11 +1,22 @@
-모바일 페이지는 지원하지 않습니다<br>
-가로 크기 1024 이상 PC 브라우저에서 접속해주세요
-<script>
-    function checkWidth() {
-        if (window.innerWidth > 1024) {
-            window.location.href = "/index.html";
-        }
-    }
-    window.onload = checkWidth;
-    window.onresize = checkWidth;
-</script>
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="./assets/favicon.svg" />
+        <title>모두의 자율학습, MOZA</title>
+    </head>
+    <body>
+        모바일 페이지는 지원하지 않습니다<br>
+        가로 크기 1024 이상 PC 브라우저에서 접속해주세요
+        <script>
+            function checkWidth() {
+                if (window.innerWidth > 1024) {
+                    window.location.href = "/index.html";
+                }
+            }
+            window.onload = checkWidth;
+            window.onresize = checkWidth;
+        </script>
+    </body>
+</html>
